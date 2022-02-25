@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
+use App\Entity\Event;
 use App\Entity\Tag;
 use App\Entity\User;
 use DateTime;
@@ -82,6 +83,9 @@ class AppFixtures extends Fixture
         /************* User **************/
 
         /* ANNONCEUR */
+
+        $allAnnonceursEntity = []; // to add Annonceurs to Events
+
         for ($i=1; $i <= 20; $i++){
 
             $newAnnonceur = new User();
@@ -107,10 +111,13 @@ class AppFixtures extends Fixture
                 ->setTwitter('www.twitter.com/lieu')
                 ->setSlug(strtolower($this->slugger->slug($newAnnonceur->getName())));
 
+                $allAnnonceursEntity[] = $newAnnonceur;
+
                 $manager->persist($newAnnonceur);
         }
 
         /* USER */
+
         for ($i=1; $i <= 10; $i++){
             $newUser = new User();
             $newUser->setEmail('user'. $i .'@user.com')
@@ -131,7 +138,33 @@ class AppFixtures extends Fixture
             $manager->persist($newAdmin);
     
 
+        /************* Event **************/
+
+        $allEventsEntity = []; // to add Event to Post
+
+        for ($i=1; $i <= 10; $i++){
+
+            $newEvent = new Event();
+
+            $randomCategory = $allCategoriesEntity[mt_rand(0, count($allCategoriesEntity) - 1)];
+            $randomAnnonceur = $allAnnonceursEntity[mt_rand(0, count($allAnnonceursEntity) - 1)];
         
+            $newEvent->setName($faker->text(5))
+                ->setCreatedAt(new DateTimeImmutable('now'))
+                ->setCategory($randomCategory)
+                ->setUser($randomAnnonceur)
+                ->setPrice($faker->numberBetween(0, 20))
+                ->setDescription($faker->text())
+                ->setPicture('https://media.istockphoto.com/photos/hot-air-balloons-of-cappadocia-picture-id536290479?k=20&m=536290479&s=612x612&w=0&h=3QITRcn07NUf1WehQfvdKg0N0iqUGBUzI7RurIKT4oY=')
+                ->setIsPremium($faker->numberBetween(0, 1))
+                ->setStartDate(new DateTime())
+                ->setEndDate(new DateTime())
+                ->setSlug(strtolower($this->slugger->slug($newEvent->getName())));
+
+                $allEventsEntity[] = $tag;
+                
+            $manager->persist($newEvent);
+        }
 
         $manager->flush();
     }
