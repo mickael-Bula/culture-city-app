@@ -13,7 +13,6 @@ class AdvertiserType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('isVerified')
             ->add('address_1')
             ->add('address_2')
             ->add('city')
