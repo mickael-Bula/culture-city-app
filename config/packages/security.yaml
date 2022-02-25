@@ -32,7 +32,7 @@ security:
             logout:
                 path: app_logout 
                 # Redirection after logout
-                target: main_home   
+                target: home   
 
 
             # configure the maximum login attempts in a custom period of time
