@@ -81,50 +81,57 @@ class AppFixtures extends Fixture
 
         /************* User **************/
 
-        $users = [
-            [
-                'login' => 'admin@admin.com',
-                'password' => 'admin',
-                'roles' => 'ROLE_ADMIN',
-            ],
-            [
-                'login' => 'user@user.com',
-                'password' => 'user',
-                'roles' => 'ROLE_USER',
-            ],
-        ];
+        /* ANNONCEUR */
+        for ($i=1; $i <= 20; $i++){
 
-        $annonceurs = [
-            [
-                'login' => 'manager@manager.com',
-                'password' => 'manager',
-                'roles' => 'ROLE_MANAGER',
-            ]
-        ];
+            $newAnnonceur = new User();
+            $newAnnonceur->setEmail('annonceur' . $i . '@annonceur.fr')
+                ->setRoles(['ROLE_ANNONCEUR'])
+                ->setName($faker->firstName(rand(1, 2) == 1 ? 'female' : 'male'))
+                ->setPassword(strtolower($newAnnonceur->getName()))
+                ->setCreatedAt(new DateTimeImmutable('now'))
+                ->setIsVerified(rand(1, 2))
+                ->setAddress1($faker->streetAddress())
+                ->setAddress2($faker->streetAddress())
+                ->setCity($faker->city)
+                ->setZip($faker->postcode())
+                ->setSiren($faker->randomNumber())
+                ->setAvatar('https://cdn.pixabay.com/photo/2021/08/21/19/39/greyhound-6563435_960_720.jpg')
+                ->setBanner('https://cdn.pixabay.com/photo/2021/08/04/11/58/kids-6521604_960_720.jpg')
+                ->setPhone($faker->phoneNumber())
+                ->setFoundedIn(new DateTimeImmutable($faker->date()))
+                ->setWebsite('www.lieu.fr')
+                ->setCapacity($faker->randomNumber())
+                ->setFacebook('www.facebook.com/lieu')
+                ->setInstagram('www.instagram.com/lieu')
+                ->setTwitter('www.twitter.com/lieu')
+                ->setSlug(strtolower($this->slugger->slug($newAnnonceur->getName())));
 
-        foreach ($users as $user){
+                $manager->persist($newAnnonceur);
+        }
+
+        /* USER */
+        for ($i=1; $i <= 10; $i++){
             $newUser = new User();
-            $newUser->setEmail($user['login'])
-                ->setRoles([$user['roles']])
-                ->setPassword($user['password'])
+            $newUser->setEmail('user'. $i .'@user.com')
+                ->setRoles(['ROLE_USER'])
+                ->setPassword('user')
                 ->setCreatedAt(new DateTimeImmutable('now'));
 
-                $manager->persist($newUser);
-            
+            $manager->persist($newUser);
         }
 
-        foreach ($annonceurs as $annonceur){
-            $newUser->setEmail($annonceur['login'])
-                ->setRoles([$annonceur['roles']])
-                ->setPassword($annonceur['password'])
-                ->setCreatedAt(new DateTimeImmutable('now'))
-                ->setName($faker->firstName('female'))
-                ->setIsVerified(rand(1, 2))
-                ->setAddress1($faker->city);
-                
+        /* ADMIN */
+        $newAdmin = new User();
+        $newAdmin->setEmail('admin@admin.com')
+            ->setRoles(['ROLE_ADMIN'])
+            ->setPassword('admin')
+            ->setCreatedAt(new DateTimeImmutable('now'));
 
-                $manager->persist($newUser);
-        }
+            $manager->persist($newAdmin);
+    
+
+        
 
         $manager->flush();
     }
