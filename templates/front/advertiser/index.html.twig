@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}formulaire d'annonceur{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello advertiser !</h1>
+
+    Cette page est le formulaire pour éditer un annonceur
+
+    {# read and display just one flash message type #}
+    {% for message in app.flashes('success') %}
+         <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('danger') %}
+         <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div>
+        {{ form_errors(form) }}
+    </div>
+    <div class="row">
+    </div>
+        {{ form_row(form.name) }}
+        {{ form_row(form.address_1) }}
+        {{ form_row(form.address_2) }}
+        {{ form_row(form.city) }}    
+        {{ form_row(form.zip) }}
+        {{ form_row(form.siren) }}
+        {{ form_row(form.avatar) }}
+        {{ form_row(form.banner) }}
+        {{ form_row(form.phone) }}
+        {{ form_row(form.foundedIn) }}
+        {{ form_row(form.website) }}
+        {{ form_row(form.capacity) }}
+        {{ form_row(form.facebook) }}
+        {{ form_row(form.twitter) }}
+        {{ form_row(form.instagram) }}
+        {{ form_row(form.slug) }}
+
+    <div class="col-md-4" id="some-custom-id">
+
+            <button class="btn btn-primary">Ajouter une critique</button>
+
+        </div>
+
+    </div>
+
+{{ form_end(form) }}
+
+</div>
+{% endblock %}
