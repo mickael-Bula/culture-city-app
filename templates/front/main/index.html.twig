@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}page d'accueil{% endblock %}
 
 {% block body %}
 <style>
@@ -9,12 +9,13 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>la page home</h1>
 
-    This friendly message is coming from:
     <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/apothéose/projet-17-culture-city-app/src/Controller/MainController.php'|file_link(0) }}">src/Controller/MainController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/apothéose/projet-17-culture-city-app/templates/main/index.html.twig'|file_link(0) }}">templates/main/index.html.twig</a></code></li>
+    cette page liste tous les événements.
+    {% for event in events %}
+        <li>{{ event.description }} </li>
+        {% endfor %}
     </ul>
 </div>
 {% endblock %}
