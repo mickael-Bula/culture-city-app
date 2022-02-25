@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<p>
+    La route demandée n'existe pas. Vérifiez le nom de l'url. <a href="{{ path('home') }}">Retourner à la page d'accueil</a>.
+</p>
+
+<div class="starWarBody">
+
+    <div class="fade"></div>
+
+<section class="star-wars">
+
+  <div class="crawl">
+
+    <div class="title">
+      <p>Perdu dans l'Espace</p>
+      <h1>Ton chemin tu dois retrouver</h1>
+    </div>
+    
+    <p>Cette page a été perdu. Comment faire pour la retrouver ?</p>      
+    <p>Peut-être pourrais-tu cliquer sur le lien qui t'es présenté au-dessus de cette image.</p>
+    <p>Une autre solution serait de crier pour obtenir de l'aide. Mais dans ce vide intersidéral, il y a peu de chance pour que quiconque t'attende...</p>
+
+  </div>
+
+</section>
+
+</div>
+
+{% endblock %}
