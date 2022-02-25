@@ -1,0 +1,46 @@
+/** Variables CSS **/
+
+/* couleurs */
+:root {
+--main-color-blue-dark : #132C33; 
+--main-color-blue-med : #126E82; 
+--main-color-blue-light : #82c1cf; 
+}
+
+/** Global **/
+html {
+    font-family: 'Montserrat', sans-serif;
+
+}
+
+/** Typo **/
+
+h1 {
+    font-size : 3em;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+}
+
+h2 {
+    font-size : 2.5em;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+}
+
+h3 {
+    font-size : 2em;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+}
+
+p {
+    font-size : 1.2em;
+    line-height: 1.4em;
+}
+
+/** Header **/
+
+.header_logo {
+    width :100%;
+    height: auto;
+}
