@@ -11,6 +11,43 @@
 <div class="example-wrapper">
     <h1>la page home</h1>
 
+  
+
+
+{% if app.user %}
+    <H5 class="text-center mt-5">Vous êtes connecté comme : {{ app.user.username }}<h5> 
+{% endif %}
+
+{% for message in app.flashes('emailverification') %}
+    <div class="container alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('success-login') %}
+    <div class="container alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('success-register-annonceur') %}
+    <div class="container alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('success-register-user') %}
+    <div class="container alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('password-reset-success') %}
+    <div class="container alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}    
+
     <ul>
     cette page liste tous les événements.
     {% for event in events %}

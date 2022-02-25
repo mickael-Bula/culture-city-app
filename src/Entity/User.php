@@ -158,6 +158,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $status;
 
+
+ 
+
     public function __construct(SluggerInterface $slugger)
     {   
         $this->slugger = $slugger;
@@ -264,11 +267,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->name = $name;
 
-          // ici en premier je crée un slug avec le service composant Symfony slugger
-          $slug = $this->slugger->slug($name);
-          // ensuite je passe ce slug propre sans espace dans ma méthode setSlug pour flusher un slug propre
-           // à la soumission du formulaire.
-           $this->setSlug(strtolower($slug));  
+        // ici en premier je crée un slug avec le service composant Symfony slugger
+        $slug = $this->slugger->slug($name);
+        // ensuite je passe ce slug propre sans espace dans ma méthode setSlug pour flusher un slug propre
+        // à la soumission du formulaire.
+        $this->setSlug(strtolower($slug));  
 
         return $this;
     }
