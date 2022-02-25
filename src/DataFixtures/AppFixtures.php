@@ -4,6 +4,9 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Tag;
+use App\Entity\User;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\DBAL\Connection;
@@ -14,10 +17,13 @@ use Faker\Factory as Faker;
 class AppFixtures extends Fixture
 {
 
-    public function __construct(Connection $connexion, UserPasswordHasherInterface $hasheur, SluggerInterface $slugger)
+    private $connexion;
+    private $hasher;
+
+    public function __construct(Connection $connexion, UserPasswordHasherInterface $hasher, SluggerInterface $slugger)
     {
         $this->connexion = $connexion;
-        $this->hasheur = $hasheur;
+        $this->hasheur = $hasher;
         $this->slugger = $slugger;
     }
 
@@ -71,6 +77,53 @@ class AppFixtures extends Fixture
             $allTagsEntity[] = $tag;
 
             $manager->persist($tag);
+        }
+
+        /************* User **************/
+
+        $users = [
+            [
+                'login' => 'admin@admin.com',
+                'password' => 'admin',
+                'roles' => 'ROLE_ADMIN',
+            ],
+            [
+                'login' => 'user@user.com',
+                'password' => 'user',
+                'roles' => 'ROLE_USER',
+            ],
+        ];
+
+        $annonceurs = [
+            [
+                'login' => 'manager@manager.com',
+                'password' => 'manager',
+                'roles' => 'ROLE_MANAGER',
+            ]
+        ];
+
+        foreach ($users as $user){
+            $newUser = new User();
+            $newUser->setEmail($user['login'])
+                ->setRoles([$user['roles']])
+                ->setPassword($user['password'])
+                ->setCreatedAt(new DateTimeImmutable('now'));
+
+                $manager->persist($newUser);
+            
+        }
+
+        foreach ($annonceurs as $annonceur){
+            $newUser->setEmail($annonceur['login'])
+                ->setRoles([$annonceur['roles']])
+                ->setPassword($annonceur['password'])
+                ->setCreatedAt(new DateTimeImmutable('now'))
+                ->setName($faker->firstName('female'))
+                ->setIsVerified(rand(1, 2))
+                ->setAddress1($faker->city);
+                
+
+                $manager->persist($newUser);
         }
 
         $manager->flush();
