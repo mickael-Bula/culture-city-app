@@ -3,42 +3,16 @@ security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-        App\Entity\User:
-            algorithm: auto
-
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: email
+        users_in_memory: { memory: null }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
         main:
             lazy: true
-            provider: app_user_provider
-
-            form_login:
-                # "login" is the name of the route created previously
-                login_path: app_login
-                check_path: app_login
-                # comment or uncomment 'enable_csrf: true' line for allow csrf on loginform
-                enable_csrf: true
-
-            logout:
-                path: app_logout 
-                # Redirection after logout
-                target: home   
-
-
-            # configure the maximum login attempts in a custom period of time
-            login_throttling:
-                max_attempts: 10
-                interval: '15 minutes'    
+            provider: users_in_memory
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

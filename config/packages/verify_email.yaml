@@ -1,3 +1,0 @@
-# configure the time for user confir is email adress
-symfonycasts_verify_email:
-    lifetime: 172800
