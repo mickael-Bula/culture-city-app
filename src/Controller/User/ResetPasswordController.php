@@ -167,7 +167,7 @@ class ResetPasswordController extends AbstractController
         $email = (new TemplatedEmail())
             ->from(new Address('contact@culturecity.fr', 'Culture City App'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
+            ->subject('Votre demande de renouvellement de mot de passe')
             ->htmlTemplate('user/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
