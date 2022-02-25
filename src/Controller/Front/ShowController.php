@@ -19,6 +19,6 @@ class ShowController extends AbstractController
         {
             throw $this->createNotFoundException('The product does not exist');
         }
-        return $this->render('front/show/index.html.twig', compact('event'));        
+        return $this->render('front/main/event.html.twig', compact('event'));        
     }
 }
