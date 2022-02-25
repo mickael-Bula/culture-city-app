@@ -15,10 +15,10 @@ class ShowController extends AbstractController
     public function index(EventRepository $eventRepository, string $slug): Response
     {
         $event = $eventRepository->findOneBy(["slug" => $slug]);
-        if ($event)
+        if (!$event)
         {
-            return $this->render('front/show/index.html.twig', compact('event'));
+            throw $this->createNotFoundException('The product does not exist');
         }
-        return $this->render('front/show/error.html.twig', ["message" => "pas d'event"]);
+        return $this->render('front/show/index.html.twig', compact('event'));        
     }
 }
