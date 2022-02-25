@@ -12,7 +12,6 @@ class AdvertiserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
             ->add('address_1')
             ->add('address_2')
             ->add('city')
@@ -27,7 +26,6 @@ class AdvertiserType extends AbstractType
             ->add('facebook')
             ->add('twitter')
             ->add('instagram')
-            ->add('slug')
         ;
     }
 
