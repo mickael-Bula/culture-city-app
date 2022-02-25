@@ -3,11 +3,13 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
+use App\Entity\Tag;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Faker\Factory as Faker;
 
 class AppFixtures extends Fixture
 {
@@ -34,9 +36,11 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $this->truncate();
+        $faker = Faker::create('fr_FR');
 
         /************* Category **************/
 
+        $allCategoriesEntity = []; // to add category to events
         $categories = [
             'Concert', 'Spectacle', 'Exposition', 'Loisir', 'Évènementiel'
         ];
@@ -47,7 +51,26 @@ class AppFixtures extends Fixture
             $category->setName($categoryName)
                 ->setSlug(strtolower($this->slugger->slug($category->getName())));
 
+            $allCategoriesEntity[] = $category;
+
             $manager->persist($category);
+        }
+
+        /************* Tag **************/
+
+        $allTagsEntity = []; // to add tags to events 
+        $tags = [
+            'Jeunesse', 'Rock', 'Jazz', 'Piano', 'Jeux-vidéos', 'Théâtre', 'Comédie', 
+        ];
+
+        foreach ($tags as $tagName){
+            $tag = new Tag();
+            $tag->setName($tagName)
+                ->setSlug(strtolower($this->slugger->slug($tag->getName())));
+
+            $allTagsEntity[] = $tag;
+
+            $manager->persist($tag);
         }
 
         $manager->flush();
