@@ -41,6 +41,6 @@ class AdvertiserController extends AbstractController
 
             return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
-        return $this->renderForm('front/advertiser/index.html.twig', compact('form'));
+        return $this->renderForm('front/form/advertiser.html.twig', compact('form'));
     }
 }

@@ -103,7 +103,7 @@ class RegistrationController extends AbstractController
                     $request
                 );
 
-                return $this->redirectToRoute('app_user_advertizer');
+                return $this->redirectToRoute('app_user_advertiser');
     
                 }
 
