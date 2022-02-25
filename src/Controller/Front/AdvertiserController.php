@@ -21,13 +21,12 @@ class AdvertiserController extends AbstractController
         // get user from session
         $user = $this->getUser();
         
-        // if no user authenticated, we create a new one
-        if (!$user)
+        // if no user authenticated as advertiser, we create a new one
+        if ( !$user)
         {
-            $user = new User();
-            dump($user);
+            $this->addFlash('danger', "vous n'êtes pas autorisé");
+            $this->redirectToRoute('home', [], Response::HTTP_MOVED_PERMANENTLY);
         }
-
         // get advertiserForm and bind the authenticated user
         $form = $this->createForm(AdvertiserType::class, $user);
         $form->handleRequest($request);
