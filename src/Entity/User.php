@@ -153,6 +153,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $events;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true, options={"default":"0"})
+     */
+    private $status;
+
     public function __construct(SluggerInterface $slugger)
     {   
         $this->slugger = $slugger;
@@ -161,8 +166,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         
     }
     
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -265,7 +268,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
           $slug = $this->slugger->slug($name);
           // ensuite je passe ce slug propre sans espace dans ma méthode setSlug pour flusher un slug propre
            // à la soumission du formulaire.
-          $this->setSlug($slug);  
+           $this->setSlug(strtolower($slug));  
 
         return $this;
     }
@@ -542,6 +545,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $event->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
