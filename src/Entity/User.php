@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
- * @UniqueEntity(fields={"email"}, message="Une adresse mail {{ value }} existe déjà ! (@assert) message défini dans tout en haut avant ouverture de l'Entity CategoryCard - regarde en bdd si la valeur passé dans le form pour la proriété CardTitle est déjà présente en Bdd)")
+ * @UniqueEntity(fields={"email"}, message="Une adresse mail {{ value }} existe déjà !)")
 
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
