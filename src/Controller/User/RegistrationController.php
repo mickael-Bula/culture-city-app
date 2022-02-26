@@ -111,9 +111,10 @@ class RegistrationController extends AbstractController
                                 //->bcc('bcc@example.com')
                                 //->replyTo('fabien@example.com')
                                 //->priority(Email::PRIORITY_HIGH)
-                            ->subject($newUserName . ' Votre demande de statut annonceur sur Culture City App')
+                            ->subject($newUserName . ' - Votre demande de statut annonceur sur Culture City App')
                             ->text('Bonjour ' . $newUserName .' 
-                            Nous avons bien reçu votre demande afin d\'annoncer vos événements. 
+                            Nous avons bien reçu votre demande afin d\'annoncer vos événements
+                            sur Culture City App. 
                             Nous allons valider votre statut annonceur pour
                             que vous puissiez commencer à partager vos événements !
                             
@@ -132,8 +133,7 @@ class RegistrationController extends AbstractController
 
                         // flash message for user with status = advertiser request
                         $this->addFlash('success-register-annonceur', 'Merci ' . $newUserName . ' vous êtes enregistré et connecté.
-                        Nous avons bien reçu votre demande afin d\'annoncer vos événements. Nous allons valider votre statut annonceur pour
-                        que vous puissiez commencer à partager vos événements !.
+                        Nous avons bien reçu votre demande afin d\'annoncer vos événements.
                         En attendant...veuillez vérifier vos mail pour confirmer votre adresse e-mail !');
 
                         return $this->redirectToRoute('app_user_advertiser');
