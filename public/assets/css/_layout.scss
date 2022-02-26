@@ -1,0 +1,33 @@
+/** Header **/
+.header {
+    background-color: var(--main-color-blue-med);
+}
+
+.header_logo {
+    width :200px;
+    height: auto;
+}
+
+.navbar .navbar-toggler {
+    color: var(--main-color-white);
+    border-color: rgba(0,0,0,0);
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+/** Global **/
+.btn-primary {
+    color: var(--main-color-white);;
+    background-color: var(--main-color-blue-light);
+    border-color: var(--main-color-blue-light);
+    border-radius: 50px;
+}
+
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: var(--main-color-blue-dark);
+    border-color: var(--main-color-blue-dark);
+}
