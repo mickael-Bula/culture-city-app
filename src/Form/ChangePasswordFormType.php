@@ -16,7 +16,8 @@ class ChangePasswordFormType extends AbstractType
      * On this form Method.
      * After receiving the email containing the link allowing the user
      * to change his password.
-     * He can do it with this form.
+     * On this form user set his new password and send form
+     * to validate his new password.
      * @link resetPasswordController
      *
      * @param FormBuilderInterface $builder
