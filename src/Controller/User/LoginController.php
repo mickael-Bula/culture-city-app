@@ -2,8 +2,6 @@
 
 namespace App\Controller\User;
 
-use App\Repository\UserRepository;
-use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,12 +16,12 @@ class LoginController extends AbstractController
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        dump($error);
+
         // last username entered by the user
         $last_username = $authenticationUtils->getLastUsername();
-        dump($last_username);
-        //TODO A ajouter dans home
-        $this->addFlash('success-login', 'Vous êtes bien connecté !');
+       
+        // flash massage on user login actually displayed on home page
+        $this->addFlash('success-login', 'Félicitation, vous êtes bien connecté !');
        
         return $this->render('user/login.html.twig', [
             'last_username' => $last_username, 

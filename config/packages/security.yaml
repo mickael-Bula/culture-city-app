@@ -28,7 +28,6 @@ security:
             form_login:
                 # "login" is the name of the route created previously
                 login_path: app_login
-                # ICI RETOURNE INVALID CREDENTIALS
                 check_path: app_login
                 # default redirect route after login successfull
                 # default_target_path: home
