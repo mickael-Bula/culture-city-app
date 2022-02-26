@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Event;
+use App\Entity\Post;
 use App\Entity\Tag;
 use App\Entity\User;
 use DateTime;
@@ -118,12 +119,16 @@ class AppFixtures extends Fixture
 
         /* USER */
 
+        $allUsersEntity = []; // to add Users to Post
+
         for ($i=1; $i <= 10; $i++){
             $newUser = new User();
             $newUser->setEmail('user'. $i .'@user.com')
                 ->setRoles(['ROLE_USER'])
                 ->setPassword('user')
                 ->setCreatedAt(new DateTimeImmutable('now'));
+
+                $allUsersEntity[] = $newUser;
 
             $manager->persist($newUser);
         }
@@ -161,10 +166,28 @@ class AppFixtures extends Fixture
                 ->setEndDate(new DateTime())
                 ->setSlug(strtolower($this->slugger->slug($newEvent->getName())));
 
-                $allEventsEntity[] = $tag;
+                $allEventsEntity[] = $newEvent;
                 
             $manager->persist($newEvent);
         }
+
+        /************* Post **************/
+
+        for ($i=1; $i <= 50; $i++){
+
+            $randomUser = $allUsersEntity[mt_rand(0, count($allUsersEntity) - 1)];
+            $randomEvent = $allEventsEntity[mt_rand(0, count($allEventsEntity) - 1)];
+
+            $newPost = new Post();
+
+            $newPost->setContent($faker->paragraph(5))
+                ->setCreatedAt(new DateTimeImmutable('now'))
+                ->setAuthor($randomUser)
+                ->setEvent($randomEvent);
+                
+            $manager->persist($newPost);
+        }
+
 
         $manager->flush();
     }
