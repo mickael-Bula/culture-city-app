@@ -78,6 +78,8 @@ class AppFixtures extends Fixture
 
             $allTagsEntity[] = $tag;
 
+
+
             $manager->persist($tag);
         }
 
@@ -153,8 +155,9 @@ class AppFixtures extends Fixture
 
             $randomCategory = $allCategoriesEntity[mt_rand(0, count($allCategoriesEntity) - 1)];
             $randomAnnonceur = $allAnnonceursEntity[mt_rand(0, count($allAnnonceursEntity) - 1)];
+            $randomTag = $allTagsEntity[mt_rand(0, count($allTagsEntity) - 1)];
         
-            $newEvent->setName($faker->text(5))
+            $newEvent->setName($faker->words(3, true))
                 ->setCreatedAt(new DateTimeImmutable('now'))
                 ->setCategory($randomCategory)
                 ->setUser($randomAnnonceur)
@@ -164,7 +167,8 @@ class AppFixtures extends Fixture
                 ->setIsPremium($faker->numberBetween(0, 1))
                 ->setStartDate(new DateTime())
                 ->setEndDate(new DateTime())
-                ->setSlug(strtolower($this->slugger->slug($newEvent->getName())));
+                ->setSlug(strtolower($this->slugger->slug($newEvent->getName())))
+                ->addTag($randomTag);
 
                 $allEventsEntity[] = $newEvent;
                 
@@ -187,7 +191,6 @@ class AppFixtures extends Fixture
                 
             $manager->persist($newPost);
         }
-
 
         $manager->flush();
     }
