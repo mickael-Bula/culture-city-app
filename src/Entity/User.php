@@ -189,9 +189,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $bannerFile;
 
-    public function __construct(SluggerInterface $slugger)
+    public function __construct()
     {   
-        $this->slugger = $slugger;
+        //$this->slugger = $slugger;
         $this->posts = new ArrayCollection();
         $this->events = new ArrayCollection();
         
@@ -360,10 +360,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->name = $name;
 
         // ici en premier je crée un slug avec le service composant Symfony slugger
-        $slug = $this->slugger->slug($name);
+        // $slug = $this->slugger->slug($name);
         // ensuite je passe ce slug propre sans espace dans ma méthode setSlug pour flusher un slug propre
         // à la soumission du formulaire.
-        $this->setSlug(strtolower($slug));  
+        // $this->setSlug(strtolower($slug));  
 
         return $this;
     }
