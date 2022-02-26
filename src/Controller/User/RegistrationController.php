@@ -88,9 +88,9 @@ class RegistrationController extends AbstractController
 
 
                   if ( $form->get('status')->getData() == true) {
-                            // here we don't use any email template -> juste new Email()
+                            // here we don't use any email twig template -> juste new Email()
                             // this send a mail to the app admin    
-                            $email = (new Email())
+                            $admin_email = (new Email())
                             ->from('register@yculturecity.fr')
                             ->to('admin@yculturecity.fr')
                                 //->cc('cc@example.com')
@@ -100,10 +100,10 @@ class RegistrationController extends AbstractController
                             ->subject('ADMIN - ' . $newUserName . ' demande le statut d\'annonceur')
                             ->text('Un nouvel utilisateur ' . $newUserName .' vient de s\'enregistrer sur App Culture City et demande le statut annonceur!');
                             //->html('<p>See Twig integration for better HTML integration!</p>');
-                            $mailer->send($email);
+                            $mailer->send($admin_email);
 
-                            // here we don't use any email template -> juste new Email()
-                            // this send a mail to new user asking admin for Advertiser status. 
+                            // here we don't use any email twig template -> juste new Email()
+                            // We send a message to the user confirming that an administrator has received his request to be an advertiser on the application 
                             $advertiser_email = (new Email())
                             ->from('register@yculturecity.fr')
                             ->to($user->getEmail())
