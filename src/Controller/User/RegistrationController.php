@@ -88,7 +88,8 @@ class RegistrationController extends AbstractController
 
 
                   if ( $form->get('status')->getData() == true) {
-                    // here we don't use any email template -> juste new Email()    
+                            // here we don't use any email template -> juste new Email()
+                            // this send a mail to the app admin    
                             $email = (new Email())
                             ->from('register@yculturecity.fr')
                             ->to('admin@yculturecity.fr')
@@ -96,10 +97,31 @@ class RegistrationController extends AbstractController
                                 //->bcc('bcc@example.com')
                                 //->replyTo('fabien@example.com')
                                 //->priority(Email::PRIORITY_HIGH)
-                            ->subject('Demande de statut annonceur')
+                            ->subject('ADMIN - ' . $newUserName . ' demande le statut d\'annonceur')
                             ->text('Un nouvel utilisateur ' . $newUserName .' vient de s\'enregistrer sur App Culture City et demande le statut annonceur!');
-                        //->html('<p>See Twig integration for better HTML integration!</p>');
+                            //->html('<p>See Twig integration for better HTML integration!</p>');
                             $mailer->send($email);
+
+                            // here we don't use any email template -> juste new Email()
+                            // this send a mail to new user asking admin for Advertiser status. 
+                            $advertiser_email = (new Email())
+                            ->from('register@yculturecity.fr')
+                            ->to($user->getEmail())
+                                //->cc('cc@example.com')
+                                //->bcc('bcc@example.com')
+                                //->replyTo('fabien@example.com')
+                                //->priority(Email::PRIORITY_HIGH)
+                            ->subject($newUserName . ' Votre demande de statut annonceur sur Culture City App')
+                            ->text('Bonjour ' . $newUserName .' 
+                            Nous avons bien reçu votre demande afin d\'annoncer vos événements. 
+                            Nous allons valider votre statut annonceur pour
+                            que vous puissiez commencer à partager vos événements !
+                            
+                            N\'oubliez pas de reseigner vos informations de profil pour offrir à 
+                            vos utilisateurs une expérience optimale ;)...'
+                            );
+                            //->html('<p>See Twig integration for better HTML integration!</p>');
+                            $mailer->send($advertiser_email);
                         
                         // user advertiser autologin after registration send
                         $userAuthenticator->authenticateUser(
