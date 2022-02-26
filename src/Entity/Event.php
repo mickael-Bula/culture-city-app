@@ -105,7 +105,7 @@ class Event
      * et le nom à associer qui est stocké en bdd
      * pour résoudre le lien et servir l'image
      * 
-     * @Vich\UploadableField(mapping="picture", fileNameProperty="picture")
+     * @Vich\UploadableField(mapping="event_picture", fileNameProperty="picture")
      * @var File
      */
     private $pictureFile;

@@ -55,7 +55,28 @@
     cette page liste tous les événements.
     {% for event in events %}
         <li>{{ event.description }} </li>
+        <li>{{ user.avatar }} </li>
         {% endfor %}
     </ul>
+
+
+{% for user in users %}
+  <img class="profileImage" src="{{ vich_uploader_asset (user, 'avatarFile') }}" alt="{{ user.name }}" />
+
+  <img class="profileImage" src="{{ vich_uploader_asset (user, 'bannerFile') }}" alt="{{ user.banner }}" /> 
+    <div class="orgaInfos bi bi-music-note"> {{ user.name }}</div>
+      <div class="orgaUlDiv">
+      <ul class="orgaUl">
+        <li class="orgaLi bi bi-house"> {{ user.city }}</li>
+        <li class="orgaLi"> {{ user.website }}</li>
+        <li class="orgaLi"> {{ user.phone  }}</li>
+        <li class="orgaLi bi bi-telephone"> {{ user.facebook  }}</li>
+        <li class="orgaLi bi bi-envelope"> {{ user.capacity  }}</li>
+      </ul>
+    </div>  
+    </div>
+{% endfor %}
+
+
 </div>
 {% endblock %}

@@ -167,7 +167,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * et le nom à associer qui est stocké en bdd
      * pour résoudre le lien et servir l'image
      * 
-     * @Vich\UploadableField(mapping="avatar", fileNameProperty="avatar")
+     * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="avatar")
      * @var File
      */
     private $avatarFile;
@@ -184,7 +184,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * et le nom à associer qui est stocké en bdd
      * pour résoudre le lien et servir l'image
      * 
-     * @Vich\UploadableField(mapping="banner", fileNameProperty="banner")
+     * @Vich\UploadableField(mapping="user_banner", fileNameProperty="banner")
      * @var File
      */
     private $bannerFile;

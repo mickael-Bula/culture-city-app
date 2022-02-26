@@ -8,7 +8,7 @@
 # Je lui passe les paramètres qui vont être utilises après par ex dans le CRUD
 # Que se passe t'il si je supprime/update un user par ex est ce que son image se supprime aussi etc  
 
-# Vérifier la pésence de cette ligne dans config/bundle.php
+# Vérifier la présence de cette ligne dans config/bundle.php
 # Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
 
 # lors de l'install du bundle valider avec Y l'installation de la configuration de base. C'est elle qui crée les fichiers

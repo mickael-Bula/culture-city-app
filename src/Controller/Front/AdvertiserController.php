@@ -43,8 +43,7 @@ class AdvertiserController extends AbstractController
         {
 
             // todo ici on a un problème parce que ça vide les valeurs que Mika rècupère de la session 
-            $user = new User();
-            //$user = $this->getUser();
+            //$user = new User();
             
 
             /** @var UploadedFile avatar (ce paramètre est défini dans le form.
@@ -57,7 +56,7 @@ class AdvertiserController extends AbstractController
 
                 // Je sette donc la valeur de $avatarFile avec le fichier image
                 $user->setAvatarFile($avatarFile);
-                dd($avatarFile);
+               
 
                 // Le passage par le renommage n'est obligatoire que si une image est ajoutée 
                 // il n'est pas obligatoire d'ajouter une image si mise à jour par exemple d'autres valeurs du formulaire.
@@ -127,7 +126,7 @@ class AdvertiserController extends AbstractController
                 // Flash message display a success message
             $this->addFlash('success', 'votre profil a été édité');
 
-            dd($user); 
+            //dd($user); 
 
             $entityManager->persist($user);
             $entityManager->flush();
