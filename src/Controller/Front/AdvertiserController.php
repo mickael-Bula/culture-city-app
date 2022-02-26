@@ -25,7 +25,6 @@ class AdvertiserController extends AbstractController
     {
         // get user from session
         $user = $this->getUser();
-        dump($user);
         
             // if no user authenticated as advertiser, we create a new one
             if ( !$user)
@@ -40,11 +39,7 @@ class AdvertiserController extends AbstractController
 
         
         if ($form->isSubmitted() && $form->isValid())
-        {
-
-            // todo ici on a un problème parce que ça vide les valeurs que Mika rècupère de la session 
-            //$user = new User();
-            
+        { 
 
             /** @var UploadedFile avatar (ce paramètre est défini dans le form.
              *  il doit être le même dans le form et ici ex 'attachement' ou'file').
@@ -81,10 +76,9 @@ class AdvertiserController extends AbstractController
                         // ... gérer les exeptions si problème d'upload en fonction des restrictions qu'on a pu donner dans le form
                     }
     
-                    // mise à jourde la propriété $avatar qui va prendre comme valeur le nouveau nom du fichier
+                    // mise à jour de la propriété $avatar qui va prendre comme valeur le nouveau nom du fichier
                     $user->setAvatar($newFilename);
                    
-                    dump($user);
                 }
 
                 $bannerFile = $form->get('banner')->getData();
@@ -117,7 +111,6 @@ class AdvertiserController extends AbstractController
     
                     // mise à jour de la propriété $banner qui va prendre comme valeur le nouveau nom du fichier
                     $user->setBanner($newFilename);
-                    dump($user);
                     
                 } 
 
