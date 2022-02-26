@@ -12,6 +12,17 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ChangePasswordFormType extends AbstractType
 {
+    /**
+     * On this form Method.
+     * After receiving the email containing the link allowing the user
+     * to change his password.
+     * He can do it with this form.
+     * @link resetPasswordController
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

@@ -33,6 +33,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
+     * Method for registering a new user.
      * @Route("register", name="user_register")
      */
     public function register(Request $request, 
@@ -143,6 +144,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
+     * Method asks new registered user to verify their email address
      * @Route("/verify/email", name="app_verify_email")
      */
      public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
