@@ -111,6 +111,17 @@ bg-blue-dark {
   display: none;
 }
 
+/** Homepage **/
+.aside {
+  background-color: var(--main-color-blue-med);
+  border-radius: 30px;
+}
+
+/** Footer **/
+.footer {
+  background-color: var(--main-color-blue-med);
+}
+
 /** Global **/
 .btn-primary {
   color: var(--main-color-white);
@@ -120,9 +131,16 @@ bg-blue-dark {
 }
 
 .btn-primary:hover {
-  color: #fff;
-  background-color: var(--main-color-blue-dark);
-  border-color: var(--main-color-blue-dark);
+  color: var(--main-color-blue-med);
+  background-color: var(--main-color-white);
+  border-color: var(--main-color-blue-med);
+}
+
+.separator {
+  width: 300px;
+  height: 5px;
+  background-color: var(--main-color-blue-med);
+  margin-bottom: 30px;
 }
 
 /*-------------------------------------------------------------------------------------*/
@@ -147,22 +165,39 @@ h2 {
   font-size: 2.5em;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
+  line-height: 1em;
+  margin-bottom: 10px;
 }
 
 h3 {
   font-size: 2em;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
+  line-height: 1em;
 }
 
 p {
   font-size: 1.2em;
   line-height: 1.4em;
+  margin-bottom: 15px;
 }
 
 /*-------------------------------------------------------------------------------------*/
 /*  FORMS														   
 /*-------------------------------------------------------------------------------------*/
+/* Search bar home page */
+/* switch button */
+.form-check-input:checked {
+  background-color: var(--main-color-blue-light);
+  border-color: var(--main-color-blue-light);
+}
+
+.form-check .form-check-input {
+  float: left;
+  margin-left: -2.5em;
+  margin-top: -2px;
+}
+
 /*-------------------------------------------------------------------------------------*/
 /* RESPONSIVE														   
 /*-------------------------------------------------------------------------------------*/
