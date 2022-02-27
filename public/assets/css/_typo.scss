@@ -26,6 +26,8 @@ h3 {
     font-family: 'Nunito', sans-serif;
     font-weight: 700;
     line-height: 1em;
+    margin-bottom:10px
+
 }
 
 p {
@@ -33,3 +35,21 @@ p {
     line-height: 1.4em;
     margin-bottom: 15px;
 }
+
+a {
+    color : var(--main-color-blue-dark);
+    text-decoration: none;
+    &:hover  {
+        color : var(--main-color-blue-light);
+    }
+}
+
+/* Footer */
+
+.footer a {
+    color : var(--main-color-white);
+    &:hover {
+        color : var(--main-color-blue-light);
+    }
+}
+

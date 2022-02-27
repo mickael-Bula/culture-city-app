@@ -16,11 +16,21 @@
 .dropdown-toggle::after {
     display: none;
 }
+
 /** Homepage **/
 .aside {
     background-color: var(--main-color-blue-med);
-    border-radius: 30px;
+    @extend .border-radius;
 }
+
+
+/*card*/
+.card {
+    @extend .border-radius;
+    @extend .box-shadow;
+    border-color: var(--main-color-grey);
+}
+
 
 
 
@@ -48,4 +58,9 @@
     height: 5px;
     background-color: var(--main-color-blue-med);
     margin-bottom: 30px;
+
+    &-small {
+        @extend .separator;
+        width: 100px;
+    }
 }

@@ -79,14 +79,24 @@ table {
   --main-color-blue-med: #126E82;
   --main-color-blue-light: #82c1cf;
   --main-color-white: #ffffff;
+  --main-color-grey: #D8E3E7;
 }
 
 /*-------------------------------------------------------------------------------------*/
 /*  Extend													   
 /*-------------------------------------------------------------------------------------*/
 /** background **/
-bg-blue-dark {
+.bg-blue-dark {
   background-color: var(--main-color-blue-dark);
+}
+
+.box-shadow, .card {
+  -webkit-box-shadow: 10px 10px 0px var(--main-color-blue-med);
+          box-shadow: 10px 10px 0px var(--main-color-blue-med);
+}
+
+.border-radius, .aside, .card {
+  border-radius: 30px;
 }
 
 /*-------------------------------------------------------------------------------------*/
@@ -114,7 +124,11 @@ bg-blue-dark {
 /** Homepage **/
 .aside {
   background-color: var(--main-color-blue-med);
-  border-radius: 30px;
+}
+
+/*card*/
+.card {
+  border-color: var(--main-color-grey);
 }
 
 /** Footer **/
@@ -136,11 +150,15 @@ bg-blue-dark {
   border-color: var(--main-color-blue-med);
 }
 
-.separator {
+.separator, .separator-small {
   width: 300px;
   height: 5px;
   background-color: var(--main-color-blue-med);
   margin-bottom: 30px;
+}
+
+.separator-small {
+  width: 100px;
 }
 
 /*-------------------------------------------------------------------------------------*/
@@ -174,12 +192,31 @@ h3 {
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
   line-height: 1em;
+  margin-bottom: 10px;
 }
 
 p {
   font-size: 1.2em;
   line-height: 1.4em;
   margin-bottom: 15px;
+}
+
+a {
+  color: var(--main-color-blue-dark);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--main-color-blue-light);
+}
+
+/* Footer */
+.footer a {
+  color: var(--main-color-white);
+}
+
+.footer a:hover {
+  color: var(--main-color-blue-light);
 }
 
 /*-------------------------------------------------------------------------------------*/
@@ -201,4 +238,25 @@ p {
 /*-------------------------------------------------------------------------------------*/
 /* RESPONSIVE														   
 /*-------------------------------------------------------------------------------------*/
+@media screen and (min-width: 0px) and (max-width: 768px) {
+  h1 {
+    font-size: 2em;
+    margin-bottom: 5px;
+  }
+  h2 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+  }
+  h3 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+  }
+  p {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+  }
+  .scaled-xs {
+    font-size: 0.7em;
+  }
+}
 /*# sourceMappingURL=style.css.map */

@@ -23,3 +23,9 @@ Autoprefixer v3.0.1 mrmlnc
 
 ## Elemnents graphiques
 Switch bootstrap : https://mdbootstrap.com/docs/standard/forms/switch/
+
+## Doc Sass
+https://sass-lang.com/
+
+## box shadows
+https://boxshadows.com/
