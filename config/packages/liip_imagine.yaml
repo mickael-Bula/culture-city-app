@@ -3,9 +3,11 @@
 
 liip_imagine:
 
-    # valid drivers options include "gd" or "gmagick" or "imagick"
-    # C'est le driver qui sera utilisé pour le traitement de l'image.
-    # en général gd est déjà installé sur le serveur.
+    # "gd" c'est le driver qui sera utilisé pour le traitement de l'image.
+    # en général gd est déjà installé sur le serveur. 
+    # On pourrait aussi utiliser "gmagick" ou "imagick" si installés sur le serveur.
+    # ou les installer sur le serveur si ce n'est pas le cas (de la même façon wu'on a installé composer ou symfony sur la VM...).
+
     driver: "gd"
 
     # dans le fichier bundle.php vérifier que l'intallation a bien ajouté cette ligne;
@@ -42,5 +44,32 @@ liip_imagine:
                 thumbnail: { size: [831, 180], mode: outbound }       
 
 
+        # Par défaut le bundle va créer 2 dossiers: media/cache dans le dossier public de l'applicatiion.
+        # On peut faire des configurations plus poussés, il faut se référerer à la doc. La configuration de base
+        # et regarder les resolvers...DataLoaders etc
+        # Actuellement on utilise ici la configuration par défaut du Bundle donc on ne lui précise que nos filtres personnalisés.
+        # il s'occupe du reste. Pour voir comment les filtres sont appliqués, se rendre dans les template
+        
+        # Ex :
+        # <img src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_50') }}" alt="{{ user.name }}" />
+        
+        # comme on utilise les asset de VichUploader (qui sert d'abord à uploader le fichier) on aplle le fichier comme ça :
+        # {{ vich_uploader_asset (user, 'avatarFile') cela revent à faire user.avatarFile 
+        # user est la varibale que l'on a retourné depuis le controller pour l'objet sur le quel on boucle.
+        # avatarFile correspond au fichier.
+        # utiliser vich_uploader_asset permet à vichuploader de trouver le fichier.
+
+        # ensuite on applique le filtre LiipImagine voulu sur le fichier.
+        # | imagine_filter ('avatar_50') 
+        # donc ici on va appliquer le filtre crée ci-dessus avatar_50 et liip imgine va traiter le fichier.
+        # il va le croper = 'outbound' et le redimentionner en 50X50 px.
+        # C'est au premier affichage du fichier qu'il applique le filtre et le stocke dans son dossier media/cache/avatar_50
+        # on servira donc une image optimisée.
+        # on peut aussi changer les valeurs du filtre, vider le fichier de cache ou même le supprimer.
+        # il serait recrée au chaque premier charement de la page...
+        # ensuite comme il est mis en cache il sera directement servi a chaque chargmenet de la page
+        # sans qu'il soit necessaire de faire le traitement à nouveau.
+
+        # A ce moment là, ça y est notre imgage est optimisée et mise en cache. 
 
 
