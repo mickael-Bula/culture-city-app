@@ -1,0 +1,46 @@
+# Lien vers la documentation: 
+# https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
+
+liip_imagine:
+
+    # valid drivers options include "gd" or "gmagick" or "imagick"
+    # C'est le driver qui sera utilisé pour le traitement de l'image.
+    # en général gd est déjà installé sur le serveur.
+    driver: "gd"
+
+    # dans le fichier bundle.php vérifier que l'intallation a bien ajouté cette ligne;
+    # Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
+
+    # Dans le fichier routes.yaml, tout en haut, ajouter (respecter cette indentation et bien garder l'underscore):
+    #
+    # _liip_imagine:
+    #     resource: "@LiipImagineBundle/Resources/config/routing.yaml"
+
+    # Ici on configure nos filtres personnalisés que l'on pourra ensuite appeler sur les images dans nos template.
+    # pour traiter et mettre en cache le simages que l'on servira ensuite directement en version filtrée.
+
+    # On commence ici la déclaration des filtres personnalisés
+    filter_sets:
+        # Mon filtre pour un avatar adapté par exemples à être affiché dans un commentaire ou autre en petit.
+        avatar_50:
+            filters:
+                thumbnail: { size: [50, 50], mode: outbound }
+                
+        # Mon filtre pour un avatar de taille moyenne adapté à l'affichage dans le profil
+        avatar_200:
+            filters:
+                thumbnail: { size: [200, 200], mode: outbound }
+        
+        # Mon filtre pour l'image de la banière de profil    
+        user_cover:
+            filters:
+                thumbnail: { size: [1440, 200], mode: outbound }
+        
+        # Mon filtre pour l'image de la page d'un événement.
+        event_picture:
+            filters:
+                thumbnail: { size: [831, 180], mode: outbound }       
+
+
+
+
