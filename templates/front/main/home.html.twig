@@ -56,7 +56,11 @@
     {% for event in events %}
         <li>{{ event.description }} </li>
         <li>{{ user.avatar }} </li>
-        {% endfor %}
+        {% else %}
+  <div class="alert alert-warning mb-3" role="alert">
+    <h3>Il n'y a pas encore d'événements enregistrés sur ce site...mais ça ne saurait tarder !</h3> 
+  </div>
+{% endfor %}
     </ul>
 
 
