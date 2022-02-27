@@ -61,17 +61,24 @@
 
 
 {% for user in users %}
-  <img class="profileImage" src="{{ vich_uploader_asset (user, 'avatarFile') }}" alt="{{ user.name }}" />
+  <img src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
+  <img src="{{ vich_uploader_asset (user, 'bannerFile') | imagine_filter ('user_cover_1200') }}" alt="{{ user.name }}" />
 
-  <img class="profileImage" src="{{ vich_uploader_asset (user, 'bannerFile') }}" alt="{{ user.banner }}" /> 
     <div class="orgaInfos bi bi-music-note"> {{ user.name }}</div>
       <div class="orgaUlDiv">
       <ul class="orgaUl">
-        <li class="orgaLi bi bi-house"> {{ user.city }}</li>
-        <li class="orgaLi"> {{ user.website }}</li>
-        <li class="orgaLi"> {{ user.phone  }}</li>
-        <li class="orgaLi bi bi-telephone"> {{ user.facebook  }}</li>
-        <li class="orgaLi bi bi-envelope"> {{ user.capacity  }}</li>
+        <li> {{ user.city }}</li>
+        <li> {{ user.address1 }}</li>
+        <li> {{ user.address2 }}</li>
+        <li> {{ user.city }}</li>
+        <li> {{ user.zip }}</li>
+        <li> {{ user.phone }}</li>
+        <li> {{ user.email }}</li>
+        <li> {{ user.capacity }}</li>
+        <li> {{ user.website }}</li>
+        <li> {{ user.facebook }}</li>
+        <li> {{ user.twitter }}</li>
+        <li> {{ user.instagram }}</li>
       </ul>
     </div>  
     </div>

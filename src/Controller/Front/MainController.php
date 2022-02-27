@@ -18,6 +18,10 @@ class MainController extends AbstractController
     {
         $users = $userRepository->findAll();
         $events = $eventRepository->findAll();
+
+        dump($users);
+        dump($events);
+
         return $this->render('front/main/home.html.twig', compact('events', 'users'));
     }
 }

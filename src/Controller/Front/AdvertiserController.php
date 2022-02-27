@@ -23,6 +23,9 @@ class AdvertiserController extends AbstractController
      */
     public function editPlaceProfile(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
     {
+
+        //! ne pas s'inquièter de ce qui est souligné en rouge il n'y a pas de problème, tout fonctionne.
+        
         // get user from session
         $user = $this->getUser();
         
@@ -116,7 +119,7 @@ class AdvertiserController extends AbstractController
 
 
             
-                // Flash message display a success message
+            // Flash message display a success message
             $this->addFlash('success', 'votre profil a été édité');
 
             //dd($user); 

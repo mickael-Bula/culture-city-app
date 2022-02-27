@@ -22,11 +22,15 @@ liip_imagine:
     # pour traiter et mettre en cache le simages que l'on servira ensuite directement en version filtrée.
 
     # On commence ici la déclaration des filtres personnalisés
+    # Ici on utilise thumbnail qui est un filtre de base présent dans liipImagine
+    # par contre on lui passe nos paramètres personnalisés.
+    # les filtres natifs sont listés dans la doc du bundle.
+
     filter_sets:
         # Mon filtre pour un avatar adapté par exemples à être affiché dans un commentaire ou autre en petit.
-        avatar_50:
-            filters:
-                thumbnail: { size: [50, 50], mode: outbound }
+        avatar_50: #nom personnalisé 
+            filters: #déclaration du filre et de sa config
+                thumbnail: { size: [50, 50], mode: outbound } #utilisateion du filtre thumbnail avec nos paramètres perso.
                 
         # Mon filtre pour un avatar de taille moyenne adapté à l'affichage dans le profil
         avatar_200:
@@ -34,12 +38,12 @@ liip_imagine:
                 thumbnail: { size: [200, 200], mode: outbound }
         
         # Mon filtre pour l'image de la banière de profil    
-        user_cover:
+        user_cover_1200:
             filters:
-                thumbnail: { size: [1440, 200], mode: outbound }
+                thumbnail: { size: [1200, 250], mode: outbound }
         
         # Mon filtre pour l'image de la page d'un événement.
-        event_picture:
+        event_picture_831:
             filters:
                 thumbnail: { size: [831, 180], mode: outbound }       
 
