@@ -71,11 +71,12 @@
     <div class="orgaInfos bi bi-music-note"> {{ user.name }}</div>
       <div class="orgaUlDiv">
       <ul class="orgaUl">
-        <li> {{ user.city }}</li>
         <li> {{ user.address1 }}</li>
-        <li> {{ user.address2 }}</li>
-        <li> {{ user.city }}</li>
         <li> {{ user.zip }}</li>
+        <li> {{ user.city }}</li>   
+        {% if user.address2 %}
+        <li> {{ user.address2 }}</li>
+        {% endif %}
         <li> {{ user.phone }}</li>
         <li> {{ user.email }}</li>
         <li> {{ user.capacity }}</li>
