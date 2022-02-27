@@ -39,6 +39,12 @@
     background-color: var(--main-color-blue-med);
 }
 
+.menu-mobile {
+    background-color: var(--main-color-blue-light);
+    position: fixed;
+    bottom:0;
+}
+
 /** Global **/
 .btn-primary {
     color: var(--main-color-white);;
