@@ -136,7 +136,7 @@ class AdvertiserController extends AbstractController
 
      /**
      * 
-     * @Route("/advertiser/{slug}", name="showAdvertiserSlug")
+     * @Route("/annonceur/{slug}", name="showAdvertiserSlug")
      */
     public function index(EventRepository $eventRepository, UserRepository $userRepository,  string $slug): Response
     {

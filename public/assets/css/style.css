@@ -130,9 +130,19 @@ table {
   background-color: var(--main-color-blue-med);
 }
 
-/*card*/
+/**card event **/
 .card {
   border-color: var(--main-color-grey);
+}
+
+/** advertiser page **/
+.avatar {
+  max-width: 200px;
+  border: 2px solid var(--main-color-white);
+  position: relative;
+  top: -50px;
+  left: 100px;
+  border-radius: 100px;
 }
 
 /** Footer **/
@@ -187,6 +197,7 @@ h1 {
   font-size: 3em;
   font-family: 'Nunito', sans-serif;
   font-weight: 900;
+  margin-bottom: 10px;
 }
 
 h2 {

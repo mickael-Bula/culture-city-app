@@ -24,7 +24,7 @@
 }
 
 
-/*card*/
+/**card event **/
 .card {
     @extend .border-radius;
     @extend .box-shadow;
@@ -32,7 +32,16 @@
 }
 
 
+/** advertiser page **/
 
+.avatar {
+    max-width: 200px;
+    border : 2px solid var(--main-color-white);
+    position :relative;
+    top : -50px;
+    left : 100px;
+    border-radius: 100px;
+}
 
 /** Footer **/
 .footer {

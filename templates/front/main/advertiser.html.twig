@@ -1,38 +1,94 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}page d'accueil{% endblock %}
+{% block title %} Annonceur {{ user.name }}{% endblock %}
 
 {% block body %}
 
 
+<div class="container-fluid">
+    <!-- advertiser-infos -->
+    <div class="row">
+        <h1> Annonceur {{ user.name }} </h1>
+        <div class="separator"></div>
 
+        <div class="col-12">  
+            <img class="img-fluid w-100 border-radius" src="{{ asset('assets/images/banner.jpg') }}" alt="">  
+
+            <div class="avatar">
+                <img class="img-fluid w-100 rounded-circle" src="{{ asset('assets/images/avatar.png') }}" alt="">
+            </div>  
+        </div>    
+    </div>
+
+    <div class="row">
+        <h2> à propos de nous</h2>
+        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, corrupti. Nostrum, inventore dolores unde sunt repellat 
+            veniam molestiae excepturi culpa, numquam ipsam quis architecto eligendi laborum, quo officia obcaecati eum.</p>
+
+        <div class="d-flex ">
+            
+            <div class="my-2">    
+                <div class="scaled-xs">
+                    <i class="fa-solid fa-location-dot d-inline"></i><p class="d-inline">Adresse</p>
+                    <br>
+                    <adress>
+                        {{ user.address1 }} <br>
+                        {% if user.address2 %} 
+                        {{ user.address2 }} <br>
+                        {% endif %}
+                        {{ user.zip }} {{ user.city }} 
+                    </adress>
+                </div>  
+            </div>
+
+            <div class="my-2">    
+                <div class="scaled-xs">
+                    <i class="fa-solid fa-envelope d-inline"></i><p class="d-inline">Mail</p>
+                    <br>
+                    <a href="mailto: {{ user.email }}">{{ user.email }}</a> 
+                </div>  
+            </div>
+
+            <div class="my-2">    
+                <div class="scaled-xs">
+                    <i class="fa-solid fa-phone d-inline"></i><p  class="d-inline">Téléphone</p>
+                    <br>
+                    <a href="mailto:{{ user.phone }}">{{ user.phone }}</a> 
+                </div>  
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
    
 
 
  
-   <img src="{{ vich_uploader_asset (user, 'avatarFile')}}" alt="{{ user.name }}" />
+  
 
     <div class="orgaInfos bi bi-music-note"> {{ user.name }}</div>
       <div class="orgaUlDiv">
-      <ul class="orgaUl">
-        <li> {{ user.address1 }}</li>
-        <li> {{ user.zip }}</li>
-        <li> {{ user.city }}</li>   
-        {% if user.address2 %}
-        <li> {{ user.address2 }}</li>
-        {% endif %}
-        <li> {{ user.phone }}</li>
-        <li> {{ user.email }}</li>
-        <li> {{ user.capacity }}</li>
-        <li> {{ user.website }}</li>
-        <li> {{ user.facebook }}</li>
-        <li> {{ user.twitter }}</li>
-        <li> {{ user.instagram }}</li>
-      </ul>
+        <ul class="orgaUl">
+            <li> {{ user.address1 }}</li>
+            <li> {{ user.zip }}</li>
+            <li> {{ user.city }}</li>   
+            {% if user.address2 %}
+            <li> {{ user.address2 }}</li>
+            {% endif %}
+            <li> {{ user.phone }}</li>
+            <li> {{ user.email }}</li>
+            <li> {{ user.capacity }}</li>
+            <li> {{ user.website }}</li>
+            <li> {{ user.facebook }}</li>
+            <li> {{ user.twitter }}</li>
+            <li> {{ user.instagram }}</li>
+        </ul>
     </div>  
   
 
-
+    {% endblock %}
 
 
 
