@@ -4,17 +4,6 @@
 
 {% block body %}
 
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>la page home</h1>
-
-  
-
-
 {% if app.user %}
     <H5 class="text-center mt-5">Vous êtes connecté comme : {{ app.user.username }}<h5> 
 {% endif %}
@@ -47,15 +36,7 @@
     <div class="container alert alert-success">
         {{ message }}
     </div>
-{% endfor %}    
-
-    <ul>
-    cette page liste tous les événements.
-    {% for event in events %}
-        <li>{{ event.description }} </li>
-        {% endfor %}
-    </ul>
-</div>
+{% endfor %}
 
     <h2>Événements à venir</h2>
     <div class="separator"></div>
@@ -64,36 +45,23 @@
     {#% include 'front/main/_aside.html.twig' %#}
     <div class="row">
         <div class="col-12 col-lg-4 col-xl-3">
+        <form id="filters">
             <div class="aside p-4 mb-5">
                 <!-- search by date -->
                 <input type="date" id="start" name="trip-start" value="2022-02-22" min="2022-02-22" max="2032-12-31">
-                
+
                 <!-- Checked switch -->
-                <div class="form-check form-switch d-flex align-items-center my-3">
-                    <input class="form-check-input" type="checkbox" role="switch3" id="flexSwitchCheckChecked" checked />
-                    <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">Concert</label>
-                </div>
+                {% for category in categories %}
 
                 <div class="form-check form-switch d-flex align-items-center my-3">
-                    <input class="form-check-input" type="checkbox" role="switch3" id="flexSwitchCheckChecked" checked />
-                    <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">Spectacle</label>
+                    <input class="form-check-input" name="filters[]" type="checkbox" role="switch3" value="{{ category.name }} id="flexSwitchCheckChecked" checked />
+                    <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">{{ category.name }}</label>
                 </div>
 
-                <div class="form-check form-switch d-flex align-items-center my-3">
-                    <input class="form-check-input" type="checkbox" role="switch3" id="flexSwitchCheckChecked" checked />
-                    <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">Expositions</label>
-                </div>
-
-                <div class="form-check form-switch d-flex align-items-center my-3">
-                    <input class="form-check-input" type="checkbox" role="switch3" id="flexSwitchCheckChecked" checked />
-                    <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">Loisirs</label>
-                </div>
-
-                <div class="form-check form-switch d-flex align-items-center my-3">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked />
-                    <label class="form-check-label text-white ms-2" for="flexSwitchCheckChecked">Évenementiel</label>
-                </div>
+                {% endfor %}
+                
             </div>
+            </form>
         </div>
 
         <div class="col-12 col-lg-8 col-xl-9">

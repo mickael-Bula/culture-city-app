@@ -16,4 +16,16 @@ class ApiController extends AbstractController
     {
         return $this->json($eventRepository->findAll(), 200, [], ["groups" => "events"]);
     }
+
+    /**
+     * @Route("/front/api/{category}", name="api_category")
+     * 
+     * @param string $category
+     * @return Response
+     */
+    public function getEventsByCategory(EventRepository $eventRepository, string $category): Response
+    {
+        $events = $eventRepository->findByCategory($category);
+        return $this->json($events, 200, [], ["groups" => "events"]);
+    }
 }

@@ -10,6 +10,9 @@ const app = {
     {
         // add listeners to 'categories' buttons
         document.querySelectorAll("#navbarNav .categories").forEach(category => category.addEventListener("click", app.handleClickCategoryBtn));
+
+        // add listeners on inputs form
+        document.querySelectorAll("#filters input").forEach(filter => filter.addEventListener("change", app.handleChangeFilterForm));
     },
 
     handleClickCategoryBtn: function(event)
@@ -28,6 +31,31 @@ const app = {
         app.fetchEvents(event);
     },
 
+    handleChangeFilterForm: function()
+    {
+        // on récupère notre formulaire
+        const filtersForm = document.querySelector("#filters");
+
+        // create an array of keys-value form our form
+        const form = new FormData(filtersForm);
+
+        // add form's data to query string
+        const queryStringParams = new URLSearchParams();
+        form.forEach((value, key) => queryStringParams.append(key, value));
+
+        // set fetch options
+        let fetchOptions = {
+            method: 'GET',
+            mode:   'cors',
+            cache:  'no-cache'
+        };
+
+        // send a request to collect events by filters
+        fetch('http://localhost:8080/front/api/filters' + '?' + queryStringParams.toString())
+        .then(res   => res.json())
+        .then(data  => app.displayEvents(data));
+    },
+
     fetchEvents: async function(event)
     {
         const category  = event.target.innerHTML;
@@ -36,7 +64,7 @@ const app = {
             mode:   'cors',
             cache:  'no-cache'
         };
-        response = await fetch('http://localhost:8000/front/api/', fetchOptions);
+        response = await fetch('http://localhost:8000/front/api/' + category, fetchOptions);
         data = await response.json();
         app.displayEvents(data);
     },
