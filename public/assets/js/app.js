@@ -72,29 +72,36 @@ const app = {
     displayEvents(data)
     {
         // get event's container
-        document.getElementById("displayEvents").textContent="";
+        const displayElement = document.getElementById("displayEvents");
+        displayElement.textContent="";
         for (const element of data)
         {
-            // on clone, on alimente notre template et on insère dans le DOM notre template pour chacun des events récupérés auprès de l'api
             // cloning the template and add it to DOM for each event collected from database
             const eventTemplate = document.getElementById("eventTemplate").content.cloneNode(true);
 
-            // we don't display an event if it's endDate is passed
-            const currentDate = new Date().toLocaleDateString();
-            const endDate = new Date(element.endDate).toLocaleDateString();            
-            if (currentDate > endDate) { continue }
+            // we check dates to not display a past event
+            // for an easier comparison we convert dates using the getTime() method which returns the number of milliseconds since the ECMAScript epoch
+            const getDate = document.getElementById("start").value;
+            const datePicker = new Date(getDate);
+            const endDate = new Date(element.endDate);        
+            if (datePicker.getTime() > endDate.getTime()) { continue }
 
             // get event's tags
             let tags = element.tags;
             for (const tag of tags) { eventTemplate.querySelector(".eventTags").textContent += tag.name + " " }
 
-            // reformate event's start date
+            // reformate event's date and display it
             let eventDate = new Date(element.endDate).toLocaleDateString();
             eventTemplate.querySelector(".eventStartDate").textContent = eventDate;
 
             eventTemplate.querySelector(".eventName").textContent = element.name;
             eventTemplate.querySelector(".eventPlace").textContent = element.user.city;
-            document.getElementById("displayEvents").appendChild(eventTemplate);
+            displayElement.appendChild(eventTemplate);
+        }
+        // if the list of events is empty we display a message
+        if (displayElement.firstElementChild == null)
+        {
+            displayElement.textContent = "Il n'y a pas d'événement pour cette date";
         }
     }
 }
