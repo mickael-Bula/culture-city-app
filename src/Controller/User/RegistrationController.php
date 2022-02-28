@@ -3,16 +3,17 @@
 namespace App\Controller\User;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
-use App\Form\registrationType;
 use DateTimeImmutable;
+use App\Form\registrationType;
 use App\Security\EmailVerifier;
-use App\Security\LoginFormAuthenticator;
+use Symfony\Component\Mime\Email;
+use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
+use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -39,14 +40,15 @@ class RegistrationController extends AbstractController
         EntityManagerInterface $entityManager, 
         LoginFormAuthenticator $authenticator, 
         UserAuthenticatorInterface $userAuthenticator, 
-        SluggerInterface $slugger): Response
+        SluggerInterface $slugger,
+        MailerInterface $mailer): Response
     {
         $user = new User($slugger);
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-           
+            //dd($form);
             $form->get('password')->getData();
             $user->setPassword(
             $userPasswordHasher->hashPassword(
@@ -60,7 +62,6 @@ class RegistrationController extends AbstractController
 
             $newUserName = $form->get('name')->getData();
             $user->setName($newUserName);
-
 
             $created = new DateTimeImmutable('now');
             $user->setCreatedAt($created);
@@ -77,21 +78,48 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('user/confirmation_email.html.twig')
             );
 
-            // todo nous faire encoyer un mail d'info ici pour l'admin qui doit savoir qu'un user s'est enregistré
+            // todo nous faire envoyer un mail d'info ici pour l'admin qui doit savoir qu'un user s'est enregistré
             // dans un second temps on pourra faire un service pour ça...
-           
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
 
-            return $this->redirectToRoute('home');
-        }
+            //todo si la checkbox est coché il faut rediriger vers la suite du formulaire pour éditer son profil.
+            if ( $form->get('status')->getData() == true) {
 
-        return $this->render('user/registration.html.twig', [
-            'registration' => $form->createView(),
-        ]);
+                $email = (new Email())
+                    ->from('register@yculturecity.fr')
+                    ->to('admin@yculturecity.fr')
+                    //->cc('cc@example.com')
+                    //->bcc('bcc@example.com')
+                    //->replyTo('fabien@example.com')
+                    //->priority(Email::PRIORITY_HIGH)
+                    ->subject('Demande de statut annonceur')
+                    ->text('Un nouvel utilsateur a fait une demande pour annoncer des évéènements sur App Culture City!');
+                    //->html('<p>See Twig integration for better HTML integration!</p>');
+        
+                $mailer->send($email);
+
+                $userAuthenticator->authenticateUser(
+                    $user,
+                    $authenticator,
+                    $request
+                );
+
+                return $this->redirectToRoute('app_user_advertiser');
+    
+                }
+
+                $userAuthenticator->authenticateUser(
+                    $user,
+                    $authenticator,
+                    $request
+                );
+
+                return $this->redirectToRoute('home');
+                
+                }
+
+                return $this->render('user/registration.html.twig', [
+                    'registration' => $form->createView(),
+                ]);
     }
 
     /**

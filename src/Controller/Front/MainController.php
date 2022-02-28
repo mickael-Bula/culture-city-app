@@ -16,6 +16,6 @@ class MainController extends AbstractController
     public function index(EventRepository $eventRepository): Response
     {
         $events = $eventRepository->findAll();
-        return $this->render('front/main/index.html.twig', compact('events'));
+        return $this->render('front/main/home.html.twig', compact('events'));
     }
 }
