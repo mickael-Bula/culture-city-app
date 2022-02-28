@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Entity\User;
 use App\Form\AdvertiserType;
+use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -131,5 +132,21 @@ class AdvertiserController extends AbstractController
         }
 
         return $this->renderForm('front/form/advertiser.html.twig', compact('form'));
+    }
+
+     /**
+     * 
+     * @Route("/advertiser/{slug}", name="showAdvertiserSlug")
+     */
+    public function index(EventRepository $eventRepository, UserRepository $userRepository,  string $slug): Response
+    {
+      
+        $user = $userRepository->findOneBy(["slug" => $slug]);
+        //$events = $eventRepository->findAll();
+
+        dump($user);
+        //dump($events);
+
+        return $this->render('front/main/advertiser.html.twig', compact('user'));
     }
 }
