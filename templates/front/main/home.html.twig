@@ -66,13 +66,24 @@
 
 
 {% for user in users %}
-  <img src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
-  <img src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_50') }}" alt="{{ user.name }}" />
-  <img src="{{ vich_uploader_asset (user, 'bannerFile') | imagine_filter ('user_cover_1200') }}" alt="{{ user.name }}" />
 
- {#  <img src="{{ vich_uploader_asset (user, 'avatarFile') }}" alt="{{ user.name }}" />
-  <img src="{{ vich_uploader_asset (user, 'avatarFile') }}" alt="{{ user.name }}" />
-  <img src="{{ vich_uploader_asset (user, 'bannerFile') }}" alt="{{ user.name }}" /> #}
+{% if vich_uploader_asset (user, 'avatarFile') %}
+  <img src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
+{% else %}
+  <img src="{{ vich_uploader_asset (user, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
+{% endif %}
+
+{% if vich_uploader_asset (user, 'avatarFile') %}
+  <img src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_50') }}" alt="{{ user.name }}" />
+{% else %}
+  <img src="{{ vich_uploader_asset (user, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_50') }}" alt="{{ user.name }}" />
+{% endif %}
+
+{% if vich_uploader_asset (user, 'bannerFile') %}
+  <img src="{{ vich_uploader_asset (user, 'bannerFile') | imagine_filter ('user_cover_1200') }}" alt="{{ user.name }}" />
+{% else %}
+  <img src="{{ vich_uploader_asset (user, 'bannerFile') ?: '/upload/default_picture/default_user_banner.jpg' | imagine_filter ('user_cover_1200') }}" alt="{{ user.name }}" />
+{% endif %}
 
     <div class="orgaInfos bi bi-music-note"> {{ user.name }}</div>
       <div class="orgaUlDiv">
