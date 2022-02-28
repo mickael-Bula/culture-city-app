@@ -12,7 +12,9 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
+                # the property to query by - e.g. email, username, etc
                 property: email
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -21,14 +23,26 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            
 
             form_login:
                 # "login" is the name of the route created previously
                 login_path: app_login
                 check_path: app_login
+                # default redirect route after login successfull
+                # default_target_path: home
                 # comment or uncomment 'enable_csrf: true' line for allow csrf on loginform
                 enable_csrf: true
 
+            remember_me:
+                secret:   '%kernel.secret%' # required
+                lifetime: 604800 # 1 week in seconds
+                # https://symfony.com/doc/current/security/remember_me.html
+                # by default, the feature is enabled by checking a
+                # checkbox in the login form (see below), uncomment the
+                # following line to always enable it.
+                #always_remember_me: true
+            
             logout:
                 path: app_logout 
                 # Redirection after logout
