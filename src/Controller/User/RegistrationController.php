@@ -92,7 +92,7 @@ class RegistrationController extends AbstractController
                     //->replyTo('fabien@example.com')
                     //->priority(Email::PRIORITY_HIGH)
                     ->subject('Demande de statut annonceur')
-                    ->text('Un nouvel utilsateur a fait une demande pour annoncer des évéènements sur App Culture City!');
+                    ->text('Un nouvel utilisateur ' . $newUserName .' vient de s\'enregistrer sur App Culture City et demande le statut annonceur!');
                     //->html('<p>See Twig integration for better HTML integration!</p>');
         
                 $mailer->send($email);
@@ -103,6 +103,11 @@ class RegistrationController extends AbstractController
                     $request
                 );
 
+                $this->addFlash('success-register-annonceur', 'Merci ' . $newUserName . ' vous êtes enregistré et connecté.
+                 Nous avons bien reçu votre demande afin d\'annoncer vos événements. Nous allons valider votre statut annonceur pour
+                 que vous puissiez commencer à partager vos événements !.
+                 En attendant...veuillez vérifier vos mail pour confirmer votre adresse e-mail !');
+
                 return $this->redirectToRoute('app_user_advertiser');
     
                 }
@@ -112,6 +117,9 @@ class RegistrationController extends AbstractController
                     $authenticator,
                     $request
                 );
+
+                $this->addFlash('success-register-user', 'Merci ' . $newUserName . ' vous êtes enregistré et connecté. Veuillez vérifier vos mail pour confirmer votre adresse e-mail !');
+
 
                 return $this->redirectToRoute('home');
                 
