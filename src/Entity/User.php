@@ -2,16 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @UniqueEntity(fields={"email"}, message="Une adresse mail {{ value }} existe déjà !)")
+
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -133,6 +138,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $slug;
 
+     /**
+     * use this with slugger service
+     */
+    private $slugger;
+
     /**
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="author", orphanRemoval=true)
      */
@@ -143,14 +153,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $events;
 
-    public function __construct()
-    {
+    /**
+     * @ORM\Column(type="boolean", nullable=true, options={"default":"0"})
+     */
+    private $status;
+
+    public function __construct(SluggerInterface $slugger)
+    {   
+        $this->slugger = $slugger;
         $this->posts = new ArrayCollection();
         $this->events = new ArrayCollection();
+        
     }
     
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -248,6 +263,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setName(?string $name): self
     {
         $this->name = $name;
+
+          // ici en premier je crée un slug avec le service composant Symfony slugger
+          $slug = $this->slugger->slug($name);
+          // ensuite je passe ce slug propre sans espace dans ma méthode setSlug pour flusher un slug propre
+           // à la soumission du formulaire.
+           $this->setSlug(strtolower($slug));  
 
         return $this;
     }
@@ -524,6 +545,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $event->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
