@@ -21,6 +21,7 @@ class AppFixtures extends Fixture
 
     private $connexion;
     private $hasher;
+    private $slugger;
 
     public function __construct(Connection $connexion, UserPasswordHasherInterface $hasher, SluggerInterface $slugger)
     {
@@ -91,7 +92,7 @@ class AppFixtures extends Fixture
 
         for ($i=1; $i <= 20; $i++){
 
-            $newAnnonceur = new User();
+            $newAnnonceur = new User($this->slugger);
             $newAnnonceur->setEmail('annonceur' . $i . '@annonceur.fr')
                 ->setRoles(['ROLE_ANNONCEUR'])
                 ->setName($faker->firstName(rand(1, 2) == 1 ? 'female' : 'male'))
@@ -103,8 +104,8 @@ class AppFixtures extends Fixture
                 ->setCity($faker->city)
                 ->setZip($faker->postcode())
                 ->setSiren($faker->randomNumber())
-                ->setAvatar('https://cdn.pixabay.com/photo/2021/08/21/19/39/greyhound-6563435_960_720.jpg')
-                ->setBanner('https://cdn.pixabay.com/photo/2021/08/04/11/58/kids-6521604_960_720.jpg')
+                ->setAvatar('avatar.jpeg')
+                ->setBanner('banner.jpeg')
                 ->setPhone($faker->phoneNumber())
                 ->setFoundedIn(new DateTimeImmutable($faker->date()))
                 ->setWebsite('www.lieu.fr')
@@ -124,11 +125,13 @@ class AppFixtures extends Fixture
         $allUsersEntity = []; // to add Users to Post
 
         for ($i=1; $i <= 10; $i++){
-            $newUser = new User();
+            $newUser = new User($this->slugger);
             $newUser->setEmail('user'. $i .'@user.com')
                 ->setRoles(['ROLE_USER'])
                 ->setPassword('user')
-                ->setCreatedAt(new DateTimeImmutable('now'));
+                ->setCreatedAt(new DateTimeImmutable('now'))
+                ->setName($faker->firstName(rand(1, 2) == 1 ? 'female' : 'male'))
+                ->setSlug(strtolower($this->slugger->slug($newUser->getName())));
 
                 $allUsersEntity[] = $newUser;
 
@@ -136,7 +139,7 @@ class AppFixtures extends Fixture
         }
 
         /* ADMIN */
-        $newAdmin = new User();
+        $newAdmin = new User($this->slugger);
         $newAdmin->setEmail('admin@admin.com')
             ->setRoles(['ROLE_ADMIN'])
             ->setPassword('admin')
