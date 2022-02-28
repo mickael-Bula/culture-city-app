@@ -167,9 +167,14 @@ class AppFixtures extends Fixture
                 ->setIsPremium($faker->numberBetween(0, 1))
                 ->setStartDate(new DateTime())
                 ->setEndDate(new DateTime())
-                ->setSlug(strtolower($this->slugger->slug($newEvent->getName())))
-                ->addTag($randomTag);
+                ->setSlug(strtolower($this->slugger->slug($newEvent->getName())));
 
+                $arrayTags = array_slice($allTagsEntity,0, mt_rand(0, 3));
+                foreach ($arrayTags as $tag)
+                {
+                    $newEvent->addTag($tag);
+                    $manager->persist($newEvent);
+                }        
                 $allEventsEntity[] = $newEvent;
                 
             $manager->persist($newEvent);
