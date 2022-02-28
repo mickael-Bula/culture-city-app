@@ -36,7 +36,7 @@ const app = {
             mode:   'cors',
             cache:  'no-cache'
         };
-        response = await fetch('http://localhost:8080/api/filters/' + category, fetchOptions);
+        response = await fetch('http://localhost:8000/front/api/', fetchOptions);
         data = await response.json();
         app.displayEvents(data);
     },
@@ -49,8 +49,9 @@ const app = {
         {
             // on clone, on alimente notre template et on insère dans le DOM notre template pour chacun des events récupérés auprès de l'api
             const eventTemplate = document.getElementById("eventTemplate").content.cloneNode(true);
+            console.log(eventTemplate);
             eventTemplate.querySelector(".eventName").textContent += element.name;
-            document.getElementById("content").appendChild(eventTemplate);
+            document.getElementById("displayEvents").appendChild(eventTemplate);
         }
     }
 }
