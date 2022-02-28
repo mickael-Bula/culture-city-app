@@ -54,6 +54,7 @@ class Event
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"events"})
      */
     private $endDate;
 

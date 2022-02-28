@@ -79,15 +79,20 @@ const app = {
             // cloning the template and add it to DOM for each event collected from database
             const eventTemplate = document.getElementById("eventTemplate").content.cloneNode(true);
 
+            // we don't display an event if it's endDate is passed
+            const currentDate = new Date().toLocaleDateString();
+            const endDate = new Date(element.endDate).toLocaleDateString();            
+            if (currentDate > endDate) { continue }
+
             // get event's tags
             let tags = element.tags;
-
-            // format event's start date
-            let eventDate = new Date(element.startDate).toLocaleDateString();
-
             for (const tag of tags) { eventTemplate.querySelector(".eventTags").textContent += tag.name + " " }
-            eventTemplate.querySelector(".eventName").textContent = element.name;
+
+            // reformate event's start date
+            let eventDate = new Date(element.endDate).toLocaleDateString();
             eventTemplate.querySelector(".eventStartDate").textContent = eventDate;
+
+            eventTemplate.querySelector(".eventName").textContent = element.name;
             eventTemplate.querySelector(".eventPlace").textContent = element.user.city;
             document.getElementById("displayEvents").appendChild(eventTemplate);
         }
