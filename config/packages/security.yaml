@@ -63,8 +63,13 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/back, roles: ROLE_ADMIN }
+        - { path: ^/annonceur/(edit|events), roles: ROLE_ANNONCEUR }
+        - { path: ^/annonceur/(edit|events), roles: ROLE_USER }
+
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_ANNONCEUR
 
 when@test:
     security:
