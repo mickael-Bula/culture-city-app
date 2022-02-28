@@ -104,7 +104,7 @@ table {
   border-radius: 30px;
 }
 
-.transition, .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-expositions, .bg-category-loisirs, .bg-category-evenementiel {
+.transition, .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-expositions, .bg-category-loisirs, .bg-category-evenementiel, a {
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
 }
@@ -201,6 +201,7 @@ table {
   background-color: var(--main-color-blue-light);
   position: fixed;
   bottom: 0;
+  width: 100%;
 }
 
 /** Global **/

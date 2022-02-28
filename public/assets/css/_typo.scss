@@ -37,6 +37,7 @@ p {
 a {
     color : var(--main-color-blue-dark);
     text-decoration: none;
+    @extend .transition;
     &:hover  {
         color : var(--main-color-blue-light);
     }

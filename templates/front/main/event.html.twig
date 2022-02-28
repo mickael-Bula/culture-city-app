@@ -10,14 +10,16 @@
             <div class="col-12 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
                 <div class="main">
 
+                    <!-- event picture -->
                     <div class="col-12 mb-3">
                         <a href="">
                             <img class="img-fluid w-100 border-radius box-shadow" src="{{ asset('assets/images/image-concert-600px.jpg') }}" alt="">
                         </a>
                     </div>
 
+                    <!-- event details -->
                     <div class="col-12 p-1 p-sm-3">
-                        <div class="my-3">
+                        <div class="my-3 mb-lg-4">
                             <div class="scaled-xs"> 
                                 <a href="#">  
                                     <div class ="category bg-category-concert d-inline">Concert</div>
@@ -26,7 +28,7 @@
                         </div>
                         
                         <a href="#">
-                            <h3 class="name mb-2 mb-xl-3">Lenny Kravurgitz</h3>
+                            <h1 class="name mb-2 mb-xl-3">Lenny Kravurgitz</h1>
                         </a>
 
                         <div class="my-2">
@@ -78,17 +80,30 @@
                         </div>
 
                         <div class="separator mt-4"></div>
-                        21 RUE DE L’AVENIR 23000 SAINT-CHRISTOPHE
-                        07 07 07 07
-                        mon.mail@ici.com
                         
-                        <div class="d-flex justify-content-end">
+                        <!-- contact info-->
+                        <div class="scaled-xs">
+                            <address class="mb-2">
+                                <i class="fa-solid fa-location-dot me-2"></i><span class="address_1">adresse 1</span> <span class="address_2">adresse 2</span> <span class="city">City</span>
+                            </address>
+                            <div class="my-2 my-xl-3">
+                                <i class="fa-solid fa-phone me-2" ></i><a href="tel:+07070707" class="phone">07 07 07 07</a>
+                            </div>
+                            <div class="my-2 my-xl-3">
+                                <i class="fa-solid fa-envelope me-2"></i><a href="mailto:mon.mail@ici.com " class="email">mon.mail@ici.com</a>
+                            </div>
+                        </div>
+                        <!-- end contact info-->
+                        
+                        <!-- back to home or toher page-->
+                        <div class="d-flex justify-content-start mt-5">
                             <a href="#">
-                                <i class="fa-solid fa-arrow-right-long me-2"></i>
+                                <i class="fa-solid fa-circle-arrow-left fa-2xl"></i> back to home or categorie page
                             </a>
                         </div>
+                        <!-- end back to home-->
 
-                    </div>
+                    </div> <!-- end event details -->
                 </div>     
             </div> 
 
