@@ -104,13 +104,8 @@ class AppFixtures extends Fixture
                 ->setCity($faker->city)
                 ->setZip($faker->postcode())
                 ->setSiren($faker->randomNumber())
-<<<<<<< HEAD
                 //->setAvatar('avatar.jpg')
                 //->setBanner('banner.jpg')
-=======
-                ->setAvatar('avatar.jpg')
-                ->setBanner('banner.jpg')
->>>>>>> 5aaac7c06520a41cc9457ed4795eb04acde848df
                 ->setPhone($faker->phoneNumber())
                 ->setFoundedIn(new DateTimeImmutable($faker->date()))
                 ->setWebsite('www.lieu.fr')
