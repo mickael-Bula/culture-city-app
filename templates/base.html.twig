@@ -1,22 +1,55 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+<!doctype html>
+<html lang="fr">
 
-        {#  {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %} #}
-    </head>
-    <body>
-        {% block body %}
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         
+        <!-- Fontawesome CDN -->
+        <script src="https://kit.fontawesome.com/115544430d.js" crossorigin="anonymous"></script>
+
+        <!-- Google Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">  
+
+        <!-- App custom CSS -->
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+        <!-- favicon -->
+        
+        {# https://symfony.com/doc/current/templates.html#linking-to-css-javascript-and-image-assets #}
+        {# the image lives at "public/images/logo.png" #}
+        {# <img src="{{ asset('images/logo.png') }}" alt="Symfony!"/> #}
+        <link rel="shortcut icon" href="{{ asset('assets/favicon.png') }}" type="image/x-icon">
+
+        <title>
+            {% block title %}
+                Culture City App
+            {% endblock %}
+        </title>
+    
+</head>
+
+<body>
+    {% include '_header.html.twig' %}
+
+    <div class="container-fluid my-5">
+        {% block body %}
+       
         {% endblock %}
-    </body>
+    </div> 
+
+    {% include '_footer.html.twig' %}
+
+    {% block javascripts %}
+        <!-- Bootstrap bundle CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    {% endblock %}
+</body>
+
 </html>

@@ -1,0 +1,72 @@
+/** Header **/
+.header {
+    background-color: var(--main-color-blue-med);
+}
+
+.header_logo {
+    width :200px;
+    height: auto;
+}
+
+.navbar .navbar-toggler {
+    color: var(--main-color-white);
+    border-color: rgba(0,0,0,0);
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+/** Homepage **/
+.aside {
+    background-color: var(--main-color-blue-med);
+    @extend .border-radius;
+}
+
+
+/*card*/
+.card {
+    @extend .border-radius;
+    @extend .box-shadow;
+    border-color: var(--main-color-grey);
+}
+
+
+
+
+/** Footer **/
+.footer {
+    background-color: var(--main-color-blue-med);
+}
+
+.menu-mobile {
+    background-color: var(--main-color-blue-light);
+    position: fixed;
+    bottom:0;
+}
+
+/** Global **/
+.btn-primary {
+    color: var(--main-color-white);;
+    background-color: var(--main-color-blue-light);
+    border-color: var(--main-color-blue-light);
+    border-radius: 50px;
+}
+
+.btn-primary:hover {
+    color: var(--main-color-blue-med);
+    background-color: var(--main-color-white);
+    border-color: var(--main-color-blue-med);
+}
+
+.separator {
+    width: 300px;
+    height: 5px;
+    background-color: var(--main-color-blue-med);
+    margin-bottom: 30px;
+
+    &-small {
+        @extend .separator;
+        width: 100px;
+    }
+}

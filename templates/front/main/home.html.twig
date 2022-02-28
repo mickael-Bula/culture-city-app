@@ -3,6 +3,7 @@
 {% block title %}page d'accueil{% endblock %}
 
 {% block body %}
+
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
@@ -55,4 +56,266 @@
         {% endfor %}
     </ul>
 </div>
+
+    <h2>Événements à venir</h2>
+    <div class="separator"></div>
+
+
+    {#% include 'front/main/_aside.html.twig' %#}
+    <div class="row">
+        <div class="col-12 col-lg-4 col-xl-3">
+            <div class="aside p-4 mb-5">
+                <!-- search by date -->
+                <input type="date" id="start" name="trip-start" value="2022-02-22" min="2022-02-22" max="2032-12-31">
+                
+                <!-- Checked switch -->
+                <div class="form-check form-switch d-flex align-items-center my-3">
+                    <input class="form-check-input" type="checkbox" role="switch3" id="flexSwitchCheckChecked" checked />
+                    <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">Concert</label>
+                </div>
+
+                <div class="form-check form-switch d-flex align-items-center my-3">
+                    <input class="form-check-input" type="checkbox" role="switch3" id="flexSwitchCheckChecked" checked />
+                    <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">Spectacle</label>
+                </div>
+
+                <div class="form-check form-switch d-flex align-items-center my-3">
+                    <input class="form-check-input" type="checkbox" role="switch3" id="flexSwitchCheckChecked" checked />
+                    <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">Expositions</label>
+                </div>
+
+                <div class="form-check form-switch d-flex align-items-center my-3">
+                    <input class="form-check-input" type="checkbox" role="switch3" id="flexSwitchCheckChecked" checked />
+                    <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">Loisirs</label>
+                </div>
+
+                <div class="form-check form-switch d-flex align-items-center my-3">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked />
+                    <label class="form-check-label text-white ms-2" for="flexSwitchCheckChecked">Évenementiel</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-8 col-xl-9">
+            <div class="main">
+                
+                <!-- Day events-->
+                <h3> Les évènements du lundi 26 février 2022</h3>
+                <div class="separator-small"></div>
+
+                <div class="d-flex flex-column flex-md-row">
+
+                    <!-- card -->
+                    <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
+                        <div class="card overflow-hidden">
+                            <div class="d-flex d-flex flex-row flex-md-column">
+                                <div class="col-4 col-sm-12 ">
+                                    <a href="">
+                                        <img class="img-fluid w-100 border-radius" src="{{ asset('assets/images/image-concert-600px.jpg') }}" alt="">
+                                    </a>
+                                </div>
+                            
+                                <div class="col-8 col-sm-12 p-1 p-sm-3">
+                                    <a href="#">
+                                        <h3 class="name mb-2">Lenny Kravurgitz</h3>
+                                    </a>
+
+                                    <div class="my-2">
+                                        <div class="scaled-xs">
+                                            <i class="fa-solid fa-calendar-days d-inline"></i> 
+                                            <div class ="date ms-2 d-inline">23/02/2022</div>
+                                        </div> 
+                                    </div>
+                                    
+                                    <div class="my-2">
+                                        <div class="scaled-xs">
+                                            <i class="fa-solid fa-tags d-inline"></i> 
+                                            <div class="tags ms-2 d-inline"><a href="#"> Rock</a>,<a href="#"> electro</a></div>    
+                                        </div>
+                                    </div>
+
+                                    <div class="my-2">    
+                                        <div class="scaled-xs">
+                                            <i class="fa-solid fa-location-dot d-inline"></i> 
+                                            <a href="#">
+                                                <div class="place ms-2 d-inline"> Le Florida</div>
+                                            </a>
+                                        </div>  
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-end">
+                                        <a href="#">
+                                            <i class="fa-solid fa-arrow-right-long me-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--fin card -->
+
+                    <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
+                        
+                        <div class="card overflow-hidden">
+                            <div class="d-flex d-flex flex-row flex-md-column">
+                                <div class="col-4 col-sm-12 ">
+                                    <a href="">
+                                        <img class="img-fluid w-100 border-radius" src="{{ asset('assets/images/image-concert-600px.jpg') }}" alt="">
+                                    </a>
+                                </div>
+                            
+                                <div class="col-8 col-sm-12 p-1 p-sm-3">
+                                    <a href="#">
+                                        <h3 class="name mb-2">Les chats rageurs</h3>
+                                    </a>
+                                    <div class="my-2">
+                                        <div class="scaled-xs">
+                                            <i class="fa-solid fa-calendar-days d-inline"></i> 
+                                            <div class ="date ms-2 d-inline">23/02/2022</div>
+                                        </div> 
+                                    </div>
+                                    
+                                    <div class="my-2">
+                                        <div class="scaled-xs">
+                                            <i class="fa-solid fa-tags d-inline"></i> 
+                                            <div class="tags ms-2 d-inline"><a href="#"> Rock</a>,<a href="#"> electro</a></div>    
+                                        </div>
+                                    </div>
+
+                                    <div class="my-2">  
+                                        <div class="scaled-xs">
+                                            <i class="fa-solid fa-location-dot d-inline"></i> 
+                                            <a href="#">
+                                                <div class="place ms-2 d-inline"> L'Alambique'</div>
+                                            </a>
+                                        </div>  
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <a href="#">
+                                            <i class="fa-solid fa-arrow-right-long me-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                 
+                </div>
+
+                <!--Other events -->
+                <h3 class="mt-5"> Les évènements suivant </h3>
+                <div class="separator-small"></div>
+
+                <div class="d-flex flex-column flex-md-row">
+                {# emmet : div.col-12>div.card>img+div.p-3r>h3+div.date+div.tags+div.place #}
+                                     
+                    <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
+                        <div class="card overflow-hidden">
+                            <div class="d-flex d-flex flex-row flex-md-column">
+                                <div class="col-4 col-sm-12 ">
+                                    <a href="">
+                                        <img class="img-fluid w-100 border-radius" src="{{ asset('assets/images/image-concert-600px.jpg') }}" alt="">
+                                    </a>
+                                </div>
+                            
+                                <div class="col-8 col-sm-12 p-1 p-sm-3">
+                                    <a href="#">
+                                        <h3 class="name mb-2">Les pergolas timbrées</h3>
+                                    </a>
+
+                                    <div class="my-2">
+                                        <div class="scaled-xs">
+                                            <i class="fa-solid fa-calendar-days d-inline"></i> 
+                                            <div class ="date ms-2 d-inline">23/02/2022</div>
+                                        </div> 
+                                    </div>
+                                    
+                                    <div class="my-2">
+                                        <div class="scaled-xs">
+                                            <i class="fa-solid fa-tags d-inline"></i> 
+                                            <div class="tags ms-2 d-inline"><a href="#"> Rock</a>,<a href="#"> electro</a></div>    
+                                        </div>
+                                    </div>
+
+                                    <div class="my-2">    
+                                        <div class="scaled-xs">
+                                            <i class="fa-solid fa-location-dot d-inline"></i> 
+                                            <a href="#">
+                                                <div class="place ms-2 d-inline"> Au pousse pousse</div>
+                                            </a>
+                                        </div>  
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-end">
+                                        <a href="#">
+                                            <i class="fa-solid fa-arrow-right-long me-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
+                        
+                        <div class="card overflow-hidden">
+                            <div class="d-flex d-flex flex-row flex-md-column">
+                                <div class="col-4 col-sm-12 ">
+                                    <a href="">
+                                        <img class="img-fluid w-100 border-radius" src="{{ asset('assets/images/image-concert-600px.jpg') }}" alt="">
+                                    </a>
+                                </div>
+                            
+                                <div class="col-8 col-sm-12 p-1 p-sm-3">
+                                    <a href="#">
+                                        <h3 class="name mb-2">Salon de la bière</h3>
+                                    </a>
+                                    <div class="my-2">
+                                        <div class="scaled-xs">
+                                            <i class="fa-solid fa-calendar-days d-inline"></i> 
+                                            <div class ="date ms-2 d-inline">23/02/2022</div>
+                                        </div> 
+                                    </div>
+                                    
+                                    <div class="my-2">
+                                        <div class="scaled-xs">
+                                            <i class="fa-solid fa-tags d-inline"></i> 
+                                            <div class="tags ms-2 d-inline"><a href="#"> bières artisanales</a></div>    
+                                        </div>
+                                    </div>
+
+                                    <div class="my-2">  
+                                        <div class="scaled-xs">
+                                            <i class="fa-solid fa-location-dot d-inline"></i> 
+                                            <a href="#">
+                                                <div class="place ms-2 d-inline">Cave de chez Rochert</div>
+                                            </a>
+                                        </div>  
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <a href="#">
+                                            <i class="fa-solid fa-arrow-right-long me-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+
+       
+        <ul>
+            {% for event in events %}
+            <li>{{ event.description }} </li>
+            {% endfor %}
+        </ul>
 {% endblock %}
