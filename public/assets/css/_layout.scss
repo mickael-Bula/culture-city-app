@@ -31,6 +31,61 @@
     border-color: var(--main-color-grey);
 }
 
+.bg-category {
+    @extend .border-radius;
+    @extend .transition;
+    padding: 10px;
+    color: var(--main-color-white);
+
+
+    &-concert {
+        @extend .bg-category;
+        background-color: $yellow-color;
+        color: var(--main-color-blue-med);
+
+        &:hover {
+            background-color: var(--main-color-blue-med);
+            color: var(--main-color-white);
+        }
+    }
+    &-spectacle {
+        @extend .bg-category;
+        background-color: $brown-color;
+
+        &:hover {
+            background-color: var(--main-color-blue-med);
+            color: var(--main-color-white);
+        }
+    }
+    &-expositions {
+        @extend .bg-category;
+        background-color: $green-color;
+
+        &:hover {
+            background-color: var(--main-color-blue-med);
+            color: var(--main-color-white);
+        }
+    }
+    &-loisirs {
+        @extend .bg-category;
+        background-color: $blue-color;
+
+        &:hover {
+            background-color: var(--main-color-blue-med);
+            color: var(--main-color-white);
+        }
+    }
+    &-evenementiel {
+        @extend .bg-category;
+        background-color: $grey-color;
+
+        &:hover {
+            background-color: var(--main-color-blue-med);
+            color: var(--main-color-white);
+        }
+    }
+}
+
 
 
 

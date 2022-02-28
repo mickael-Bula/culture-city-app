@@ -21,11 +21,14 @@ Live Sass Compiler v3.0.0 Ritwick Dey
 ## Auto prefixer ( ajouter les préfixes de navigateur au css)
 Autoprefixer v3.0.1 mrmlnc
 
-## Elemnents graphiques
+## Elements graphiques
 Switch bootstrap : https://mdbootstrap.com/docs/standard/forms/switch/
 
 ## Doc Sass
 https://sass-lang.com/
 
-## box shadows
+## Box shadows
 https://boxshadows.com/
+
+## coouleur adjacente harmonie
+http://colorsafe.co/

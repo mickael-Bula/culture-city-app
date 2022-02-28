@@ -73,15 +73,16 @@ table {
 /*  Variable														   
 /*-------------------------------------------------------------------------------------*/
 /** Variables CSS **/
-/* couleurs */
+/* colors */
 :root {
   --main-color-blue-dark: #132C33;
   --main-color-blue-med: #126E82;
-  --main-color-blue-light: #82c1cf;
+  --main-color-blue-light: #51C4D3;
   --main-color-white: #ffffff;
   --main-color-grey: #D8E3E7;
 }
 
+/* couleur categories */
 /*-------------------------------------------------------------------------------------*/
 /*  Extend													   
 /*-------------------------------------------------------------------------------------*/
@@ -99,8 +100,13 @@ table {
           box-shadow: 10px 10px 0px var(--main-color-blue-med);
 }
 
-.border-radius, .aside, .card {
+.border-radius, .aside, .card, .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-expositions, .bg-category-loisirs, .bg-category-evenementiel {
   border-radius: 30px;
+}
+
+.transition, .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-expositions, .bg-category-loisirs, .bg-category-evenementiel {
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 
 /*-------------------------------------------------------------------------------------*/
@@ -133,6 +139,57 @@ table {
 /*card*/
 .card {
   border-color: var(--main-color-grey);
+}
+
+.bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-expositions, .bg-category-loisirs, .bg-category-evenementiel {
+  padding: 10px;
+  color: var(--main-color-white);
+}
+
+.bg-category-concert {
+  background-color: #FFD700;
+  color: var(--main-color-blue-med);
+}
+
+.bg-category-concert:hover {
+  background-color: var(--main-color-blue-med);
+  color: var(--main-color-white);
+}
+
+.bg-category-spectacle {
+  background-color: #220B38;
+}
+
+.bg-category-spectacle:hover {
+  background-color: var(--main-color-blue-med);
+  color: var(--main-color-white);
+}
+
+.bg-category-expositions {
+  background-color: #9ACD32;
+}
+
+.bg-category-expositions:hover {
+  background-color: var(--main-color-blue-med);
+  color: var(--main-color-white);
+}
+
+.bg-category-loisirs {
+  background-color: #36D7B7;
+}
+
+.bg-category-loisirs:hover {
+  background-color: var(--main-color-blue-med);
+  color: var(--main-color-white);
+}
+
+.bg-category-evenementiel {
+  background-color: #D3D3D3;
+}
+
+.bg-category-evenementiel:hover {
+  background-color: var(--main-color-blue-med);
+  color: var(--main-color-white);
 }
 
 /** Footer **/
@@ -272,6 +329,9 @@ a:hover {
   }
   .scaled-xs {
     font-size: 0.7em;
+  }
+  .separator, .separator-small {
+    width: 200px;
   }
 }
 /*# sourceMappingURL=style.css.map */
