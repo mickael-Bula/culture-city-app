@@ -22,7 +22,7 @@ class EventRepository extends ServiceEntityRepository
     /**
      * custom request gathering events by category name
      *
-     * @param [type] $category
+     * @param string $category
      * @return void
      */
     public function findByCategory($category)
@@ -42,6 +42,13 @@ class EventRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * custom request gathering events by filters
+     * return events which category.name is in filters array
+     *
+     * @param array $filters
+     * @return void
+     */
     public function findEvents($filters)
     {
         return $this->createQueryBuilder('e')

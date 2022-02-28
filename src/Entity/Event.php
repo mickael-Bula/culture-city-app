@@ -48,6 +48,7 @@ class Event
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"events"})
      */
     private $startDate;
 
@@ -78,6 +79,7 @@ class Event
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="events")
+     * @Groups({"events"})
      */
     private $tags;
 
@@ -90,6 +92,8 @@ class Event
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"events"})
+     * 
      */
     private $user;
 

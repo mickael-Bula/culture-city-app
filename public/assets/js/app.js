@@ -78,8 +78,17 @@ const app = {
             // on clone, on alimente notre template et on insère dans le DOM notre template pour chacun des events récupérés auprès de l'api
             // cloning the template and add it to DOM for each event collected from database
             const eventTemplate = document.getElementById("eventTemplate").content.cloneNode(true);
-            console.log(eventTemplate);
-            eventTemplate.querySelector(".eventName").textContent += element.name;
+
+            // get event's tags
+            let tags = element.tags;
+
+            // format event's start date
+            let eventDate = new Date(element.startDate).toLocaleDateString();
+
+            for (const tag of tags) { eventTemplate.querySelector(".eventTags").textContent += tag.name + " " }
+            eventTemplate.querySelector(".eventName").textContent = element.name;
+            eventTemplate.querySelector(".eventStartDate").textContent = eventDate;
+            eventTemplate.querySelector(".eventPlace").textContent = element.user.city;
             document.getElementById("displayEvents").appendChild(eventTemplate);
         }
     }
