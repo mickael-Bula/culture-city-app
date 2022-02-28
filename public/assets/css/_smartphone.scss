@@ -25,4 +25,17 @@
     .scaled-xs {
         font-size:0.7em;
     } 
+
+    .avatar {
+        max-width: 50px;
+        top : -15px;
+    }
+
+    .separator {
+        
+        &-small {
+            margin-bottom: 15px;
+        }
+    }
+
 }

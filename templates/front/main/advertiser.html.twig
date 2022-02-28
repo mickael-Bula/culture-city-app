@@ -11,84 +11,94 @@
         <h1> Annonceur {{ user.name }} </h1>
         <div class="separator"></div>
 
+        <!-- user banner-->
         <div class="col-12">  
             <img class="img-fluid w-100 border-radius" src="{{ asset('assets/images/banner.jpg') }}" alt="">  
-
-            <div class="avatar">
-                <img class="img-fluid w-100 rounded-circle" src="{{ asset('assets/images/avatar.png') }}" alt="">
-            </div>  
         </div>    
     </div>
 
     <div class="row">
-        <h2> à propos de nous</h2>
-        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, corrupti. Nostrum, inventore dolores unde sunt repellat 
-            veniam molestiae excepturi culpa, numquam ipsam quis architecto eligendi laborum, quo officia obcaecati eum.</p>
+        <div class="col-lg-8 offset-lg-2">
+            <!-- user description-->
+            <div class="col-12">
+                <div class="avatar">
+                    <img class="img-fluid w-100 rounded-circle" src="{{ asset('assets/images/avatar.png') }}" alt="">
+                </div> 
+                <h2 class="mb-3">à propos de nous</h2>
 
-        <div class="d-flex ">
-            
-            <div class="my-2">    
-                <div class="scaled-xs">
-                    <i class="fa-solid fa-location-dot d-inline"></i><p class="d-inline">Adresse</p>
-                    <br>
-                    <adress>
-                        {{ user.address1 }} <br>
-                        {% if user.address2 %} 
-                        {{ user.address2 }} <br>
-                        {% endif %}
-                        {{ user.zip }} {{ user.city }} 
-                    </adress>
-                </div>  
+                <div class="separator-small"></div>
+
+                <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, corrupti. Nostrum, inventore dolores unde sunt repellat 
+                    veniam molestiae excepturi culpa, numquam ipsam quis architecto eligendi laborum, quo officia obcaecati eum.
+                </p>
+                {% if user.capacity %} 
+                    <p><em>Capacité : {{ user.capacity }} personnes</em></p>
+                {% endif %}
             </div>
 
-            <div class="my-2">    
-                <div class="scaled-xs">
-                    <i class="fa-solid fa-envelope d-inline"></i><p class="d-inline">Mail</p>
-                    <br>
-                    <a href="mailto: {{ user.email }}">{{ user.email }}</a> 
-                </div>  
-            </div>
+            <!-- Other user infos-->
+            <div class="d-flex justify-content-start flex-wrap">
+ 
+                <div class="my-2 me-5">    
+                    <div class="scaled-xs">
+                        <div class="mb-2 mb-lg-3">
+                            <i class="fa-solid fa-location-dot d-inline"></i> <h4 class="d-inline">Adresse</h4>
+                        </div>
+                        <div class="separator-small"></div>
+                        <adress>
+                            <p>{{ user.address1 }} <br>
+                            {% if user.address2 %} 
+                                {{ user.address2 }} <br>
+                            {% endif %}
+                            {{ user.zip }} {{ user.city }} </p>
+                        </adress>
+                    </div>  
+                </div>
 
-            <div class="my-2">    
-                <div class="scaled-xs">
-                    <i class="fa-solid fa-phone d-inline"></i><p  class="d-inline">Téléphone</p>
-                    <br>
-                    <a href="mailto:{{ user.phone }}">{{ user.phone }}</a> 
-                </div>  
+                <div class="my-2 me-5">    
+                    <div class="scaled-xs">
+                        <div class="mb-2 mb-lg-3">
+                            <i class="fa-solid fa-envelope d-inline"></i> <h4 class="d-inline">Mail</h4>   
+                        </div>
+                        <div class="separator-small"></div>
+                        <a href="mailto: {{ user.email }}">{{ user.email }}</a> 
+                    </div>  
+                </div>
+
+                <div class="my-2 me-5">    
+                    <div class="scaled-xs">
+                        <div class="mb-2 mb-lg-3">
+                            <i class="fa-solid fa-phone d-inline"></i> <h4 class="d-inline">Téléphone</h4>   
+                        </div>
+                        <div class="separator-small"></div>
+                        <a href="mailto:{{ user.phone }}">{{ user.phone }}</a> 
+                    </div>  
+                </div>
+
+                <div class="my-2 me-5">    
+                    <div class="scaled-xs">
+                        <div class="mb-2 mb-lg-3">
+                            <i class="fa-solid fa-link d-inline"></i> <h4 class="d-inline">Site web</h4>   
+                        </div>
+                        <div class="separator-small"></div>
+                        <a href="{{ user.website }}">{{ user.website }}</a> 
+                    </div>  
+                </div>
+
+                <div class="my-2 me-5">   
+                    <div class="d-flex justify-conternt-center" >
+                        <a href="{{ user.facebook }}" class="me-3 my-3"><i class="fa-brands fa-facebook fa-2xl"></i></a> 
+                        <a href="{{ user.instagram }}" class="me-3 my-3"><i class="fa-brands fa-instagram fa-2xl"></i></a> 
+                        <a href="{{ user.twitter }}" class="my-3"><i class="fa-brands fa-twitter fa-2xl"></i></a> 
+                    </div>  
+                </div>
+
             </div>
         </div>
     </div>
-
-
-
 </div>
-   
 
-
- 
-  
-
-    <div class="orgaInfos bi bi-music-note"> {{ user.name }}</div>
-      <div class="orgaUlDiv">
-        <ul class="orgaUl">
-            <li> {{ user.address1 }}</li>
-            <li> {{ user.zip }}</li>
-            <li> {{ user.city }}</li>   
-            {% if user.address2 %}
-            <li> {{ user.address2 }}</li>
-            {% endif %}
-            <li> {{ user.phone }}</li>
-            <li> {{ user.email }}</li>
-            <li> {{ user.capacity }}</li>
-            <li> {{ user.website }}</li>
-            <li> {{ user.facebook }}</li>
-            <li> {{ user.twitter }}</li>
-            <li> {{ user.instagram }}</li>
-        </ul>
-    </div>  
-  
-
-    {% endblock %}
+{% endblock %}
 
 
 

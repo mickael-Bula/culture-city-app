@@ -35,12 +35,17 @@
 /** advertiser page **/
 
 .avatar {
-    max-width: 200px;
+    max-width: 150px;
     border : 2px solid var(--main-color-white);
     position :relative;
     top : -50px;
-    left : 100px;
+    left : 0;
     border-radius: 100px;
+}
+
+.avatar img {
+    width: 100%;
+    height:auto;
 }
 
 /** Footer **/
