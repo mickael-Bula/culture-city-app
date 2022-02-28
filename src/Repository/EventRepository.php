@@ -41,4 +41,15 @@ class EventRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findEvents($filters)
+    {
+        return $this->createQueryBuilder('e')
+            ->join('e.category', 'e_c')
+            ->andWhere('e_c.name IN (:vals)')
+            ->setParameter(':vals', array_values($filters))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

@@ -16,20 +16,11 @@
 
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
+                            {% for category in categories %}
                                 <li class="nav-item">
-                                    <a class="nav-link categories" href="#">Concert</a>
+                                    <a class="nav-link categories" href="#">{{ category.name }}</a>
+                            {% endfor %}
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link categories" href="#">Spectacle</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link categories" href="#">Expositions</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link categories" href="#">Loisirs</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link categories" href="#">Evènementiel</a>
                                 </li>
                             </ul>
                         </div>

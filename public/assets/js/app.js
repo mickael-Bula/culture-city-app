@@ -6,7 +6,7 @@ const app = {
         app.addAllEventListeners();
     },
 
-    addAllEventListeners: function(event)
+    addAllEventListeners: function()
     {
         // add listeners to 'categories' buttons
         document.querySelectorAll("#navbarNav .categories").forEach(category => category.addEventListener("click", app.handleClickCategoryBtn));
@@ -33,7 +33,7 @@ const app = {
 
     handleChangeFilterForm: function()
     {
-        // on récupère notre formulaire
+        // retrieve form
         const filtersForm = document.querySelector("#filters");
 
         // create an array of keys-value form our form
@@ -51,7 +51,7 @@ const app = {
         };
 
         // send a request to collect events by filters
-        fetch('http://localhost:8080/front/api/filters' + '?' + queryStringParams.toString())
+        fetch('http://localhost:8000/front/api/filters' + '?' + queryStringParams.toString(), fetchOptions)
         .then(res   => res.json())
         .then(data  => app.displayEvents(data));
     },
@@ -64,7 +64,7 @@ const app = {
             mode:   'cors',
             cache:  'no-cache'
         };
-        response = await fetch('http://localhost:8000/front/api/' + category, fetchOptions);
+        response = await fetch('http://localhost:8000/front/api/filters/' + category, fetchOptions);
         data = await response.json();
         app.displayEvents(data);
     },
@@ -76,6 +76,7 @@ const app = {
         for (const element of data)
         {
             // on clone, on alimente notre template et on insère dans le DOM notre template pour chacun des events récupérés auprès de l'api
+            // cloning the template and add it to DOM for each event collected from database
             const eventTemplate = document.getElementById("eventTemplate").content.cloneNode(true);
             console.log(eventTemplate);
             eventTemplate.querySelector(".eventName").textContent += element.name;
