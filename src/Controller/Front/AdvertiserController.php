@@ -57,9 +57,9 @@ class AdvertiserController extends AbstractController
                
 
                 // Le passage par le renommage n'est obligatoire que si une image est ajoutée 
-                // il n'est pas obligatoire d'ajouter une image si mise à jour par exemple d'autres valeurs du formulaire.
-                // Si il y a eu une image ajoutée je rentre dans ce if.
-                
+                    // il n'est pas obligatoire d'ajouter une image si mise à jour par exemple d'autres valeurs du formulaire.
+                    // Si il y a eu une image ajoutée je rentre dans ce if.
+                    
                 if ($avatarFile) {
                     $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
                     // ici on modifie le nom du fichier pour le rendre unique et éviter les doublons ou les conflits
