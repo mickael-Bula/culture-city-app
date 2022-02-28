@@ -11,8 +11,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+// add this use for vichUploaderBundle
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+// add this to upload file type in class method
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
+ * Add this on top of the class for vichUploaderBundle
+ * @Vich\Uploadable
+ *   
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @UniqueEntity(fields={"email"}, message="Une adresse mail {{ value }} existe déjà !)")
@@ -81,16 +88,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $avatar;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $banner;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $phone;
 
     /**
@@ -138,7 +135,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $slug;
 
-     /**
+    /**
      * use this with slugger service
      */
     private $slugger;
@@ -158,8 +155,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatar;
 
- 
+    /**
+     * Ici on passe avatar qui correspond à la propriété
+     * avatar en Bdd pour faire le lien
+     * entre le fichier téléchargé soit la valeur de $avatarFile
+     * et le nom à associer qui est stocké en bdd
+     * pour résoudre le lien et servir l'image
+     * 
+     * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="avatar")
+     * @var File
+     */
+    private $avatarFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $banner;
+
+    /**
+     * Ici on passe banner qui correspond à la propriété
+     * banner en Bdd pour faire le lien
+     * entre le fichier téléchargé soit la valeur de $bannerFile
+     * et le nom à associer qui est stocké en bdd
+     * pour résoudre le lien et servir l'image
+     * 
+     * @Vich\UploadableField(mapping="user_banner", fileNameProperty="banner")
+     * @var File
+     */
+    private $bannerFile;
 
     public function __construct(SluggerInterface $slugger)
     {   
@@ -168,7 +196,71 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->events = new ArrayCollection();
         
     }
+
+    /**
+     * Set the value of avatarFile
+     * @param  File  $avatarFile
+     * @return  self
+     */ 
+    public function setAvatarFile(File $avatarFile = null)
+    {   
+
+        // avatar correspond ici à avatarFile (donc au fichier)
+        // avatar en bdd prendra donc la valeur du nom du fichier
+        // et avatarFile sera le fichier stocké dans les dossiers paramètrés dans 
+        // vich_uploader.yaml et services.yaml 
+
+        $this->avatar = $avatarFile;
+
+        // si il y a un fichier avatar uploadé on met a jour la date sur updatedAt
+        if ($avatarFile) {
+
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * Get the value of avatarFile
+     * @return  File
+     */ 
+    public function getAvatarFile()
+    {
+        return $this->avatarFile;
+    }
     
+
+    /**
+     * Set the value of bannerFile
+     * @param  File  $bannerFile
+     * @return  self
+     */ 
+    public function setBannerFile(File $bannerFile = null)
+    {   
+
+        // banner correspond ici à bannerFile (donc au fichier)
+        // banner en bdd prendra donc la valeur du nom du fichier
+        // et bannerFile sera le fichier stocké dans les dossiers paramètrés dans 
+        // vich_uploader.yaml et services.yaml 
+
+        $this->banner = $bannerFile;
+
+        // si il y a un fichier avatar uploadé on met a jour la date sur updatedAt
+        if ($bannerFile) {
+
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * Get the value of avatarFile
+     * @return  File
+     */ 
+    public function getBannerFile()
+    {
+        return $this->bannerFile;
+    }
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -267,7 +359,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->name = $name;
 
-        // ici en premier je crée un slug avec le service composant Symfony slugger
+        //ici en premier je crée un slug avec le service composant Symfony slugger
         $slug = $this->slugger->slug($name);
         // ensuite je passe ce slug propre sans espace dans ma méthode setSlug pour flusher un slug propre
         // à la soumission du formulaire.
