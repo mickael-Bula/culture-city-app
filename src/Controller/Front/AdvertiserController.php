@@ -138,15 +138,18 @@ class AdvertiserController extends AbstractController
      * 
      * @Route("/annonceur/{slug}", name="showAdvertiserSlug")
      */
-    public function index(EventRepository $eventRepository, UserRepository $userRepository,  string $slug): Response
+    public function showPlacePanel(EventRepository $eventRepository, UserRepository $userRepository,  string $slug): Response
     {
       
         $user = $userRepository->findOneBy(["slug" => $slug]);
-        //$events = $eventRepository->findAll();
 
-        dump($user);
-        //dump($events);
+        $userId = $user->getId();
+    
+        $eventsList = $eventRepository->findBy(["user" => $userId] );
+        
+        //dump($user);
+        dump($eventsList);
 
-        return $this->render('front/main/advertiser.html.twig', compact('user'));
+        return $this->render('front/main/advertiser.html.twig', compact('user', 'eventsList'));
     }
 }
