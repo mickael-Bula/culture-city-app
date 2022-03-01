@@ -18,13 +18,11 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class EventController extends AbstractController
 {
     /**
-     * @Route("/front/event", name="app_front_event")
+     * @Route("/event/{slug}", name="show_event")
      */
-    public function index(): Response
+    public function showEvent(Event $event): Response
     {
-        return $this->render('----------', [
-            'controller_name' => 'FrontEventController',
-        ]);
+        return $this->render('front/main/event.html.twig', compact('event'));
     }
 
 
