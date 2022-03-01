@@ -31,7 +31,7 @@ class EventController extends AbstractController
     /**
      * @Route("/create/event", name="create_event", methods={"GET", "POST"})
      */
-    public function editPlaceProfile(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
+    public function createEvent(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
     {
        
 
@@ -43,11 +43,13 @@ class EventController extends AbstractController
         { 
 
                 $event = New Event();
-                $eventFile = $form->get('picture')->getData();
                 $eventName = $form->get('name')->getData();
+                $eventFile = $form->get('picture')->getData();
+                $eventCat = $form->get('category')->getData();
+
+
                 $event->setPictureFile($eventFile);
                 $event->setName($eventName);
-                $eventCat = $form->get('category')->getData();
                 $event->setCategory($eventCat);
 
                 $user = $this->getUser();

@@ -23,10 +23,7 @@ class EventType extends AbstractType
             ->add('isPremium')
             ->add('startDate')
             ->add('endDate')
-            //->add('createdAt')
-           // ->add('updatedAt')
-           // ->add('slug')
-
+           
             // upload user event picture file
             ->add('picture' , FileType::class, [
 
@@ -34,7 +31,10 @@ class EventType extends AbstractType
                 'mapped' => true,
                 'required' => false,     
             ])  
+
             //->add('tags')
+
+            // select event category
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
@@ -43,8 +43,10 @@ class EventType extends AbstractType
                 'required' => true,
             ]) 
 
-    
             //->add('user')
+            //->add('createdAt')
+            //->add('updatedAt')
+            //->add('slug')
         ;
     }
 
