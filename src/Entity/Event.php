@@ -6,6 +6,7 @@ use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 // add this use for vichUploaderBundle
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 // add this to upload file type in class method
@@ -28,6 +29,7 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"events"})
      */
     private $name;
 
@@ -48,11 +50,13 @@ class Event
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"events"})
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"events"})
      */
     private $endDate;
 
@@ -78,6 +82,7 @@ class Event
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="events")
+     * @Groups({"events"})
      */
     private $tags;
 
@@ -90,6 +95,8 @@ class Event
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"events"})
+     * 
      */
     private $user;
 
