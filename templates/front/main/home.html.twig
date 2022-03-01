@@ -4,39 +4,106 @@
 
 {% block body %}
 
+{# affiche le user name du user en session  #}
 {% if app.user %}
-    <H5 class="text-center mt-5">Vous êtes connecté comme : {{ app.user.username }}<h5> 
+    <H5 class="text-center mt-5">Hello ! {{ app.user.username }}<h5> 
 {% endif %}
 
+{# flash message après email vérification  #}
 {% for message in app.flashes('emailverification') %}
     <div class="container alert alert-success">
         {{ message }}
     </div>
 {% endfor %}
 
+{# flash message après login  #}
 {% for message in app.flashes('success-login') %}
     <div class="container alert alert-success">
         {{ message }}
     </div>
 {% endfor %}
 
+{# flash message après login et enregistrement statut annonceur  #}
 {% for message in app.flashes('success-register-annonceur') %}
     <div class="container alert alert-success">
         {{ message }}
     </div>
 {% endfor %}
 
+{# flash message après login et enregistrement statut user  #}
 {% for message in app.flashes('success-register-user') %}
     <div class="container alert alert-success">
         {{ message }}
     </div>
 {% endfor %}
 
+{# flash message après paswword reset  #}
 {% for message in app.flashes('password-reset-success') %}
     <div class="container alert alert-success">
         {{ message }}
     </div>
+{% endfor %}    
+
+    <ul>
+    cette page liste tous les événements.
+    {% for event in events %}
+        <li>{{ event.description }} </li>
+        <li>{{ event.user.avatar }} </li>
+        {% else %}
+  <div class="alert alert-warning mb-3" role="alert">
+    <h3>Il n'y a pas encore d'événements enregistrés sur ce site...mais ça ne saurait tarder !</h3> 
+  </div>
 {% endfor %}
+    </ul>
+
+
+{% for user in users %}
+
+{% if vich_uploader_asset (user, 'avatarFile') %}
+  <img src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
+{% else %}
+  <img src="{{ vich_uploader_asset (user, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
+{% endif %}
+
+{% if vich_uploader_asset (user, 'avatarFile') %}
+  <img src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_50') }}" alt="{{ user.name }}" />
+{% else %}
+  <img src="{{ vich_uploader_asset (user, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_50') }}" alt="{{ user.name }}" />
+{% endif %}
+
+{% if vich_uploader_asset (user, 'bannerFile') %}
+  <img src="{{ vich_uploader_asset (user, 'bannerFile') | imagine_filter ('user_cover_1200') }}" alt="{{ user.name }}" />
+{% else %}
+  <img src="{{ vich_uploader_asset (user, 'bannerFile') ?: '/upload/default_picture/default_user_banner.jpg' | imagine_filter ('user_cover_1200') }}" alt="{{ user.name }}" />
+{% endif %}
+
+    <div class="orgaInfos bi bi-music-note"> {{ user.name }}</div>
+      <div class="orgaUlDiv">
+      <ul class="orgaUl">
+        <li> {{ user.address1 }}</li>
+        <li> {{ user.zip }}</li>
+        <li> {{ user.city }}</li>   
+        {% if user.address2 %}
+        <li> {{ user.address2 }}</li>
+        {% endif %}
+        <li> {{ user.phone }}</li>
+        <li> {{ user.email }}</li>
+        <li> {{ user.capacity }}</li>
+        <li> {{ user.website }}</li>
+        <li> {{ user.facebook }}</li>
+        <li> {{ user.twitter }}</li>
+        <li> {{ user.instagram }}</li>
+      </ul>
+    </div>  
+    </div>
+{% else %}
+  <div class="alert alert-warning mb-3" role="alert">
+    <h3>Il n'y a pas encore d'utilisateurs enregistrés sur ce site...mais ça ne saurait tarder !</h3> 
+  </div>
+{% endfor %}
+
+
+</div>
 
     <h2>Événements à venir</h2>
     <div class="separator"></div>

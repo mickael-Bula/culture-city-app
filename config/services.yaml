@@ -1,9 +1,22 @@
 # This file is the entry point to configure your own services.
 # Files in the packages/ subdirectory configure your dependencies.
-
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+
+# Ici je défini l'emplacement de stockage de mes images uploadés pour les variables
+# définie dans le fichier vich_uploader.yaml 
+# ces dossiers seront crée automatiquement par le budle lors du premier upload de fichier.
+# il est inutile de les créer avant...on laisse faire notre configuration.
+# il créera ces dossiers par défaut dans le dossier public de notre application.
+
+# https://symfony.com/bundles/EasyAdminBundle/2.x/integration/vichuploaderbundle.html
+
+
 parameters:
+    user_banner: "upload/userbanner"
+    user_avatar: "upload/useravatar"
+    event_picture: "upload/eventpicture"
+
 
 services:
     # default configuration for services in *this* file

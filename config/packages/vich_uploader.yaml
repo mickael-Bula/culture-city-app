@@ -1,0 +1,41 @@
+# https://symfony.com/bundles/EasyAdminBundle/2.x/integration/vichuploaderbundle.html
+
+# Config en lien avec le fichier service.yaml.
+# on mappe les options de nos variable ex: user_banner
+# et dans services.yaml on détermine le répertoire où seront stockés les fichiers en
+# lien avec ces variables.
+
+# Je lui passe les paramètres qui vont être utilises après par ex dans le CRUD
+# Que se passe t'il si je supprime/update un user par ex est ce que son image se supprime aussi etc  
+
+# Vérifier la présence de cette ligne dans config/bundle.php
+# Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
+
+# lors de l'install du bundle valider avec Y l'installation de la configuration de base. C'est elle qui crée les fichiers
+# et réglages de base necessaires au paramètrage personnalisé par la suite du bundle.
+# même si on pourrait les créer à la main c'est bien plus simple.
+
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        user_banner:
+            uri_prefix: '%user_banner%'
+            upload_destination: '%user_banner%'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            delete_on_update: true
+            delete_on_remove: true
+
+        user_avatar:
+            uri_prefix: '%user_avatar%'
+            upload_destination: '%user_avatar%'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            delete_on_update: true
+            delete_on_remove: true    
+
+        event_picture:
+            uri_prefix: '%event_picture%'
+            upload_destination: '%event_picture%'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            delete_on_update: true
+            delete_on_remove: true
