@@ -104,8 +104,6 @@ class AppFixtures extends Fixture
                 ->setCity($faker->city)
                 ->setZip($faker->postcode())
                 ->setSiren($faker->randomNumber())
-                ->setAvatar('avatar.jpg')
-                ->setBanner('banner.jpg')
                 ->setPhone($faker->phoneNumber())
                 ->setFoundedIn(new DateTimeImmutable($faker->date()))
                 ->setWebsite('www.lieu.fr')
@@ -166,13 +164,17 @@ class AppFixtures extends Fixture
                 ->setUser($randomAnnonceur)
                 ->setPrice($faker->numberBetween(0, 20))
                 ->setDescription($faker->text())
-                ->setPicture('https://media.istockphoto.com/photos/hot-air-balloons-of-cappadocia-picture-id536290479?k=20&m=536290479&s=612x612&w=0&h=3QITRcn07NUf1WehQfvdKg0N0iqUGBUzI7RurIKT4oY=')
                 ->setIsPremium($faker->numberBetween(0, 1))
                 ->setStartDate(new DateTime())
                 ->setEndDate(new DateTime())
-                ->setSlug(strtolower($this->slugger->slug($newEvent->getName())))
-                ->addTag($randomTag);
+                ->setSlug(strtolower($this->slugger->slug($newEvent->getName())));
 
+                $arrayTags = array_slice($allTagsEntity,0, mt_rand(0, 3));
+                foreach ($arrayTags as $tag)
+                {
+                    $newEvent->addTag($tag);
+                    $manager->persist($newEvent);
+                }        
                 $allEventsEntity[] = $newEvent;
                 
             $manager->persist($newEvent);
