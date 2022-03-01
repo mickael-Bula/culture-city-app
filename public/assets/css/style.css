@@ -100,11 +100,11 @@ table {
           box-shadow: 10px 10px 0px var(--main-color-blue-med);
 }
 
-.border-radius, .aside, .card, .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-expositions, .bg-category-loisirs, .bg-category-evenementiel {
+.border-radius, .aside, .card, .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-exposition, .bg-category-loisir, .bg-category-evenementiel {
   border-radius: 30px;
 }
 
-.transition, .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-expositions, .bg-category-loisirs, .bg-category-evenementiel, a {
+.transition, .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-exposition, .bg-category-loisir, .bg-category-evenementiel, a {
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
 }
@@ -141,22 +141,7 @@ table {
   border-color: var(--main-color-grey);
 }
 
-/** advertiser page **/
-.avatar {
-  max-width: 150px;
-  border: 2px solid var(--main-color-white);
-  position: relative;
-  top: -50px;
-  left: 0;
-  border-radius: 100px;
-}
-
-.avatar img {
-  width: 100%;
-  height: auto;
-}
-
-.bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-expositions, .bg-category-loisirs, .bg-category-evenementiel {
+.bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-exposition, .bg-category-loisir, .bg-category-evenementiel {
   padding: 10px;
   color: var(--main-color-white);
 }
@@ -180,20 +165,20 @@ table {
   color: var(--main-color-white);
 }
 
-.bg-category-expositions {
+.bg-category-exposition {
   background-color: #9ACD32;
 }
 
-.bg-category-expositions:hover {
+.bg-category-exposition:hover {
   background-color: var(--main-color-blue-med);
   color: var(--main-color-white);
 }
 
-.bg-category-loisirs {
+.bg-category-loisir {
   background-color: #36D7B7;
 }
 
-.bg-category-loisirs:hover {
+.bg-category-loisir:hover {
   background-color: var(--main-color-blue-med);
   color: var(--main-color-white);
 }
@@ -205,6 +190,21 @@ table {
 .bg-category-evenementiel:hover {
   background-color: var(--main-color-blue-med);
   color: var(--main-color-white);
+}
+
+/** advertiser page **/
+.avatar {
+  max-width: 150px;
+  border: 2px solid var(--main-color-white);
+  position: relative;
+  top: -50px;
+  left: 0;
+  border-radius: 100px;
+}
+
+.avatar img {
+  width: 100%;
+  height: auto;
 }
 
 /** Footer **/
@@ -361,16 +361,12 @@ em {
   .scaled-xs {
     font-size: 0.7em;
   }
-
   .avatar {
     max-width: 50px;
     top: -15px;
   }
   .separator-small {
     margin-bottom: 15px;
-  }
-  .separator, .separator-small {
-    width: 200px;
   }
 }
 /*# sourceMappingURL=style.css.map */
