@@ -102,6 +102,7 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"events"})
      */
     private $picture;
 
