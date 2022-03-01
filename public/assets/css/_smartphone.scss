@@ -26,8 +26,15 @@
         font-size:0.7em;
     } 
 
-    .separator {
-        width: 200px;
+    .avatar {
+        max-width: 50px;
+        top : -15px;
     }
-    
+
+    .separator {
+        
+        &-small {
+            margin-bottom: 15px;
+        }
+    }
 }

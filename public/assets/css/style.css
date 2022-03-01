@@ -136,9 +136,24 @@ table {
   background-color: var(--main-color-blue-med);
 }
 
-/*card*/
+/**card event **/
 .card {
   border-color: var(--main-color-grey);
+}
+
+/** advertiser page **/
+.avatar {
+  max-width: 150px;
+  border: 2px solid var(--main-color-white);
+  position: relative;
+  top: -50px;
+  left: 0;
+  border-radius: 100px;
+}
+
+.avatar img {
+  width: 100%;
+  height: auto;
 }
 
 .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-expositions, .bg-category-loisirs, .bg-category-evenementiel {
@@ -245,6 +260,7 @@ h1 {
   font-size: 3em;
   font-family: 'Nunito', sans-serif;
   font-weight: 900;
+  margin-bottom: 10px;
 }
 
 h2 {
@@ -257,6 +273,14 @@ h2 {
 
 h3 {
   font-size: 2em;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  line-height: 1em;
+  margin-bottom: 10px;
+}
+
+h4 {
+  font-size: 1.1em;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
   line-height: 1em;
@@ -276,6 +300,12 @@ a {
 
 a:hover {
   color: var(--main-color-blue-light);
+}
+
+em {
+  font-family: 'Nunito', sans-serif;
+  font-style: italic;
+  font-weight: 700;
 }
 
 /* Footer */
@@ -330,6 +360,14 @@ a:hover {
   }
   .scaled-xs {
     font-size: 0.7em;
+  }
+
+  .avatar {
+    max-width: 50px;
+    top: -15px;
+  }
+  .separator-small {
+    margin-bottom: 15px;
   }
   .separator, .separator-small {
     width: 200px;
