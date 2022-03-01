@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}categorie : {{category.name}} {% endblock %}
+
+{% block body %}
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        {# <div class="col-12 col-lg-4 col-xl-3">
+            <form id="filters">
+                <div class="aside p-4 mb-5">
+                    <!-- search by date -->
+                    <input type="date" id="start" name="trip-start" value="2022-02-22" min="2022-02-22" max="2032-12-31">
+
+                    <!-- Checked switch -->
+                    {% for category in categories %}
+
+                    <div class="form-check form-switch d-flex align-items-center my-3">
+                        <input class="form-check-input" name="filters[]" type="checkbox" role="switch3" value="{{ category.name }}" id="flexSwitchCheckChecked"/>
+                        <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">{{ category.name }}</label>
+                    </div>
+
+                    {% endfor %}
+                    
+                </div>
+            </form>
+        </div> #}
+
+        <div class="col-12 col-lg-8 col-xl-9">
+            <div class="main"> 
+                
+                <h1>Événements {{category.name}} </h1>
+                <div class="separator"></div>
+
+                <div id="displayEvents" class="d-flex flex-column flex-md-row"></div>
+
+                <div class="d-flex flex-column flex-md-row">
+                {# emmet : div.col-12>div.card>img+div.p-3r>h3+div.date+div.tags+div.place #}
+                    
+                    {% for event in category.events %}
+                        <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
+                            <div class="card overflow-hidden">
+                                <div class="d-flex d-flex flex-row flex-md-column">
+                                    <div class="col-4 col-sm-12 ">
+                                        <a href="#">
+                                            <img class="img-fluid w-100 border-radius" src="{{event.picture}}" alt="{{event.name}}">
+                                        </a>
+                                    </div>
+                                
+                                    <div class="col-8 col-sm-12 p-1 p-sm-3">
+                                        <a href="#">
+                                            <h3 class="name mb-2">{{event.name}}</h3>
+                                        </a>
+
+                                        <div class="my-2">
+                                            <div class="scaled-xs">
+                                                <i class="fa-solid fa-calendar-days d-inline"></i> 
+                                                <div class ="date ms-2 d-inline">{{event.startDate | date("d/m/Y")}}</div>
+                                            </div> 
+                                        </div>
+                                        
+                                        <div class="my-2">
+                                            <div class="scaled-xs">
+                                                <i class="fa-solid fa-tags d-inline"></i> 
+                                                <div class="tags ms-2 d-inline">
+                                                    {% for tag in event.tags %}
+                                                        <a href="#">{{tag.name}}</a>
+                                                    {% endfor %}
+                                                </div>    
+                                            </div>
+                                        </div>
+
+                                        <div class="my-2">    
+                                            <div class="scaled-xs">
+                                                <i class="fa-solid fa-location-dot d-inline"></i> 
+                                                <a href="#">
+                                                    <div class="place ms-2 d-inline"> {{event.user.name}}</div>
+                                                </a>
+                                            </div>  
+                                        </div>
+                                        
+                                        <div class="d-flex justify-content-end">
+                                            <a href="#">
+                                                <i class="fa-solid fa-arrow-right-long me-2"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>    
+                    {% endfor %}
+  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
