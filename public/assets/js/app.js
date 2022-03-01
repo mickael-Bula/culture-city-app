@@ -12,7 +12,7 @@ const app = {
         document.querySelectorAll("#navbarNav .categories").forEach(category => category.addEventListener("click", app.handleClickCategoryBtn));
 
         // add listeners on inputs form
-        document.querySelectorAll("#filters input").forEach(filter => filter.addEventListener("change", app.handleChangeFilterForm));
+        document.querySelectorAll("#filters input").forEach(filter => filter.addEventListener("change", app.handleChangeFiltersForm));
     },
 
     handleClickCategoryBtn: function(event)
@@ -28,7 +28,7 @@ const app = {
         event.currentTarget.setAttribute("aria-current", "page");
     },
 
-    handleChangeFilterForm: function()
+    handleChangeFiltersForm: function()
     {
         // retrieve form
         const filtersForm = document.querySelector("#filters");
@@ -40,28 +40,17 @@ const app = {
         const queryStringParams = new URLSearchParams();
         form.forEach((value, key) => queryStringParams.append(key, value));
 
-        // set fetch options
-        let fetchOptions = {
-            method: 'GET',
-            mode:   'cors',
-            cache:  'no-cache'
-        };
-
-        // send a request to collect events by filters
-        fetch('http://localhost:8000/front/api/filters' + '?' + queryStringParams.toString(), fetchOptions)
-        .then(res   => res.json())
-        .then(data  => app.displayEvents(data));
+        app.fetchEvents('http://localhost:8000/front/api/filters', queryStringParams.toString());
     },
 
-    fetchEvents: async function(event)
+    fetchEvents: async function(url, queryString)
     {
-        const category  = event.target.innerHTML;
         let fetchOptions = {
             method: 'GET',
             mode:   'cors',
             cache:  'no-cache'
         };
-        response = await fetch('http://localhost:8000/front/api/filters/' + category, fetchOptions);
+        response = await fetch(url + '?' + queryString, fetchOptions);
         data = await response.json();
         app.displayEvents(data);
     },
