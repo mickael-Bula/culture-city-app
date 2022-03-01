@@ -3,8 +3,10 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Category;
+use App\Entity\Event;
 use App\Entity\Tag;
 use App\Entity\User;
+use DateTimeImmutable;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -25,6 +27,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             BeforeEntityPersistedEvent::class => ['setCategorySlug'],
             BeforeEntityPersistedEvent::class => ['setTagSlug'],
             BeforeEntityPersistedEvent::class => ['setUserSlug'],
+            BeforeEntityPersistedEvent::class => ['setEventSlugAndDate'],
         ];
     }
 
@@ -62,5 +65,20 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         $slug = $this->slugger->slug($entity->getName());
         $entity->setSlug(strtolower($slug));
+    }
+
+    public function setEventSlugAndDate(BeforeEntityPersistedEvent $event)
+    {
+        $entity = $event->getEntityInstance();
+
+        if (!($entity instanceof Event)) {
+            return;
+        }
+
+        $slug = $this->slugger->slug($entity->getName());
+        $entity->setSlug(strtolower($slug));
+
+        $now = new DateTimeImmutable('now');
+        $entity->setCreatedAt($now);
     }
 }

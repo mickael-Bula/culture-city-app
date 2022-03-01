@@ -655,4 +655,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    // For CRUD ADMIN (Event)
+    public function __toString()
+    {
+        return $this->email;
+    }
 }
