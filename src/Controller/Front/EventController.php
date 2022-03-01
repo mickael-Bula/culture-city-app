@@ -31,37 +31,45 @@ class EventController extends AbstractController
     /**
      * @Route("/create/event", name="create_event", methods={"GET", "POST"})
      */
-    public function createEvent(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
+    public function createEvent(EntityManagerInterface $entityManager, 
+        Request $request, 
+        SluggerInterface $slugger): Response
     {
-       
-
         $form = $this->createForm(EventType::class);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid())
         
         { 
-
                 $event = New Event();
-                $eventName = $form->get('name')->getData();
-                $eventFile = $form->get('picture')->getData();
-                $eventCat = $form->get('category')->getData();
-
-
-                $event->setPictureFile($eventFile);
-                $event->setName($eventName);
-                $event->setCategory($eventCat);
 
                 $user = $this->getUser();
                 $event->setUser($user);
 
+                $name = $form->get('name')->getData();
+                $price = $form->get('price')->getData();
+                $description = $form->get('description')->getData();
+                $isPremium = $form->get('isPremium')->getData();
+                $startDate = $form->get('startDate')->getData();
+                $endDate = $form->get('endDate')->getData();
+                $eventFile = $form->get('picture')->getData();
+                $category = $form->get('category')->getData();
+
+                $event->setName($name)
+                    ->setPrice($price)
+                    ->setDescription($description)
+                    ->setIsPremium($isPremium)
+                    ->setStartDate($startDate)
+                    ->setStartDate($startDate)
+                    ->setEndDate($endDate)
+                    ->setPictureFile($eventFile)
+                    ->setCategory($category);
                     
                 if ($eventFile) {
                     $originalFilename = pathinfo($eventFile->getClientOriginalName(), PATHINFO_FILENAME);
                     $safeFilename = $slugger->slug($originalFilename);
                     $newFilename = $safeFilename.'-'.uniqid().'.'.$eventFile->guessExtension();
     
-                
                     try {
                         $eventFile->move(
                             $this->getParameter('event_picture'),
@@ -84,7 +92,7 @@ class EventController extends AbstractController
             return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('front/form/event.html.twig', compact('form'));
+            return $this->renderForm('front/form/event.html.twig', compact('form'));
     }
 
 
