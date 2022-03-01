@@ -81,10 +81,9 @@ const app = {
             let eventDate = new Date(element.endDate).toLocaleDateString();
             eventTemplate.querySelector(".eventStartDate").textContent = eventDate;
             
+            // TODO vérifier que l'image est bien reçue
             // display event's image
-            let eventPicture = (element.picture !== null) ? element.picture : "default_event.jpg";
-            let urlPicture = "upload/default_picture/" + eventPicture;
-            console.log(urlPicture);
+            let urlPicture = (element.picture !== null) ? "upload/eventpicture/" + element.picture : "upload/default_picture/default_event.jpg";
 
             eventTemplate.querySelector(".eventPicture").setAttribute("src", urlPicture);
 
