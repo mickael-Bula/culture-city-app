@@ -72,13 +72,18 @@ const app = {
             const endDate = new Date(element.endDate);        
             if (datePicker.getTime() > endDate.getTime()) { continue }
 
-            // get event's tags
+            // get event's tags and create a link for each
             let tags = element.tags;
-            for (const tag of tags) { eventTemplate.querySelector(".eventTags").textContent += tag.name + " " }
-
+            // for (const tag of tags) { eventTemplate.querySelector(".eventTags").textContent += tag.name + " " }
+            for (const tag of tags) { app.addTagLinkElementToDOM(eventTemplate, tag) }
+            
             // reformate event's date and display it
             let eventDate = new Date(element.endDate).toLocaleDateString();
             eventTemplate.querySelector(".eventStartDate").textContent = eventDate;
+            
+            // display event's image
+            let urlImage = "upload/default_picture/default_avatar.jpg";
+            eventTemplate.querySelector(".eventPicture").setAttribute("src", urlImage);
 
             eventTemplate.querySelector(".eventName").textContent = element.name;
             eventTemplate.querySelector(".eventPlace").textContent = element.user.city;
@@ -89,6 +94,16 @@ const app = {
         {
             displayElement.textContent = "Il n'y a pas d'événement pour cette date";
         }
+    },
+
+    addTagLinkElementToDOM: function(eventTemplate, tag)
+    {
+        // add a link to tag's page for each tag and append it to DOM
+        let newLink = document.createElement("a");
+        newLink.href = "/front/tag/" + tag.name;
+        newLink.textContent = tag.name + " ";
+        console.log(eventTemplate);
+        eventTemplate.querySelector(".eventTags").appendChild(newLink);
     }
 }
 
