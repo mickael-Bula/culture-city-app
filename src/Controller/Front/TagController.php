@@ -17,6 +17,6 @@ class TagController extends AbstractController
     public function showByName(Tag $tag): Response
     {
        
-        return $this->render('front/tag/index.html.twig', compact('tag'));
+        return $this->render('front/main/tag.html.twig', compact('tag'));
     }
 }

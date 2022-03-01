@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}categorie : {{category.name}} {% endblock %}
+{% block title %}Tag : {{tag.name}} {% endblock %}
 
 {% block body %}
 
@@ -32,15 +32,15 @@
         <div class="col-12 col-lg-8 col-xl-9">
             <div class="main"> 
                 
-                <h1>Événements {{category.name}} </h1>
+                <h1>Événements {{tag.name}} </h1>
                 <div class="separator"></div>
 
-                <div id="displayEvents" class="d-flex flex-column flex-md-row"></div>
+                <div id="displasyEvents" class="d-flex flex-column flex-md-row"></div>
 
                 <div class="d-flex flex-column flex-md-row">
                 {# emmet : div.col-12>div.card>img+div.p-3r>h3+div.date+div.tags+div.place #}
                     
-                    {% for event in eventsList %}
+                    {% for event in tag.events%}
                         <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
                             <div class="card overflow-hidden">
                                 <div class="d-flex d-flex flex-row flex-md-column">
@@ -48,9 +48,11 @@
                                         <a href="#">
                                             <img class="img-fluid w-100 border-radius" src="{{event.picture}}" alt="{{event.name}}">
                                         </a>
-                                        <div class="sticker-category text-center scaled-xs">
-                                            <div class="bg-category-{{category.slug}} d-inline "> {{category.name}}</div>
-                                        </div>
+                                        <a href="#">
+                                            <div class="sticker-category text-center scaled-xs">
+                                                <div class="bg-category-{{event.category.slug}} d-inline "> {{event.category.name}}</div>
+                                            </div>
+                                        </a>
                                     </div>
                                 
                                     <div class="col-8 col-sm-12 p-1 p-sm-3">
