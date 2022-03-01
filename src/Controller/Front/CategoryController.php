@@ -14,9 +14,8 @@ class CategoryController extends AbstractController
      */
     public function showByName(Category $category): Response
     {
-       
+      
         return $this->render('front/category/index.html.twig', compact('category'));
-        
     }
    
 }
