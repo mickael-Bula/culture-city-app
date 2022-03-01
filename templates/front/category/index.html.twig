@@ -44,9 +44,13 @@
                         <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
                             <div class="card overflow-hidden">
                                 <div class="d-flex d-flex flex-row flex-md-column">
-                                    <div class="col-4 col-sm-12 ">
+                                    <div class="col-4 col-sm-12 postion-relative">
                                         <a href="#">
                                             <img class="img-fluid w-100 border-radius" src="{{event.picture}}" alt="{{event.name}}">
+                                            <div class="sticker-category text-center scaled-xs">
+                                                <div class="bg-category-{{category.slug}} d-inline "> {{category.name}}</div>
+                                            </div>
+                                            
                                         </a>
                                     </div>
                                 
