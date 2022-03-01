@@ -170,6 +170,10 @@ class Event
     {
         $this->name = $name;
 
+        if ($name) {
+
+            $this->createdAt = new \DateTimeImmutable('now');
+        }
         return $this;
     }
 
