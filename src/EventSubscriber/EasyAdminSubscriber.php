@@ -28,6 +28,8 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             BeforeEntityPersistedEvent::class => ['setTagSlug'],
             BeforeEntityPersistedEvent::class => ['setUserSlug'],
             BeforeEntityPersistedEvent::class => ['setEventSlugAndDate'],
+            BeforeEntityUpdatedEvent::class => ['updateUserRole']
+
         ];
     }
 
@@ -65,6 +67,22 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         $slug = $this->slugger->slug($entity->getName());
         $entity->setSlug(strtolower($slug));
+    }
+
+    public function updateUserRole(BeforeEntityUpdatedEvent $updateEvent)
+    {
+        $entity = $updateEvent->getEntityInstance();
+
+        if (!($entity instanceof User)) {
+            return;
+        }
+
+        if ($entity->getStatus() == 1)
+        {
+            $entity->setRoles(['ROLE_ANNONCEUR']);
+        } else {
+            $entity->setRoles(['ROLE_USER']);
+        }
     }
 
     public function setEventSlugAndDate(BeforeEntityPersistedEvent $event)

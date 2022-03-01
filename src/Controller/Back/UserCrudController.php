@@ -11,8 +11,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -25,20 +26,19 @@ class UserCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('name'),
+            TextField::new('name')->setLabel('Prénom'),
             TextField::new('slug')->hideOnForm(),
-            BooleanField::new('isVerified'),
-            BooleanField::new('status'),
-            ArrayField::new('roles'),
-            TextField::new('address_1')->hideOnIndex(),
-            TextField::new('address_2')->hideOnIndex(),
-            TextField::new('city')->hideOnIndex(),
-            TextField::new('ZIP')->hideOnIndex(),
+            ChoiceField::new('isVerified')->setChoices(['Oui' => 1, 'Non' => 0])->setLabel('Mail Vérifié'),
+            ChoiceField::new('status')->setChoices(['Oui' => 1, 'Non' => 0])->setLabel('Annonceur'),
+            TextField::new('address_1')->hideOnIndex()->setLabel('Adresse 1'),
+            TextField::new('address_2')->hideOnIndex()->setLabel('Adresse 2'),
+            TextField::new('city')->hideOnIndex()->setLabel('Ville'),
+            TextField::new('ZIP')->hideOnIndex()->setLabel('Code Postal'),
             TextField::new('siren')->hideOnIndex(),
-            TextField::new('phone')->hideOnIndex(),
-            DateField::new('founded_in')->hideOnIndex(),
-            IntegerField::new('capacity')->hideOnIndex(),
-            UrlField::new('website')->hideOnIndex(),
+            TextField::new('phone')->hideOnIndex()->setLabel('Téléphone'),
+            DateField::new('founded_in')->hideOnIndex()->setLabel('Date de création'),
+            IntegerField::new('capacity')->hideOnIndex()->setLabel('Capacité'),
+            UrlField::new('website')->hideOnIndex()->setLabel('Site'),
             UrlField::new('facebook')->hideOnIndex(),
             UrlField::new('twitter')->hideOnIndex(),
             UrlField::new('instagram')->hideOnIndex(),
