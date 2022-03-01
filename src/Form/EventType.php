@@ -6,9 +6,9 @@ use App\Entity\Event;
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-// add this use to upload File Type
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+// add this use to upload File Type
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -27,7 +27,7 @@ class EventType extends AbstractType
             // upload user event picture file
             ->add('picture' , FileType::class, [
 
-                'label' => 'Votre image de profil (Format: jpg, png ou gif file)',
+                'label' => 'Image de votre événement (Format: jpg, png ou gif file)',
                 'mapped' => true,
                 'required' => false,     
             ])  
