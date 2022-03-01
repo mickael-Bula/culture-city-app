@@ -141,14 +141,22 @@ class AdvertiserController extends AbstractController
     public function showPlacePanel(EventRepository $eventRepository, UserRepository $userRepository,  string $slug): Response
     {
       
+        // display advertiser page
         $user = $userRepository->findOneBy(["slug" => $slug]);
 
+        // keep User id
         $userId = $user->getId();
-    
-        $eventsList = $eventRepository->findBy(["user" => $userId] );
+        
+        // display Events by user id and order by date
+        $eventsList = $eventRepository->findBy(["user" => $userId],["startDate" => 'ASC'] );
         
         //dump($user);
-        dump($eventsList);
+        //dump($eventsList);
+
+        if (!$event)
+        {
+            throw $this->createNotFoundException('No evet to display');
+        }
 
         return $this->render('front/main/advertiser.html.twig', compact('user', 'eventsList'));
     }
