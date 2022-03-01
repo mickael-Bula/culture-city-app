@@ -170,7 +170,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * pour résoudre le lien et servir l'image
      * 
      * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="avatar")
-     * @var File
+     * @var File 
      */
     private $avatarFile;
 
