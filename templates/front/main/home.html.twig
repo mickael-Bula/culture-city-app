@@ -44,7 +44,7 @@
     </div>
 {% endfor %}
 
-</div>
+
 
     <h2>Événements à venir</h2>
     <div class="separator"></div>
@@ -56,8 +56,8 @@
         <form id="filters">
             <div class="aside p-4 mb-5">
                 <!-- search by date -->
-                <input type="date" id="start" name="trip-start" value="2022-02-22" min="2022-02-22" max="2032-12-31">
-
+                <input type="date" id="start" name="trip-start"  value="{{ "now"| date("Y-m-d") }}" min="2022-02-22" max="2032-12-31">
+                
                 <!-- Checked switch -->
                 {% for category in categories %}
 
@@ -79,7 +79,7 @@
                 <h3> Les évènements du lundi 26 février 2022</h3>
                 <div class="separator-small"></div>
 
-                <div id="displayEvents" class="d-flex flex-column flex-md-row"></div>
+                <div id="displayEvents" class="d-flex flex-column flex-md-row flex-wrap"></div>
 
                 <!--Other events -->
                 <h3 class="mt-5"> Les évènements suivant </h3>
