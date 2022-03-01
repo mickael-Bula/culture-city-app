@@ -23,7 +23,7 @@ class CategoryController extends AbstractController
         
         // display all event form this category
         $eventsList = $eventRepository->findBy(["category"=>$categoryId ]);
-
+        
         // error catch events
         if (!$eventsList)
         {
