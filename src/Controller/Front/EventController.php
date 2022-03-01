@@ -54,6 +54,7 @@ class EventController extends AbstractController
                 $endDate = $form->get('endDate')->getData();
                 $eventFile = $form->get('picture')->getData();
                 $category = $form->get('category')->getData();
+                $slug = $slugger->slug($name);
 
                 $event->setName($name)
                     ->setPrice($price)
@@ -62,28 +63,27 @@ class EventController extends AbstractController
                     ->setStartDate($startDate)
                     ->setStartDate($startDate)
                     ->setEndDate($endDate)
-                    ->setPictureFile($eventFile)
-                    ->setCategory($category);
+                    ->setCategory($category)
+                    ->setSlug(strtolower($slug));   
                     
-                if ($eventFile) {
-                    $originalFilename = pathinfo($eventFile->getClientOriginalName(), PATHINFO_FILENAME);
-                    $safeFilename = $slugger->slug($originalFilename);
-                    $newFilename = $safeFilename.'-'.uniqid().'.'.$eventFile->guessExtension();
-    
-                    try {
-                        $eventFile->move(
-                            $this->getParameter('event_picture'),
-                            $newFilename
-                        );
-                    } catch (FileException $e) {
-                        // ... gérer les exeptions si problème d'upload en fonction des restrictions qu'on a pu donner dans le form
-                    }
-    
-                    $event->setPicture($newFilename);
+                    if ($eventFile) {
+                        $originalFilename = pathinfo($eventFile->getClientOriginalName(), PATHINFO_FILENAME);
+                        $safeFilename = $slugger->slug($originalFilename);
+                        $newFilename = $safeFilename.'-'.uniqid().'.'.$eventFile->guessExtension();
+        
+                        try {
+                            $eventFile->move(
+                                $this->getParameter('event_picture'),
+                                $newFilename
+                            );
+                        } catch (FileException $e) {
+                            // ... gérer les exeptions si problème d'upload en fonction des restrictions qu'on a pu donner dans le form
+                        }
+        
+                        $event->setPicture($newFilename);
                    
                 }
-
-
+                
             $this->addFlash('event_create', 'votre événement a été crée');
 
             $entityManager->persist($event);
