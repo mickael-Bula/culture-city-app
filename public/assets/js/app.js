@@ -82,8 +82,11 @@ const app = {
             eventTemplate.querySelector(".eventStartDate").textContent = eventDate;
             
             // display event's image
-            let urlImage = "upload/default_picture/default_avatar.jpg";
-            eventTemplate.querySelector(".eventPicture").setAttribute("src", urlImage);
+            let eventPicture = (element.picture !== null) ? element.picture : "default_event.jpg";
+            let urlPicture = "upload/default_picture/" + eventPicture;
+            console.log(urlPicture);
+
+            eventTemplate.querySelector(".eventPicture").setAttribute("src", urlPicture);
 
             eventTemplate.querySelector(".eventName").textContent = element.name;
             eventTemplate.querySelector(".eventPlace").textContent = element.user.city;
