@@ -26,9 +26,6 @@ const app = {
         }
         event.currentTarget.classList.add("active");
         event.currentTarget.setAttribute("aria-current", "page");
-
-        // fetch current category data
-        app.fetchEvents(event);
     },
 
     handleChangeFilterForm: function()
