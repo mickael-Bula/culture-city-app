@@ -12,7 +12,7 @@ const app = {
         document.querySelectorAll("#navbarNav .categories").forEach(category => category.addEventListener("click", app.handleClickCategoryBtn));
 
         // add listeners on inputs form
-        document.querySelectorAll("#filters input").forEach(filter => filter.addEventListener("change", app.handleChangeFilterForm));
+        document.querySelectorAll("#filters input").forEach(filter => filter.addEventListener("change", app.handleChangeFiltersForm));
     },
 
     handleClickCategoryBtn: function(event)
@@ -28,7 +28,7 @@ const app = {
         event.currentTarget.setAttribute("aria-current", "page");
     },
 
-    handleChangeFilterForm: function()
+    handleChangeFiltersForm: function()
     {
         // retrieve form
         const filtersForm = document.querySelector("#filters");
@@ -40,28 +40,17 @@ const app = {
         const queryStringParams = new URLSearchParams();
         form.forEach((value, key) => queryStringParams.append(key, value));
 
-        // set fetch options
-        let fetchOptions = {
-            method: 'GET',
-            mode:   'cors',
-            cache:  'no-cache'
-        };
-
-        // send a request to collect events by filters
-        fetch('http://localhost:8000/front/api/filters' + '?' + queryStringParams.toString(), fetchOptions)
-        .then(res   => res.json())
-        .then(data  => app.displayEvents(data));
+        app.fetchEvents('http://localhost:8000/front/api/filters', queryStringParams.toString());
     },
 
-    fetchEvents: async function(event)
+    fetchEvents: async function(url, queryString)
     {
-        const category  = event.target.innerHTML;
         let fetchOptions = {
             method: 'GET',
             mode:   'cors',
             cache:  'no-cache'
         };
-        response = await fetch('http://localhost:8000/front/api/filters/' + category, fetchOptions);
+        response = await fetch(url + '?' + queryString, fetchOptions);
         data = await response.json();
         app.displayEvents(data);
     },
@@ -83,13 +72,18 @@ const app = {
             const endDate = new Date(element.endDate);        
             if (datePicker.getTime() > endDate.getTime()) { continue }
 
-            // get event's tags
+            // get event's tags and create a link for each
             let tags = element.tags;
-            for (const tag of tags) { eventTemplate.querySelector(".eventTags").textContent += tag.name + " " }
-
+            // for (const tag of tags) { eventTemplate.querySelector(".eventTags").textContent += tag.name + " " }
+            for (const tag of tags) { app.addTagLinkElementToDOM(eventTemplate, tag) }
+            
             // reformate event's date and display it
             let eventDate = new Date(element.endDate).toLocaleDateString();
             eventTemplate.querySelector(".eventStartDate").textContent = eventDate;
+            
+            // display event's image
+            let urlImage = "upload/default_picture/default_avatar.jpg";
+            eventTemplate.querySelector(".eventPicture").setAttribute("src", urlImage);
 
             eventTemplate.querySelector(".eventName").textContent = element.name;
             eventTemplate.querySelector(".eventPlace").textContent = element.user.city;
@@ -100,6 +94,16 @@ const app = {
         {
             displayElement.textContent = "Il n'y a pas d'événement pour cette date";
         }
+    },
+
+    addTagLinkElementToDOM: function(eventTemplate, tag)
+    {
+        // add a link to tag's page for each tag and append it to DOM
+        let newLink = document.createElement("a");
+        newLink.href = "/front/tag/" + tag.name;
+        newLink.textContent = tag.name + " ";
+        console.log(eventTemplate);
+        eventTemplate.querySelector(".eventTags").appendChild(newLink);
     }
 }
 

@@ -43,9 +43,9 @@ liip_imagine:
                 thumbnail: { size: [1200, 250], mode: outbound }
         
         # Mon filtre pour l'image de la page d'un événement.
-        event_picture_831:
+        event_picture_600:
             filters:
-                thumbnail: { size: [831, 180], mode: outbound }       
+                thumbnail: { size: [600, 600], mode: outbound }       
 
 
         # Par défaut le bundle va créer 2 dossiers: media/cache dans le dossier public de l'applicatiion.
