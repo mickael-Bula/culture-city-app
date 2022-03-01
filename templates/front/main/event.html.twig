@@ -13,7 +13,7 @@
                     <!-- event picture -->
                     <div class="col-12 mb-3">
                         <a href="">
-                            <img class="img-fluid w-100 border-radius box-shadow" src="{{ asset('assets/images/image-concert-600px.jpg') }}" alt="">
+                            <img class="img-fluid w-100 border-radius box-shadow" src="{{event.picture}}" alt="">
                         </a>
                     </div>
 
@@ -22,33 +22,36 @@
                         <div class="my-3 mb-lg-4">
                             <div class="scaled-xs"> 
                                 <a href="#">  
-                                    <div class ="category bg-category-concert d-inline">Concert</div>
+                                    <div class ="category bg-category-concert d-inline">{{event.category.name}}</div>
                                 </a>
                             </div> 
                         </div>
                         
                         <a href="#">
-                            <h1 class="name mb-2 mb-xl-3">Lenny Kravurgitz</h1>
+                            <h1 class="name mb-2 mb-xl-3">{{event.name}}</h1>
                         </a>
 
                         <div class="my-2">
                             <div class="scaled-xs">
                                 <i class="fa-solid fa-calendar-days d-inline"></i> 
-                                <div class ="date ms-2 d-inline">23/02/2022</div>
+                                <div class ="date ms-2 d-inline">{{event.startDate | date("d/m/Y")}}</div>
                             </div> 
                         </div>
 
                         <div class="my-2">
                             <div class="scaled-xs">
                                 <i class="fa-solid fa-clock"></i>
-                                <div class ="start-time ms-2 d-inline">17:00</div>
+                                <div class ="start-time ms-2 d-inline">{{event.startDate | date("g:ia")}}</div>
                             </div> 
                         </div>
                         
                         <div class="my-2">
                             <div class="scaled-xs">
                                 <i class="fa-solid fa-tags d-inline"></i> 
-                                <div class="tags ms-2 d-inline"><a href="#"> Rock</a>,<a href="#"> electro</a></div>    
+                                <div class="tags ms-2 d-inline"> 
+                                    {% for tag in event.tags %}
+                                        <a href="#">{{tag.name}}</a>
+                                    {% endfor %}</div>    
                             </div>
                         </div>
 
@@ -56,7 +59,7 @@
                             <div class="scaled-xs">
                                 <i class="fa-solid fa-location-dot d-inline"></i> 
                                 <a href="#">
-                                    <div class="place ms-2 d-inline">Le Florida</div>
+                                    <div class="place ms-2 d-inline">{{event.user.name}}</div>
                                 </a>
                             </div>  
                         </div>
