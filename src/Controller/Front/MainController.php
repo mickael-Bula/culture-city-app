@@ -34,15 +34,21 @@ class MainController extends AbstractController
         foreach ($events as $event) {            
             $dateEvent = $event->getStartDate();
             $dateEvent = $dateEvent->format('Y-m-d');
+
             if ($currentDate === $dateEvent)
-            {
+            {   
+                
                 $currentEvents[] = $event;
-            }
+    
+            } elseif ($dateEvent > $currentDate) {
+                
                 $upcomingEvents[] = $event;
+           
+            } 
         }
 
          //dd($currentEvents, $upcomingEvents);
 
-        return $this->render('front/main/home.html.twig', compact('currentEvents', 'upcomingEvents', 'categories'));
+        return $this->render('front/main/home.html.twig', compact('currentEvents', 'upcomingEvents', 'categories' ));
     }
 }
