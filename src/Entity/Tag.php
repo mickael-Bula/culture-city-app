@@ -97,4 +97,10 @@ class Tag
 
         return $this;
     }
+
+    // For CRUD ADMIN (Event)
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
