@@ -111,7 +111,8 @@ class AppFixtures extends Fixture
                 ->setFacebook('www.facebook.com/lieu')
                 ->setInstagram('www.instagram.com/lieu')
                 ->setTwitter('www.twitter.com/lieu')
-                ->setSlug(strtolower($this->slugger->slug($newAnnonceur->getName())));
+                ->setSlug(strtolower($this->slugger->slug($newAnnonceur->getName())))
+                ->setStatus(1);
 
                 $allAnnonceursEntity[] = $newAnnonceur;
 
@@ -129,7 +130,8 @@ class AppFixtures extends Fixture
                 ->setPassword('user')
                 ->setCreatedAt(new DateTimeImmutable('now'))
                 ->setName($faker->firstName(rand(1, 2) == 1 ? 'female' : 'male'))
-                ->setSlug(strtolower($this->slugger->slug($newUser->getName())));
+                ->setSlug(strtolower($this->slugger->slug($newUser->getName())))
+                ->setStatus(0);
 
                 $allUsersEntity[] = $newUser;
 
@@ -141,7 +143,8 @@ class AppFixtures extends Fixture
         $newAdmin->setEmail('admin@admin.com')
             ->setRoles(['ROLE_ADMIN'])
             ->setPassword('admin')
-            ->setCreatedAt(new DateTimeImmutable('now'));
+            ->setCreatedAt(new DateTimeImmutable('now'))
+            ->setStatus(1);
 
             $manager->persist($newAdmin);
     
@@ -165,9 +168,11 @@ class AppFixtures extends Fixture
                 ->setPrice($faker->numberBetween(0, 20))
                 ->setDescription($faker->text())
                 ->setIsPremium($faker->numberBetween(0, 1))
-                ->setStartDate(new DateTime())
-                ->setEndDate(new DateTime())
-                ->setSlug(strtolower($this->slugger->slug($newEvent->getName())));
+                ->setSlug(strtolower($this->slugger->slug($newEvent->getName())))
+                ->setStartDate($faker->dateTimeBetween('+1 days', '+5 days'))
+                ->setEndDate($faker->dateTimeBetween('+6 days', '+10 days'));
+
+                $manager->persist($newEvent);
 
                 $arrayTags = array_slice($allTagsEntity,0, mt_rand(0, 3));
                 foreach ($arrayTags as $tag)
