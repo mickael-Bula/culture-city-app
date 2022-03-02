@@ -28,6 +28,7 @@ class Tag
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"events"})
      */
     private $slug;
 
