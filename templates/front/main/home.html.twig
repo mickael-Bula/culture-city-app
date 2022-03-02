@@ -44,6 +44,14 @@
     </div>
 {% endfor %}
 
+{# flash message aprèsajout événement  #}
+
+  {% for message in app.flashes('event_create') %}
+         <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
 
 
     <h2>Événements à venir</h2>
@@ -149,7 +157,9 @@
                 <h3 class="mt-5"> Les évènements suivant </h3>
                 <div class="separator-small"></div>
 
+
                 <div id="displayUpcomingEvents" class="d-flex flex-column flex-md-row flex-wrap">
+              
                 {# emmet : div.col-12>div.card>img+div.p-3r>h3+div.date+div.tags+div.place #}
                                      
                 {% for event in upcomingEvents %}
@@ -213,56 +223,7 @@
 
                         </div>
                     </div>
-                {% endfor %}
-                    
-                    <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
-                        
-                        <div class="card overflow-hidden">
-                            <div class="d-flex d-flex flex-row flex-md-column">
-                                <div class="col-4 col-sm-12 ">
-                                    <a href="">
-                                        <img class="img-fluid w-100 border-radius" src="{{ asset('assets/images/image-concert-600px.jpg') }}" alt="">
-                                    </a>
-                                </div>
-                            
-                                <div class="col-8 col-sm-12 p-1 p-sm-3">
-                                    <a href="#">
-                                        <h3 class="name mb-2">Salon de la bière</h3>
-                                    </a>
-                                    <div class="my-2">
-                                        <div class="scaled-xs">
-                                            <i class="fa-solid fa-calendar-days d-inline"></i> 
-                                            <div class ="date ms-2 d-inline">23/02/2022</div>
-                                        </div> 
-                                    </div>
-                                    
-                                    <div class="my-2">
-                                        <div class="scaled-xs">
-                                            <i class="fa-solid fa-tags d-inline"></i> 
-                                            <div class="tags ms-2 d-inline"><a href="#"> bières artisanales</a></div>    
-                                        </div>
-                                    </div>
-
-                                    <div class="my-2">  
-                                        <div class="scaled-xs">
-                                            <i class="fa-solid fa-location-dot d-inline"></i> 
-                                            <a href="#">
-                                                <div class="place ms-2 d-inline">Cave de chez Rochert</div>
-                                            </a>
-                                        </div>  
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <a href="#">
-                                            <i class="fa-solid fa-arrow-right-long me-2"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                 
+                {% endfor %}                 
                 </div>
             </div>
         </div>

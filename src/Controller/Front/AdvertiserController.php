@@ -20,21 +20,27 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class AdvertiserController extends AbstractController
 {
     /**
-     * @Route("/advertiser/panel/edit/profile", name="app_user_advertiser", methods={"GET", "POST"})
+     * @Route("/annonceur/edit/profile/{slug}", name="advertise_edit_profile", methods={"GET", "POST"})
      */
-    public function editPlaceProfile(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
+    public function editAdvertiserProfile(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
     {
 
         //! ne pas s'inquièter de ce qui est souligné en rouge il n'y a pas de problème, tout fonctionne.
+       
         
         // get user from session
         $user = $this->getUser();
-        
+        // todo vérifier la gestion de la mise à jour image.
+        $user->setAvatarFile(null);
+        $user->setBannerFile(null);
+       
+        dump($user);
+
             // if no user authenticated as advertiser, we create a new one
             if ( !$user)
             {
                 $this->addFlash('danger', "vous n'êtes pas autorisé");
-                $this->redirectToRoute('home', [], Response::HTTP_MOVED_PERMANENTLY);
+                $this->redirectToRoute('main_home', [], Response::HTTP_MOVED_PERMANENTLY);
             }
 
             // get advertiserForm and bind the authenticated user
@@ -50,6 +56,7 @@ class AdvertiserController extends AbstractController
              *  je récupère le fichier image qui est uploadé dans le form
              *  sur la propriété avatar.
              **/
+            
 
                 $avatarFile = $form->get('avatar')->getData();
 
@@ -128,7 +135,7 @@ class AdvertiserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('main_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('front/form/advertiser.html.twig', compact('form'));
@@ -136,7 +143,7 @@ class AdvertiserController extends AbstractController
 
      /**
      * 
-     * @Route("/annonceur/{slug}", name="showAdvertiserSlug")
+     * @Route("/annonceur/{slug}", name="show_advertiser_page")
      */
     public function showPlacePanel(EventRepository $eventRepository, UserRepository $userRepository,  string $slug): Response
     {
