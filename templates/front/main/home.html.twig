@@ -99,7 +99,7 @@
                                             <!-- pour avoir un bloc carré qui se redimensionne correctement, il faut créer un hack css avec square:after
                                                 info ici : https://spin.atomicobject.com/2015/07/14/css-responsive-square/
                                             -->
-                                            <a href="">
+                                            <a href="#">
                                                 <div class="square" style="background-image:url('{{event.picture}}'); background-size:cover; background-position:center center; ">
                                                 </div>
                                             </a>
@@ -119,7 +119,7 @@
                                                 <div class="scaled-xs">
                                                     <i class="fa-solid fa-calendar-days d-inline"></i> 
                                                     <div class ="date ms-2 d-inline">{{event.startDate | date("d-m-Y") }}</div>
-                                                </div> 
+                                                </div> ""
                                             </div>
                                             
                                             <div class="my-2">
@@ -211,7 +211,7 @@
                                                         {% for tag in event.tags %}
                                                             <a href="#">{{tag.name}}</a>
                                                         {% endfor %}
-                                                </div>    
+                                                    </div>    
                                                 </div>
                                             </div>
 
