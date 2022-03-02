@@ -135,7 +135,7 @@ class ResetPasswordController extends AbstractController
             // flash message for user after success on reset password.Message actually displayed on home page.
             $this->addFlash('password-reset-success', 'Félicitation...votre mot de passe a bien été changé !' );
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('main_home');
         }
 
         return $this->render('user/reset.html.twig', [

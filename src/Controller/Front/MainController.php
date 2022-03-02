@@ -11,10 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/")
-     * @Route("/home", name="home")
+     * @Route("/", name="main_home")
      */
-    public function index(CategoryRepository $categoryRepository, EventRepository $eventRepository): Response
+    public function showHomePage(CategoryRepository $categoryRepository, EventRepository $eventRepository): Response
     {
         $categories = $categoryRepository->findAll();
         $events = $eventRepository->findAll();

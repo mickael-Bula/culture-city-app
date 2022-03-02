@@ -136,7 +136,7 @@ class RegistrationController extends AbstractController
                         Nous avons bien reçu votre demande afin d\'annoncer vos événements.
                         En attendant...veuillez vérifier vos mail pour confirmer votre adresse e-mail !');
 
-                        return $this->redirectToRoute('app_user_advertiser');
+                        return $this->redirectToRoute('advertise_edit_profile');
             
                         }
 
@@ -153,7 +153,7 @@ class RegistrationController extends AbstractController
                 $this->addFlash('success-register-user', 'Merci ' . $newUserName . ' vous êtes enregistré et connecté. Veuillez vérifier vos mail pour confirmer votre adresse e-mail !');
 
                 //redirect on home page after register and autologin.
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('main_home');
                 
                 }
 
@@ -207,7 +207,7 @@ class RegistrationController extends AbstractController
         // Message actually displayed on home.
         $this->addFlash('emailverification', 'Votre adresse email a été confirmée !');
 
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('main_home');
     } 
 
 

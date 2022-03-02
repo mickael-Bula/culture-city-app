@@ -30,7 +30,7 @@ security:
                 login_path: app_login
                 check_path: app_login
                 # default redirect route after login successfull
-                # default_target_path: home
+                # default_target_path: main_home
                 # comment or uncomment 'enable_csrf: true' line for allow csrf on loginform
                 enable_csrf: true
 
@@ -46,7 +46,7 @@ security:
             logout:
                 path: app_logout 
                 # Redirection after logout
-                target: home   
+                target: main_home   
 
 
             # configure the maximum login attempts in a custom period of time
