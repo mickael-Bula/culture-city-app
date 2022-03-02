@@ -212,6 +212,12 @@ table {
   border-radius: 100px;
 }
 
+.avatar-header {
+  max-width: 150px;
+  border: 2px solid var(--main-color-white);
+  border-radius: 100px;
+}
+
 .avatar img {
   width: 100%;
   height: auto;
@@ -375,8 +381,15 @@ em {
     max-width: 50px;
     top: -15px;
   }
+  .separator, .separator-small {
+    width: 250px;
+  }
   .separator-small {
     margin-bottom: 15px;
+  }
+  .avatar-header {
+    position: relative;
+    top: -10px;
   }
 }
 /*# sourceMappingURL=style.css.map */
