@@ -27,14 +27,8 @@ class AdvertiserController extends AbstractController
 
         //! ne pas s'inquièter de ce qui est souligné en rouge il n'y a pas de problème, tout fonctionne.
        
-        
         // get user from session
         $user = $this->getUser();
-        // todo vérifier la gestion de la mise à jour image.
-        $user->setAvatarFile(null);
-        $user->setBannerFile(null);
-       
-        dump($user);
 
             // if no user authenticated as advertiser, we create a new one
             if ( !$user)
@@ -51,66 +45,49 @@ class AdvertiserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         { 
 
-            /** @var UploadedFile avatar (ce paramètre est défini dans le form.
-             *  il doit être le même dans le form et ici ex 'attachement' ou'file').
-             *  je récupère le fichier image qui est uploadé dans le form
-             *  sur la propriété avatar.
+            /** @var UploadedFile 
              **/
-            
 
+            if ($form->get('avatar')->getData() != null) {
+                
                 $avatarFile = $form->get('avatar')->getData();
 
-                // Je sette donc la valeur de $avatarFile avec le fichier image
                 $user->setAvatarFile($avatarFile);
-               
-
-                // Le passage par le renommage n'est obligatoire que si une image est ajoutée 
-                    // il n'est pas obligatoire d'ajouter une image si mise à jour par exemple d'autres valeurs du formulaire.
-                    // Si il y a eu une image ajoutée je rentre dans ce if.
-                    
+                                 
                 if ($avatarFile) {
                     $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
-                    // ici on modifie le nom du fichier pour le rendre unique et éviter les doublons ou les conflits
+
                     $safeFilename = $slugger->slug($originalFilename);
                     $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarFile->guessExtension();
     
-                    // Ici je lui passe le repertoire de savegarde où déplacer->move() le fichier image
-                        // ce rep est paramètré dans les fichiers de config dans vich_uploader.yaml et services.yaml
-                        // c'est là que l'on a fait le lien entre le bundle le framework et qu'on défini les paramètre de la variable user_avatar
-                        // sur qui on a paramètré le rep "path" de stockage et le chemin relatif : voir la notation avec avec %/rep/%
                     try {
                         $avatarFile->move(
                             $this->getParameter('user_avatar'),
                             $newFilename
-                        );
+                        );                 
+
                     } catch (FileException $e) {
                         // ... gérer les exeptions si problème d'upload en fonction des restrictions qu'on a pu donner dans le form
                     }
     
-                    // mise à jour de la propriété $avatar qui va prendre comme valeur le nouveau nom du fichier
                     $user->setAvatar($newFilename);
                    
                 }
 
+               }
+
+               if ($form->get('banner')->getData() != null) {
+
                 $bannerFile = $form->get('banner')->getData();
 
-                // Je sette donc la valeur de $bannerFile avec le fichier image
                 $user->setBannerFile($bannerFile);
 
-                // Le passage par le renommage n'est obligatoire que si une image est ajoutée 
-                    // il n'est pas obligatoire d'ajouter une image si mise à jour par exemple d'autres valeurs du formulaire.
-                    // Si il y a eu une image ajoutée je rentre dans ce if.
-                
                 if ($bannerFile) {
                     $originalFilename = pathinfo($bannerFile->getClientOriginalName(), PATHINFO_FILENAME);
-                    // ici on modifie le nom du fichier pour le rendre unique et éviter les doublons ou les conflits
+
                     $safeFilename = $slugger->slug($originalFilename);
                     $newFilename = $safeFilename.'-'.uniqid().'.'.$bannerFile->guessExtension();
-    
-                    // Ici je lui passe le repertoire de savegarde où déplacer->move() le fichier image
-                        // ce rep est paramètré dans les fichiers de config dans vich_uploader.yaml et services.yaml
-                        // c'est là que l'on a fait le lien entre le bundle le framework et qu'on défini les paramètre de la variable user_banner
-                        // sur qui on a paramètré le rep "path" de stockage et le chemin relatif : voir la notation avec avec %/rep/%
+
                     try {
                         $bannerFile->move(
                             $this->getParameter('user_banner'),
@@ -120,20 +97,19 @@ class AdvertiserController extends AbstractController
                         // ... gérer les exeptions si problème d'upload en fonction des restrictions qu'on a pu donner dans le form
                     }
     
-                    // mise à jour de la propriété $banner qui va prendre comme valeur le nouveau nom du fichier
                     $user->setBanner($newFilename);
                     
                 } 
 
-
+               }
             
-            // Flash message display a success message
-            $this->addFlash('success', 'votre profil a été édité');
+                    // Flash message display a success message
+                    $this->addFlash('success', 'votre profil a été édité');
 
-            //dd($user); 
+                    //dd($user); 
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+                    $entityManager->persist($user);
+                    $entityManager->flush();
 
             return $this->redirectToRoute('main_home', [], Response::HTTP_SEE_OTHER);
         }
@@ -156,9 +132,6 @@ class AdvertiserController extends AbstractController
         
         // display Events by user id and order by date
         $eventsList = $eventRepository->findBy(["user" => $userId],["startDate" => 'ASC'] );
-        
-        //dump($user);
-        //dump($eventsList);
 
         if (!$eventsList)
         {
