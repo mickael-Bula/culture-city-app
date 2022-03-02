@@ -143,7 +143,7 @@ class AdvertiserController extends AbstractController
 
      /**
      * 
-     * @Route("/annonceur/{slug}", name="showAdvertiserSlug")
+     * @Route("/annonceur/{slug}", name="show_advertiser_page")
      */
     public function showPlacePanel(EventRepository $eventRepository, UserRepository $userRepository,  string $slug): Response
     {

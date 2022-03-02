@@ -44,6 +44,14 @@
     </div>
 {% endfor %}
 
+{# flash message aprèsajout événement  #}
+
+  {% for message in app.flashes('event_create') %}
+         <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
 
 
     <h2>Événements à venir</h2>
