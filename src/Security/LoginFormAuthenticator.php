@@ -53,7 +53,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         // For example:
         return new RedirectResponse(
 
-            $this->urlGenerator->generate('home'),
+            $this->urlGenerator->generate('main_home'),
             );
         
     }

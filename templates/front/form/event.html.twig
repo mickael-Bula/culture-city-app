@@ -13,13 +13,6 @@
 
     Cette page est le formulaire pour créer un événement
 
-    {# read and display just one flash message type #}
-    {% for message in app.flashes('event_create') %}
-         <div class="alert alert-success" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-
     {% for message in app.flashes('danger') %}
          <div class="alert alert-danger" role="alert">
             {{ message }}

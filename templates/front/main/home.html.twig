@@ -44,6 +44,14 @@
     </div>
 {% endfor %}
 
+{# flash message aprèsajout événement  #}
+
+  {% for message in app.flashes('event_create') %}
+         <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
 
 
     <h2>Événements à venir</h2>
@@ -158,7 +166,9 @@
                 <h3 class="mt-5"> Les évènements suivant </h3>
                 <div class="separator-small"></div>
 
+
                 <div id="displayUpcomingEvents" class="d-flex flex-column flex-md-row flex-wrap">
+              
                 {# emmet : div.col-12>div.card>img+div.p-3r>h3+div.date+div.tags+div.place #}
             
                     {% if upcomingEvents %}

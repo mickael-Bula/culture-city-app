@@ -57,9 +57,11 @@ const app = {
 
     displayEvents(data)
     {
-        // get event's container
-        const displayElement = document.getElementById("displayEvents");
-        displayElement.textContent="";
+        // get event's containers, one for current dates, another for upcoming dates
+        const displayCurrentElement = document.getElementById("displayCurrentEvents");
+        const displayUpcomingElement = document.getElementById("displayUpcomingEvents");
+        displayCurrentElement.textContent="";
+        displayUpcomingElement.textContent="";
         for (const element of data)
         {
             // cloning the template and add it to DOM for each event collected from database
@@ -69,7 +71,7 @@ const app = {
             // for an easier comparison we convert dates using the getTime() method which returns the number of milliseconds since the ECMAScript epoch
             const getDate = document.getElementById("start").value;
             const datePicker = new Date(getDate);
-            const endDate = new Date(element.endDate);        
+            const endDate = new Date(element.endDate);
             if (datePicker.getTime() > endDate.getTime()) { continue }
 
             // get event's tags and create a link for each
@@ -89,15 +91,27 @@ const app = {
             eventTemplate.querySelector(".eventName").textContent = element.name;
             eventTemplate.querySelector(".eventPlace").textContent = element.user.city;
 
-            // if an event matches the date pickers's day we display it as 'Curret Event', otherwise as 'Next Events'
-            // TODO algo de tri par date actuelle et future
+            // if an event matches the date picker we display it as 'Current Event', otherwise as 'Upcoming Events'
+            // to achieve the comparison we weed to convert dates in the same format
+            const startDate = new Date(element.startDate);
+            const reformateStartDate = startDate.toLocaleDateString();
+            const reformateDatePicker = datePicker.toLocaleDateString();
 
-            displayElement.appendChild(eventTemplate);
+            // comparing dates
+            reformateStartDate === reformateDatePicker ? console.log("égaux") : console.log("inégaux");
+
+            if (reformateDatePicker >= reformateStartDate)
+            {
+                // when an event starts before the date picker or takes place this day, we add it to Current Events list
+                displayCurrentElement.appendChild(eventTemplate);
+            }
+            // alternaltively we display it to Upcoming Events list
+            displayUpcomingElement.appendChild(eventTemplate);
         }
         // if the list of events is empty we display a message
-        if (displayElement.firstElementChild == null)
+        if (displayCurrentElement.firstElementChild == null)
         {
-            displayElement.textContent = "Il n'y a pas d'événement pour cette date";
+            displayCurrentElement.textContent = "Il n'y a pas d'événement pour cette date";
         }
     },
 
@@ -107,7 +121,6 @@ const app = {
         let newLink = document.createElement("a");
         newLink.href = "/tag/" + tag.slug;
         newLink.textContent = tag.slug + " ";
-        console.log(eventTemplate);
         eventTemplate.querySelector(".eventTags").appendChild(newLink);
     }
 }

@@ -160,6 +160,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    private $placeName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $avatar;
 
     /**
@@ -173,6 +178,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var File 
      */
     private $avatarFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -658,6 +668,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getPlaceName(): ?string
+    {
+        return $this->placeName;
+    }
+
+    public function setPlaceName(?string $placeName): self
+    {
+        $this->placeName = $placeName;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+      
     // For CRUD ADMIN (Event)
     public function __toString()
     {
