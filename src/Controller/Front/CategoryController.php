@@ -10,9 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/category/{slug}", name="category", methods={"GET"})
+     * @Route("/category/{slug}", name="show_category", methods={"GET"})
      */
-    public function showByName(Category $category): Response
+    public function showCategoryByName(Category $category): Response
     {
       
         return $this->render('front/main/category.html.twig', compact('category'));

@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Entity\Category;
+use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,16 +16,20 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
+
 class EventController extends AbstractController
 {
     /**
      * @Route("/event/{slug}", name="show_event")
      */
-    public function showEvent(Event $event): Response
+    public function showEventBySlug(EventRepository $eventRepository, string $slug): Response
     {
+        $event = $eventRepository->findOneBy(["slug" => $slug]);
+        if (!$event) {
+            throw $this->createNotFoundException('Il n\'y a pas d\'événement');
+        }
         return $this->render('front/main/event.html.twig', compact('event'));
     }
-
 
     /**
      * @Route("/create/event", name="create_event", methods={"GET", "POST"})
@@ -78,7 +83,7 @@ class EventController extends AbstractController
                             // ... gérer les exeptions si problème d'upload en fonction des restrictions qu'on a pu donner dans le form
                         }
         
-                        $event->setPicture($newFilename);
+                 $event->setPicture($newFilename);
                    
                 }
                 

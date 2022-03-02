@@ -136,7 +136,8 @@ class RegistrationController extends AbstractController
                         Nous avons bien reçu votre demande afin d\'annoncer vos événements.
                         En attendant...veuillez vérifier vos mail pour confirmer votre adresse e-mail !');
 
-                        return $this->redirectToRoute('advertise_edit_profile');
+                        //return $this->redirectToRoute('advertise_edit_profile', {'slug' : $user->slug} );
+                        return $this->redirectToRoute('advertise_edit_profile', ['slug' => $user->getSlug()]);
             
                         }
 

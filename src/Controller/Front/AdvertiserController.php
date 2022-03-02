@@ -20,16 +20,22 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class AdvertiserController extends AbstractController
 {
     /**
-     * @Route("/advertiser/edit/profile/{slug}", name="advertise_edit_profile", methods={"GET", "POST"})
+     * @Route("/annonceur/edit/profile/{slug}", name="advertise_edit_profile", methods={"GET", "POST"})
      */
     public function editAdvertiserProfile(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
     {
 
         //! ne pas s'inquièter de ce qui est souligné en rouge il n'y a pas de problème, tout fonctionne.
+       
         
         // get user from session
         $user = $this->getUser();
+        // todo vérifier la gestion de la mise à jour image.
+        $user->setAvatarFile(null);
+        $user->setBannerFile(null);
+       
         dump($user);
+
             // if no user authenticated as advertiser, we create a new one
             if ( !$user)
             {
@@ -50,6 +56,7 @@ class AdvertiserController extends AbstractController
              *  je récupère le fichier image qui est uploadé dans le form
              *  sur la propriété avatar.
              **/
+            
 
                 $avatarFile = $form->get('avatar')->getData();
 

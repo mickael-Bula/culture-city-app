@@ -9,18 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ShowController extends AbstractController
 {
-    /**
-     * @Route("/show/{slug}", name="front_show")
-     */
-    public function index(EventRepository $eventRepository, string $slug): Response
-    {
-        $event = $eventRepository->findOneBy(["slug" => $slug]);
-        if (!$event) {
-            throw $this->createNotFoundException('The product does not exist');
-        }
-        return $this->render('front/main/event.html.twig', compact('event'));
-    }
 
-    
+    //todo supprimer ce controller
 
 }
