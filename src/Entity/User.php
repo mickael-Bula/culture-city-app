@@ -158,6 +158,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $placeName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
+
     public function __construct(SluggerInterface $slugger)
     {   
         $this->slugger = $slugger;
@@ -557,6 +567,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setStatus(?bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getPlaceName(): ?string
+    {
+        return $this->placeName;
+    }
+
+    public function setPlaceName(?string $placeName): self
+    {
+        $this->placeName = $placeName;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

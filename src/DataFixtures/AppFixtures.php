@@ -112,6 +112,8 @@ class AppFixtures extends Fixture
                 ->setInstagram('www.instagram.com/lieu')
                 ->setTwitter('www.twitter.com/lieu')
                 ->setSlug(strtolower($this->slugger->slug($newAnnonceur->getName())))
+                ->setPlaceName($faker->words(3, true))
+                ->setDescription($faker->text(100))
                 ->setStatus(1);
 
                 $allAnnonceursEntity[] = $newAnnonceur;
