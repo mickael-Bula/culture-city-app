@@ -54,8 +54,6 @@ const app = {
         // options to display date in long format
         const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }
         datePicker = datePicker.toLocaleDateString('fr-FR', options);
-
-        console.log(datePicker);
         document.getElementById("curentDate").innerHTML = datePicker;
     },
 
@@ -108,8 +106,11 @@ const app = {
             
             // display event's image
             let urlPicture = (element.picture !== null) ? "upload/eventpicture/" + element.picture : "upload/default_picture/default_event.jpg";
+            eventTemplate.querySelector(".square").style.cssText += "background-image:url('" + urlPicture + "'); background-size:cover; background-position:center center;";
 
-            eventTemplate.querySelector(".eventPicture").setAttribute("src", urlPicture);
+            // display event's category name
+            eventTemplate.querySelector(".square-category").className = "square-category bg-category-" + element.category.slug + " d-inline";
+            eventTemplate.querySelector(".square-category").textContent = element.category.name;
 
             eventTemplate.querySelector(".eventName").textContent = element.name;
             eventTemplate.querySelector(".eventPlace").textContent = element.user.city;
@@ -120,9 +121,7 @@ const app = {
             const reformateStartDate = startDate.toLocaleDateString();
             const reformateDatePicker = datePicker.toLocaleDateString();
 
-            // comparing dates
-            reformateStartDate === reformateDatePicker ? console.log("égaux") : console.log("inégaux");
-
+            // compare dates
             if (reformateDatePicker >= reformateStartDate)
             {
                 // when an event starts before the date picker or takes place this day, we add it to Current Events list
