@@ -68,7 +68,12 @@ class EventController extends AbstractController
                     ->setEndDate($endDate)
                     ->setCategory($category)
                     ->setSlug(strtolower($slug));   
-                    
+
+                //! Au cas ou on utilise ce form pour mettre à jour l'événement 
+                //! on ne passe ici que si il y a eu une image modifiée.
+                
+                if ($form->get('picture')->getData() != null) {
+
                     if ($eventFile) {
                         $originalFilename = pathinfo($eventFile->getClientOriginalName(), PATHINFO_FILENAME);
                         $safeFilename = $slugger->slug($originalFilename);
@@ -83,10 +88,10 @@ class EventController extends AbstractController
                             // ... gérer les exeptions si problème d'upload en fonction des restrictions qu'on a pu donner dans le form
                         }
         
-                 $event->setPicture($newFilename);
-                   
+                        $event->setPicture($newFilename);
+                    }
                 }
-                
+
             $this->addFlash('event_create', 'votre événement a été crée');
 
             $entityManager->persist($event);
