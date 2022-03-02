@@ -24,7 +24,7 @@
 }
 
 
-/*card*/
+/**card event **/
 .card {
     @extend .border-radius;
     @extend .box-shadow;
@@ -57,7 +57,7 @@
             color: var(--main-color-white);
         }
     }
-    &-expositions {
+    &-exposition {
         @extend .bg-category;
         background-color: $green-color;
 
@@ -66,7 +66,7 @@
             color: var(--main-color-white);
         }
     }
-    &-loisirs {
+    &-loisir {
         @extend .bg-category;
         background-color: $blue-color;
 
@@ -87,7 +87,21 @@
 }
 
 
+/** advertiser page **/
 
+.avatar {
+    max-width: 150px;
+    border : 2px solid var(--main-color-white);
+    position :relative;
+    top : -50px;
+    left : 0;
+    border-radius: 100px;
+}
+
+.avatar img {
+    width: 100%;
+    height:auto;
+}
 
 /** Footer **/
 .footer {

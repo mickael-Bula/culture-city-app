@@ -17,7 +17,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">  
-
+        <script src="{{ asset('assets/js/app.js') }}" defer></script>
         <!-- App custom CSS -->
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
         <!-- favicon -->
@@ -26,6 +26,7 @@
         {# the image lives at "public/images/logo.png" #}
         {# <img src="{{ asset('images/logo.png') }}" alt="Symfony!"/> #}
         <link rel="shortcut icon" href="{{ asset('assets/favicon.png') }}" type="image/x-icon">
+
 
         <title>
             {% block title %}
@@ -51,5 +52,56 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     {% endblock %}
 </body>
+
+    <!-- add a template element as model to display an event  -->
+    <template id="eventTemplate">
+        <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
+            <div class="card overflow-hidden">
+                <div class="d-flex flex-row flex-md-column">
+                    <div class="col-4 col-sm-12 ">
+                        <a href="">
+                            <img class="eventPicture img-fluid w-100 border-radius" src="" alt="">
+                        </a>
+                    </div>
+                
+                    <div class="col-8 col-sm-12 p-1 p-sm-3">
+                        <a href="#">
+                            <h3 class="eventName mb-2"></h3>
+                        </a>
+
+                        <div class="my-2">
+                            <div class="scaled-xs">
+                                <i class="fa-solid fa-calendar-days d-inline"></i> 
+                                <div class =" eventStartDate date ms-2 d-inline"></div>
+                            </div> 
+                        </div>
+                        
+                        <div class="my-2">
+                            <div class="scaled-xs">
+                                <i class="fa-solid fa-tags d-inline"></i>
+                                <div class="eventTags tags ms-2 d-inline"><a href="#"> </a>    
+                            </div>
+                        </div>
+
+                        <div class="my-2">    
+                            <div class="scaled-xs">
+                                <i class="fa-solid fa-location-dot d-inline"></i> 
+                                <a href="#">
+                                    <div class="eventPlace place ms-2 d-inline"> </div>
+                                </a>
+                            </div>  
+                        </div>
+                        
+                        <div class="d-flex justify-content-end">
+                            <a href="#">
+                                <i class="fa-solid fa-arrow-right-long me-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </template>
 
 </html>

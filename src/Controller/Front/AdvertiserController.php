@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Entity\User;
 use App\Form\AdvertiserType;
+use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -131,5 +132,32 @@ class AdvertiserController extends AbstractController
         }
 
         return $this->renderForm('front/form/advertiser.html.twig', compact('form'));
+    }
+
+     /**
+     * 
+     * @Route("/annonceur/{slug}", name="showAdvertiserSlug")
+     */
+    public function showPlacePanel(EventRepository $eventRepository, UserRepository $userRepository,  string $slug): Response
+    {
+      
+        // display advertiser page
+        $user = $userRepository->findOneBy(["slug" => $slug]);
+
+        // keep User id
+        $userId = $user->getId();
+        
+        // display Events by user id and order by date
+        $eventsList = $eventRepository->findBy(["user" => $userId],["startDate" => 'ASC'] );
+        
+        //dump($user);
+        //dump($eventsList);
+
+        if (!$eventsList)
+        {
+            throw $this->createNotFoundException('No event to display');
+        }
+
+        return $this->render('front/main/advertiser.html.twig', compact('user', 'eventsList'));
     }
 }

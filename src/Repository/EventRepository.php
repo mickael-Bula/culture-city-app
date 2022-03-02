@@ -19,32 +19,44 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-    // /**
-    //  * @return Event[] Returns an array of Event objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * custom request gathering events by category name
+     *
+     * @param string $category
+     * @return void
+     */
+    public function findByCategory($category)
+    {
+        // on crée la requête depuis le repository Event que l'on nomme ici 'e'
+        return $this->createQueryBuilder('e')
+            // on fait une jointure à partir de la propriété event.category que l'on nomme 'e_c'
+            ->join('e.category', 'e_c')
+            // on sélectionne les events dont la categorie correspond à un paramètre lié
+            ->andWhere('e_c.name = :val')
+            // on lie le paramètre à la valeur $category (fournit en paramètre de la requête)
+            ->setParameter('val', $category)
+            // on lance la requête
+            ->getQuery()
+            // on retourne le résultat
+            ->getResult()
+        ;
+    }
+
+    /**
+     * custom request gathering events by filters
+     * return events which category.name is in filters array
+     *
+     * @param array $filters
+     * @return void
+     */
+    public function findEvents($filters)
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+            ->join('e.category', 'e_c')
+            ->andWhere('e_c.name IN (:vals)')
+            ->setParameter(':vals', array_values($filters))
             ->getQuery()
             ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Event
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
