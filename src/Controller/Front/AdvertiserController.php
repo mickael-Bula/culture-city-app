@@ -133,10 +133,10 @@ class AdvertiserController extends AbstractController
         // display Events by user id and order by date
         $eventsList = $eventRepository->findBy(["user" => $userId],["startDate" => 'ASC'] );
 
-        if (!$eventsList)
-        {
-            throw $this->createNotFoundException('No event to display');
-        }
+        //if (!$eventsList)
+        //{
+        //    throw $this->createNotFoundException('No event to display');
+        //}
 
         return $this->render('front/main/advertiser.html.twig', compact('user', 'eventsList'));
     }
