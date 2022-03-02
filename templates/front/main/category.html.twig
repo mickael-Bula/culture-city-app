@@ -45,7 +45,7 @@
                             <div class="card overflow-hidden">
                                 <div class="d-flex d-flex flex-row flex-md-column">
                                     <div class="col-4 col-sm-12 ">
-                                        <a href="#">
+                                        <a href="{{ path('show_event', {slug: event.slug}) }}">
                                             <img class="img-fluid w-100 border-radius" src="{{event.picture}}" alt="{{event.name}}">
                                         </a>
                                         
@@ -57,7 +57,7 @@
                                     </div>
                                 
                                     <div class="col-8 col-sm-12 p-1 p-sm-3">
-                                        <a href="#">
+                                        <a href="{{ path('show_event', {slug: event.slug}) }}">
                                             <h3 class="name mb-2">{{event.name}}</h3>
                                         </a>
 
