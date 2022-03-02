@@ -96,16 +96,16 @@ class AppFixtures extends Fixture
             $newAnnonceur->setEmail('annonceur' . $i . '@annonceur.fr')
                 ->setRoles(['ROLE_ANNONCEUR'])
                 ->setName($faker->firstName(rand(1, 2) == 1 ? 'female' : 'male'))
-                ->setPassword(strtolower($newAnnonceur->getName()))
+                ->setPassword('annonceur')
                 ->setCreatedAt(new DateTimeImmutable('now'))
-                ->setIsVerified(rand(1, 2))
+                ->setIsVerified($faker->numberBetween(0,1))
                 ->setAddress1($faker->streetAddress())
                 ->setAddress2($faker->streetAddress())
                 ->setCity($faker->city)
                 ->setZip($faker->postcode())
                 ->setSiren($faker->randomNumber())
                 ->setPhone($faker->phoneNumber())
-                ->setFoundedIn(new DateTimeImmutable($faker->date()))
+                ->setFoundedIn(new DateTime($faker->date()))
                 ->setWebsite('www.lieu.fr')
                 ->setCapacity($faker->randomNumber())
                 ->setFacebook('www.facebook.com/lieu')
@@ -133,7 +133,8 @@ class AppFixtures extends Fixture
                 ->setCreatedAt(new DateTimeImmutable('now'))
                 ->setName($faker->firstName(rand(1, 2) == 1 ? 'female' : 'male'))
                 ->setSlug(strtolower($this->slugger->slug($newUser->getName())))
-                ->setStatus(0);
+                ->setStatus(0)
+                ->setIsVerified($faker->numberBetween(0,1));
 
                 $allUsersEntity[] = $newUser;
 
