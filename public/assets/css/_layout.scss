@@ -1,0 +1,142 @@
+/** Header **/
+.header {
+    background-color: var(--main-color-blue-med);
+}
+
+.header_logo {
+    width :200px;
+    height: auto;
+}
+
+.navbar .navbar-toggler {
+    color: var(--main-color-white);
+    border-color: rgba(0,0,0,0);
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+/** Homepage **/
+.aside {
+    background-color: var(--main-color-blue-med);
+    @extend .border-radius;
+}
+
+
+/**card event **/
+.card {
+    @extend .border-radius;
+    @extend .box-shadow;
+    border-color: var(--main-color-grey);
+}
+
+.bg-category {
+    @extend .border-radius;
+    @extend .transition;
+    padding: 10px;
+    color: var(--main-color-white);
+
+
+    &-concert {
+        @extend .bg-category;
+        background-color: $yellow-color;
+        color: var(--main-color-blue-med);
+
+        &:hover {
+            background-color: var(--main-color-blue-med);
+            color: var(--main-color-white);
+        }
+    }
+    &-spectacle {
+        @extend .bg-category;
+        background-color: $brown-color;
+
+        &:hover {
+            background-color: var(--main-color-blue-med);
+            color: var(--main-color-white);
+        }
+    }
+    &-exposition {
+        @extend .bg-category;
+        background-color: $green-color;
+
+        &:hover {
+            background-color: var(--main-color-blue-med);
+            color: var(--main-color-white);
+        }
+    }
+    &-loisir {
+        @extend .bg-category;
+        background-color: $blue-color;
+
+        &:hover {
+            background-color: var(--main-color-blue-med);
+            color: var(--main-color-white);
+        }
+    }
+    &-evenementiel {
+        @extend .bg-category;
+        background-color: $grey-color;
+
+        &:hover {
+            background-color: var(--main-color-blue-med);
+            color: var(--main-color-white);
+        }
+    }
+}
+
+
+/** advertiser page **/
+
+.avatar {
+    max-width: 150px;
+    border : 2px solid var(--main-color-white);
+    position :relative;
+    top : -50px;
+    left : 0;
+    border-radius: 100px;
+}
+
+.avatar img {
+    width: 100%;
+    height:auto;
+}
+
+/** Footer **/
+.footer {
+    background-color: var(--main-color-blue-med);
+}
+
+.menu-mobile {
+    background-color: var(--main-color-blue-light);
+    position: fixed;
+    bottom:0;
+    width: 100%;
+}
+
+/** Global **/
+.btn-primary {
+    color: var(--main-color-white);;
+    background-color: var(--main-color-blue-light);
+    border-color: var(--main-color-blue-light);
+    border-radius: 50px;
+}
+
+.btn-primary:hover {
+    color: var(--main-color-blue-med);
+    background-color: var(--main-color-white);
+    border-color: var(--main-color-blue-med);
+}
+
+.separator {
+    width: 300px;
+    height: 5px;
+    background-color: var(--main-color-blue-med);
+    margin-bottom: 30px;
+
+    &-small {
+        @extend .separator;
+        width: 100px;
+    }
+}

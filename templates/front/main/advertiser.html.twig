@@ -1,0 +1,176 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Annonceur {{ user.name }}{% endblock %}
+
+{% block body %}
+
+
+<div class="container-fluid">
+    <!-- advertiser-infos -->
+    <div class="row">
+        <h1> Annonceur {{ user.name }} </h1>
+        <div class="separator"></div>
+
+        <!-- user banner-->
+        <div class="col-12">  
+            <img class="img-fluid w-100 border-radius" src="{{ asset('assets/images/banner.jpg') }}" alt="">  
+        </div>    
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <!-- user description-->
+            <div class="col-12">
+                <div class="avatar">
+                    <img class="img-fluid w-100 rounded-circle" src="{{ asset('assets/images/avatar.png') }}" alt="">
+                </div> 
+                
+                <h2 class="mb-3">à propos de nous</h2>
+
+                <div class="separator-small"></div>
+
+                <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, corrupti. Nostrum, inventore dolores unde sunt repellat 
+                    veniam molestiae excepturi culpa, numquam ipsam quis architecto eligendi laborum, quo officia obcaecati eum.
+                </p>
+                {% if user.capacity %} 
+                    <p><em>Capacité : {{ user.capacity }} personnes</em></p>
+                {% endif %}
+            </div>
+
+            <!-- Other user infos-->
+            <div class="d-flex justify-content-start flex-wrap">
+ 
+                <div class="my-2 me-5">    
+                    <div class="scaled-xs">
+                        <div class="mb-2 mb-lg-3">
+                            <i class="fa-solid fa-location-dot d-inline"></i> <h4 class="d-inline">Adresse</h4>
+                        </div>
+                        <div class="separator-small"></div>
+                        <adress>
+                            <p>{{ user.address1 }} <br>
+                            {% if user.address2 %} 
+                                {{ user.address2 }} <br>
+                            {% endif %}
+                            {{ user.zip }} {{ user.city }} </p>
+                        </adress>
+                    </div>  
+                </div>
+
+                <div class="my-2 me-5">    
+                    <div class="scaled-xs">
+                        <div class="mb-2 mb-lg-3">
+                            <i class="fa-solid fa-envelope d-inline"></i> <h4 class="d-inline">Mail</h4>   
+                        </div>
+                        <div class="separator-small"></div>
+                        <a href="mailto: {{ user.email }}">{{ user.email }}</a> 
+                    </div>  
+                </div>
+
+                <div class="my-2 me-5">    
+                    <div class="scaled-xs">
+                        <div class="mb-2 mb-lg-3">
+                            <i class="fa-solid fa-phone d-inline"></i> <h4 class="d-inline">Téléphone</h4>   
+                        </div>
+                        <div class="separator-small"></div>
+                        <a href="mailto:{{ user.phone }}">{{ user.phone }}</a> 
+                    </div>  
+                </div>
+
+                <div class="my-2 me-5">    
+                    <div class="scaled-xs">
+                        <div class="mb-2 mb-lg-3">
+                            <i class="fa-solid fa-link d-inline"></i> <h4 class="d-inline">Site web</h4>   
+                        </div>
+                        <div class="separator-small"></div>
+                        <a href="{{ user.website }}">{{ user.website }}</a> 
+                    </div>  
+                </div>
+
+                <div class="my-2 me-5">   
+                    <div class="d-flex justify-conternt-center" >
+                        <a href="{{ user.facebook }}" class="me-3 my-3"><i class="fa-brands fa-facebook fa-2xl"></i></a> 
+                        <a href="{{ user.instagram }}" class="me-3 my-3"><i class="fa-brands fa-instagram fa-2xl"></i></a> 
+                        <a href="{{ user.twitter }}" class="my-3"><i class="fa-brands fa-twitter fa-2xl"></i></a> 
+                    </div>  
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <h2 class="my-3 mt-lg-5">les évènements à venir</h2>
+                
+    <div class="separator-small"></div>
+
+    <div class="row">
+        {% for event in eventsList%}
+             <!-- card -->
+             <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
+                <div class="card overflow-hidden">
+                    <div class="d-flex d-flex flex-row flex-md-column">
+                        <div class="col-4 col-sm-12 ">
+                            <a href="">
+                                <img class="img-fluid w-100 border-radius" src="{{event.picture}}" alt="">
+                            </a>
+                            <a href="#">
+                                <div class="sticker-category text-center scaled-xs">
+                                    <div class="bg-category-{{event.category.slug}} d-inline "> {{event.category.name}}</div>
+                                </div>
+                            </a>
+                        </div>
+                    
+                        <div class="col-8 col-sm-12 p-1 p-sm-3">
+                            <a href="#">
+                                <h3 class="name mb-2">{{event.name}}</h3>
+                            </a>
+
+                            <div class="my-2">
+                                <div class="scaled-xs">
+                                    <i class="fa-solid fa-calendar-days d-inline"></i> 
+                                    <div class ="date ms-2 d-inline">{{event.startDate | date("d/m/Y")}}</div>
+                                </div> 
+                            </div>
+                            
+                            <div class="my-2">
+                                <div class="scaled-xs">
+                                    <i class="fa-solid fa-tags d-inline"></i> 
+                                    <div class="tags ms-2 d-inline">
+                                        {% for tag in event.tags %}
+                                            <a href="#">{{tag.name}}</a>
+                                        {% endfor %}
+                                    </div>    
+                                </div>
+                            </div>
+
+                            <div class="my-2">    
+                                <div class="scaled-xs">
+                                    <i class="fa-solid fa-location-dot d-inline"></i> 
+                                    <a href="#">
+                                        <div class="place ms-2 d-inline">{{user.name}}</div>
+                                    </a>
+                                </div>  
+                            </div>
+                            
+                            <div class="d-flex justify-content-end">
+                                <a href="{{ path('front_show', {slug:event.slug}) }}">
+                                    <i class="fa-solid fa-arrow-right-long me-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!--fin card -->
+            
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
+   

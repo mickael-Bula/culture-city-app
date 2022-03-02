@@ -1,4 +1,372 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/*-------------------------------------------------------------------------------------*/
+/*  RESET															   
+/*-------------------------------------------------------------------------------------*/
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0b1 | 201101 
+   NOTE: WORK IN PROGRESS
+   USE WITH CAUTION AND TEST WITH ABANDON */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
 
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+/* remember to define visible focus styles! */
+:focus {
+  outline: none;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+  text-decoration: none;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*-------------------------------------------------------------------------------------*/
+/*  Variable														   
+/*-------------------------------------------------------------------------------------*/
+/** Variables CSS **/
+/* colors */
+:root {
+  --main-color-blue-dark: #132C33;
+  --main-color-blue-med: #126E82;
+  --main-color-blue-light: #51C4D3;
+  --main-color-white: #ffffff;
+  --main-color-grey: #D8E3E7;
+}
+
+/* couleur categories */
+/*-------------------------------------------------------------------------------------*/
+/*  Extend													   
+/*-------------------------------------------------------------------------------------*/
+/** background **/
+.bg-blue-dark {
+  background-color: var(--main-color-blue-dark);
+}
+
+.bg-blue-light {
+  background-color: var(--main-color-blue-light);
+}
+
+.box-shadow, .card {
+  -webkit-box-shadow: 10px 10px 0px var(--main-color-blue-med);
+          box-shadow: 10px 10px 0px var(--main-color-blue-med);
+}
+
+.border-radius, .aside, .card, .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-exposition, .bg-category-loisir, .bg-category-evenementiel {
+  border-radius: 30px;
+}
+
+.transition, .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-exposition, .bg-category-loisir, .bg-category-evenementiel, a {
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+/*-------------------------------------------------------------------------------------*/
+/*  Layout														   
+/*-------------------------------------------------------------------------------------*/
+/** Header **/
+.header {
+  background-color: var(--main-color-blue-med);
+}
+
+.header_logo {
+  width: 200px;
+  height: auto;
+}
+
+.navbar .navbar-toggler {
+  color: var(--main-color-white);
+  border-color: rgba(0, 0, 0, 0);
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+/** Homepage **/
+.aside {
+  background-color: var(--main-color-blue-med);
+}
+
+/**card event **/
+.card {
+  border-color: var(--main-color-grey);
+}
+
+.bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-exposition, .bg-category-loisir, .bg-category-evenementiel {
+  padding: 10px;
+  color: var(--main-color-white);
+}
+
+.bg-category-concert {
+  background-color: #FFD700;
+  color: var(--main-color-blue-med);
+}
+
+.bg-category-concert:hover {
+  background-color: var(--main-color-blue-med);
+  color: var(--main-color-white);
+}
+
+.bg-category-spectacle {
+  background-color: #220B38;
+}
+
+.bg-category-spectacle:hover {
+  background-color: var(--main-color-blue-med);
+  color: var(--main-color-white);
+}
+
+.bg-category-exposition {
+  background-color: #9ACD32;
+}
+
+.bg-category-exposition:hover {
+  background-color: var(--main-color-blue-med);
+  color: var(--main-color-white);
+}
+
+.bg-category-loisir {
+  background-color: #36D7B7;
+}
+
+.bg-category-loisir:hover {
+  background-color: var(--main-color-blue-med);
+  color: var(--main-color-white);
+}
+
+.bg-category-evenementiel {
+  background-color: #D3D3D3;
+}
+
+.bg-category-evenementiel:hover {
+  background-color: var(--main-color-blue-med);
+  color: var(--main-color-white);
+}
+
+/** advertiser page **/
+.avatar {
+  max-width: 150px;
+  border: 2px solid var(--main-color-white);
+  position: relative;
+  top: -50px;
+  left: 0;
+  border-radius: 100px;
+}
+
+.avatar img {
+  width: 100%;
+  height: auto;
+}
+
+/** Footer **/
+.footer {
+  background-color: var(--main-color-blue-med);
+}
+
+.menu-mobile {
+  background-color: var(--main-color-blue-light);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/** Global **/
+.btn-primary {
+  color: var(--main-color-white);
+  background-color: var(--main-color-blue-light);
+  border-color: var(--main-color-blue-light);
+  border-radius: 50px;
+}
+
+.btn-primary:hover {
+  color: var(--main-color-blue-med);
+  background-color: var(--main-color-white);
+  border-color: var(--main-color-blue-med);
+}
+
+.separator, .separator-small {
+  width: 300px;
+  height: 5px;
+  background-color: var(--main-color-blue-med);
+  margin-bottom: 30px;
+}
+
+.separator-small {
+  width: 100px;
+}
+
+/*-------------------------------------------------------------------------------------*/
+/*  GLOBAL															   
+/*-------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------------*/
+/*  TYPO															   
+/*-------------------------------------------------------------------------------------*/
+/** Global **/
+html {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/** Typo **/
+h1 {
+  font-size: 3em;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 2.5em;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  line-height: 1em;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 2em;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  line-height: 1em;
+  margin-bottom: 10px;
+}
+
+h4 {
+  font-size: 1.1em;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  line-height: 1em;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.2em;
+  line-height: 1.4em;
+  margin-bottom: 15px;
+}
+
+a {
+  color: var(--main-color-blue-dark);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--main-color-blue-light);
+}
+
+em {
+  font-family: 'Nunito', sans-serif;
+  font-style: italic;
+  font-weight: 700;
+}
+
+/* Footer */
+.footer a {
+  color: var(--main-color-white);
+}
+
+.footer a:hover {
+  color: var(--main-color-blue-light);
+}
+
+.menu-mobile p,
+.menu-mobile i {
+  color: var(--main-color-white);
+}
+
+/*-------------------------------------------------------------------------------------*/
+/*  FORMS														   
+/*-------------------------------------------------------------------------------------*/
+/* Search bar home page */
+/* switch button */
+.form-check-input:checked {
+  background-color: var(--main-color-blue-light);
+  border-color: var(--main-color-blue-light);
+}
+
+.form-check .form-check-input {
+  float: left;
+  margin-left: -2.5em;
+  margin-top: -2px;
+}
+
+/*-------------------------------------------------------------------------------------*/
+/* RESPONSIVE														   
+/*-------------------------------------------------------------------------------------*/
+@media screen and (min-width: 0px) and (max-width: 768px) {
+  h1 {
+    font-size: 2em;
+    margin-bottom: 5px;
+  }
+  h2 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+  }
+  h3 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+  }
+  p {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+  }
+  .scaled-xs {
+    font-size: 0.7em;
+  }
+  .avatar {
+    max-width: 50px;
+    top: -15px;
+  }
+  .separator-small {
+    margin-bottom: 15px;
+  }
+}
+/*# sourceMappingURL=style.css.map */

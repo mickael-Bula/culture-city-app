@@ -1,3 +1,8 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+
+# Ajouter cette ligne pour intégrer LiipImagine FIlter Bundle au FW.
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.yaml"

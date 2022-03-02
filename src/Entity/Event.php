@@ -6,8 +6,16 @@ use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+// add this use for vichUploaderBundle
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+// add this to upload file type in class method
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
+ * Add this on top of the class for vichUploaderBundle
+ * @Vich\Uploadable
+ * 
  * @ORM\Entity(repositoryClass=EventRepository::class)
  */
 class Event
@@ -21,6 +29,7 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"events"})
      */
     private $name;
 
@@ -35,22 +44,19 @@ class Event
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $picture;
-
-    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isPremium;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"events"})
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"events"})
      */
     private $endDate;
 
@@ -76,6 +82,7 @@ class Event
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="events")
+     * @Groups({"events"})
      */
     private $tags;
 
@@ -88,13 +95,66 @@ class Event
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"events"})
+     * 
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"events"})
+     */
+    private $picture;
+
+    /**
+     * Ici on passe picture qui correspond à la propriété
+     * picture en Bdd pour faire le lien
+     * entre le fichier téléchargé soit la valeur de $pictureFile
+     * et le nom à associer qui est stocké en bdd
+     * pour résoudre le lien et servir l'image
+     * 
+     * @Vich\UploadableField(mapping="event_picture", fileNameProperty="picture")
+     * @var File
+     */
+    private $pictureFile;
+
 
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->tags = new ArrayCollection();
+    }
+
+
+    /**
+     * Set the value of pictureFile
+     * @param  File  $pictureFile
+     * @return  self
+     */ 
+    public function setPictureFile(File $pictureFile = null)
+    {   
+
+        // picture correspond ici à pictureFile (donc au fichier)
+        // picture en bdd prendra donc la valeur du nom du fichier
+        // et pictureFile sera le fichier stocké dans les dossiers paramètrés dans 
+        // vich_uploader.yaml et services.yaml 
+
+        $this->picture = $pictureFile;
+
+        // si il y a un fichier picture uploadé on met a jour la date sur updatedAt
+        if ($pictureFile) {
+
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * Get the value of pictureFile
+     * @return  File
+     */ 
+    public function getPictureFile()
+    {
+        return $this->pictureFile;
     }
 
     public function getId(): ?int
@@ -111,6 +171,10 @@ class Event
     {
         $this->name = $name;
 
+        if ($name) {
+
+            $this->createdAt = new \DateTimeImmutable('now');
+        }
         return $this;
     }
 
