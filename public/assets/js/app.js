@@ -13,6 +13,9 @@ const app = {
 
         // add listeners on inputs form
         document.querySelectorAll("#filters input").forEach(filter => filter.addEventListener("change", app.handleChangeFiltersForm));
+
+        // add listener on date picker to display it as chosen date
+        document.querySelector("#start").addEventListener("change", app.handleDatePickerElement);
     },
 
     handleClickCategoryBtn: function(event)
@@ -41,6 +44,20 @@ const app = {
         form.forEach((value, key) => queryStringParams.append(key, value));
 
         app.fetchEvents('http://localhost:8000/front/api/filters', queryStringParams.toString());
+    },
+
+    handleDatePickerElement: function(event)
+    {
+        // get date from date picker and display it as title for current events list
+        let datePicker = new Date(event.currentTarget.value);
+
+        // options to display date in long format
+        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }
+        datePicker = datePicker.toLocaleDateString('fr-FR', options);
+
+        console.log(datePicker);
+        //TODO récupérer l'id  pour ajouter la date dans le code html
+        document.getElementById("curentDate").innerHTML = datePicker;
     },
 
     fetchEvents: async function(url, queryString)
