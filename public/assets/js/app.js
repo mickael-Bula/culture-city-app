@@ -81,7 +81,6 @@ const app = {
             let eventDate = new Date(element.endDate).toLocaleDateString();
             eventTemplate.querySelector(".eventStartDate").textContent = eventDate;
             
-            // TODO vérifier que l'image est bien reçue
             // display event's image
             let urlPicture = (element.picture !== null) ? "upload/eventpicture/" + element.picture : "upload/default_picture/default_event.jpg";
 
@@ -89,6 +88,10 @@ const app = {
 
             eventTemplate.querySelector(".eventName").textContent = element.name;
             eventTemplate.querySelector(".eventPlace").textContent = element.user.city;
+
+            // if an event matches the date pickers's day we display it as 'Curret Event', otherwise as 'Next Events'
+            // TODO algo de tri par date actuelle et future
+
             displayElement.appendChild(eventTemplate);
         }
         // if the list of events is empty we display a message
@@ -102,7 +105,7 @@ const app = {
     {
         // add a link to tag's page for each tag and append it to DOM
         let newLink = document.createElement("a");
-        newLink.href = "/front/tag/" + tag.name;
+        newLink.href = "/tag/" + tag.name;
         newLink.textContent = tag.name + " ";
         console.log(eventTemplate);
         eventTemplate.querySelector(".eventTags").appendChild(newLink);
