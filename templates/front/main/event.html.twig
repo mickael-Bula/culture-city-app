@@ -1,15 +1,116 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ShowController!{% endblock %}
+{% block title %}page event{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    
+    <div class="container">
+        <div class="row">
 
-<div class="example-wrapper">
-    <h1>test du controller</h1>
-    {{ event.description }}
-</div>
+            <div class="col-12 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
+                <div class="main">
+
+                    <!-- event picture -->
+                    <div class="col-12 mb-3">
+                        <a href="">
+                            <img class="img-fluid w-100 border-radius box-shadow" src="{{event.picture}}" alt="">
+                        </a>
+                    </div>
+
+                    <!-- event details -->
+                    <div class="col-12 p-1 p-sm-3">
+                        <div class="my-3 mb-lg-4">
+                            <div class="scaled-xs"> 
+                                <a href="#">  
+                                    <div class ="category bg-category-concert d-inline">{{event.category.name}}</div>
+                                </a>
+                            </div> 
+                        </div>
+                        
+                        <a href="#">
+                            <h1 class="name mb-2 mb-xl-3">{{event.name}}</h1>
+                        </a>
+
+                        <div class="my-2">
+                            <div class="scaled-xs">
+                                <i class="fa-solid fa-calendar-days d-inline"></i> 
+                                <div class ="date ms-2 d-inline">{{event.startDate | date("d/m/Y")}}</div>
+                            </div> 
+                        </div>
+
+                        <div class="my-2">
+                            <div class="scaled-xs">
+                                <i class="fa-solid fa-clock"></i>
+                                <div class ="start-time ms-2 d-inline">{{event.startDate | date("g:ia")}}</div>
+                            </div> 
+                        </div>
+                        
+                        <div class="my-2">
+                            <div class="scaled-xs">
+                                <i class="fa-solid fa-tags d-inline"></i> 
+                                <div class="tags ms-2 d-inline"> 
+                                    {% for tag in event.tags %}
+                                        <a href="#">{{tag.name}}</a>
+                                    {% endfor %}
+                                </div>    
+                            </div>
+                        </div>
+
+                        <div class="my-2">    
+                            <div class="scaled-xs">
+                                <i class="fa-solid fa-location-dot d-inline"></i> 
+                                <a href="#">
+                                    <div class="place ms-2 d-inline">{{event.user.name}}</div>
+                                </a>
+                            </div>  
+                        </div>
+
+                        <div class="my-2">
+                            <div class="scaled-xs">
+                                <i class="fa-solid fa-money-bill"></i>
+                                <div class ="price ms-2 d-inline">{{event.price}}<span>€</span></div>
+                            </div> 
+                        </div>
+ 
+                        <div class="separator mt-4"></div>
+
+                        <div class="my-2 my-xl-3">    
+                            <div class="scaled-xs">   
+                                <p>{{event.description}}</p>  
+                            </div>  
+                        </div>
+
+                        <div class="separator mt-4"></div>
+                        
+                        <!-- contact info-->
+                        <div class="scaled-xs">
+                            <address class="mb-2">
+                                <i class="fa-solid fa-location-dot me-2"></i><p>{{event.user.address1}}<br>
+                                {{event.user.address2}}<br>
+                                {{event.user.zip}} {{event.user.city}}</p>
+                            </address>
+                            <div class="my-2 my-xl-3">
+                                <i class="fa-solid fa-phone me-2" ></i><a href="tel:+{{event.user.phone}}" class="phone">{{event.user.phone}}</a>
+                            </div>
+                            <div class="my-2 my-xl-3">
+                                <i class="fa-solid fa-envelope me-2"></i><a href="mailto:{{event.user.email}}" class="email">{{event.user.email}}</a>
+                            </div>
+                        </div>
+                        <!-- end contact info-->
+                        
+                        <!-- back to home or toher page-->
+                        <div class="d-flex justify-content-start mt-5">
+                            <a href="{{ path('show_category', {slug: 'exposition'}) }}">
+                                <i class="fa-solid fa-circle-arrow-left fa-2xl d-inline"></i> <p class="d-inline scaled-xs">retour page catégorie</p>
+                            </a>
+                        </div>
+                        <!-- end back to home-->
+
+                    </div> <!-- end event details -->
+                </div>     
+            </div> 
+
+        </div>
+    </div>  
 {% endblock %}
+

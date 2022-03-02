@@ -1,0 +1,91 @@
+<div class="header">
+    <div class="container-fluid">
+        
+        <div class="row p-3">
+            <div class="col-12 col-lg-3 d-flex justify-content-center justify-content-lg-start">
+                <div class="header_logo">             
+                    <a href="{{ path('main_home') }}"><img src="{{ asset('assets/images/logo-culture-city-app.svg') }}" alt="logo culture city app" class="#"></a>
+                </div>
+            </div>
+            <div class="col-6 col-lg-6 d-flex justify-content-lg-center align-items-center mt-2 p-0">
+                <nav class="navbar navbar-expand-lg navbar-dark">
+                            
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <i class="fa-solid fa-bars"></i>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                            <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="{{ path('show_category', {slug: 'concert'}) }}">Concert</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link categories" href="{{ path('show_category', {slug: 'spectacle'}) }}">Spectacle</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link categories" href="{{ path('show_category', {slug: 'exposition'}) }}">Expositions</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link categories" href="{{ path('show_category', {slug: 'loisir'}) }}">Loisirs</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link categories" href="{{ path('show_category', {slug: 'evenementiel'}) }}">Evènementiel</a>
+                                </li>
+                                </li>
+                            </ul>
+                        </div>
+
+                </nav>      
+            </div>
+
+            <div class="col-6 col-lg-3 d-flex justify-content-end align-items-start align-items-lg-center mt-2 mt-lg-0">
+               
+                <!--button to add event-->
+                <div class="me-3 mt-1 d-none d-md-block ">
+                {% if app.user %}
+                    <a class="btn btn-primary" href="{{ path('create_event') }}" role="button">   
+                        <i class="fa-solid fa-bullhorn"></i>
+                        Annoncer un évènement
+                    </a>
+                {% endif %}
+                </div>
+
+                <!--profile with link back office-->
+                <div class="dropdown  mt-3 mt-lg-0">
+                    <a class="dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-circle-user fa-2xl text-white"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-white dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
+                        <li>
+                            <a class="dropdown-item active" href="{{ path('app_login') }}">Connexion</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ path('user_register') }}">Inscription</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider"></hr>
+                        <li>
+                            {% if app.user %}
+                            <a class="dropdown-item" href="{{ path('show_advertiser_page', {slug: app.user.slug}) }}">Voir mon profil</a>
+                            {% endif %}
+                        </li>
+                         <li>
+                            {% if app.user %}
+                            <a class="dropdown-item" href="{{ path('advertise_edit_profile', {slug: app.user.slug}) }}">Editer mon profil</a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+                        </li>
+                         <li>
+                            {% if app.user %}
+                            <a class="dropdown-item" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div> <!--end row-->
+    </div>
+</div><!--end header-->

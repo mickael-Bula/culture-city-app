@@ -3,19 +3,248 @@
 {% block title %}page d'accueil{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>la page home</h1>
+{# affiche le user name du user en session  #}
+{% if app.user %}
+    <H5 class="text-center mt-5">Hello ! {{ app.user.username }}<h5> 
+{% endif %}
 
-    <ul>
-    cette page liste tous les événements.
-    {% for event in events %}
-        <li>{{ event.description }} </li>
-        {% endfor %}
-    </ul>
-</div>
+{# flash message après email vérification  #}
+{% for message in app.flashes('emailverification') %}
+    <div class="container alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{# flash message après login  #}
+{% for message in app.flashes('success-login') %}
+    <div class="container alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{# flash message après login et enregistrement statut annonceur  #}
+{% for message in app.flashes('success-register-annonceur') %}
+    <div class="container alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{# flash message après login et enregistrement statut user  #}
+{% for message in app.flashes('success-register-user') %}
+    <div class="container alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{# flash message après paswword reset  #}
+{% for message in app.flashes('password-reset-success') %}
+    <div class="container alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{# flash message aprèsajout événement  #}
+
+  {% for message in app.flashes('event_create') %}
+         <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+
+
+    <h2>Événements à venir</h2>
+    <div class="separator"></div>
+
+
+    {#% include 'front/main/_aside.html.twig' %#}
+    <div class="row">
+        <div class="col-12 col-lg-4 col-xl-3">
+        <form id="filters">
+            <div class="aside p-4 mb-5">
+                <!-- search by date -->
+                <input type="date" id="start" name="trip-start"  value="{{ "now"| date("Y-m-d") }}" min="2022-02-22" max="2032-12-31">
+                
+                <!-- Checked switch -->
+                {% for category in categories %}
+
+                <div class="form-check form-switch d-flex align-items-center my-3">
+                    <input class="form-check-input" name="filters[]" type="checkbox" role="switch3" value="{{ category.name }}" id="flexSwitchCheckChecked"/>
+                    <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">{{ category.name }}</label>
+                </div>
+
+                {% endfor %}
+                
+            </div>
+            </form>
+        </div>
+
+        <div class="col-12 col-lg-8 col-xl-9">
+            <div class="main">
+                
+                <!-- Day events-->
+                <h3 id="curentDate"> Les évènements du {{ "now"|date("d-m-Y") }}</h3>
+                <div class="separator-small"></div>
+
+                <div id="displayCurrentEvents" class="d-flex flex-column flex-md-row flex-wrap">
+                
+                    {% if currentEvents %}
+                        
+                    {% for event in currentEvents %}
+                            <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
+                                <div class="card overflow-hidden">
+                                    <div class="d-flex d-flex flex-row flex-md-column">
+                                        <div class="col-4 col-sm-12 ">
+                                            <!-- pour avoir un bloc carré qui se redimensionne correctement, il faut créer un hack css avec square:after
+                                                info ici : https://spin.atomicobject.com/2015/07/14/css-responsive-square/
+                                            -->
+                                            <a href="#">
+                                                <div class="square" style="background-image:url('{{event.picture}}'); background-size:cover; background-position:center center; ">
+                                                </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="sticker-category text-center scaled-xs">
+                                                    <div class="bg-category-{{event.category.slug}} d-inline"> {{event.category.name}}</div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    
+                                        <div class="col-8 col-sm-12 p-1 p-sm-3">
+                                            <a href="#">
+                                                <h3 class="name mb-2">{{event.name}}</h3>
+                                            </a>
+
+                                            <div class="my-2">
+                                                <div class="scaled-xs">
+                                                    <i class="fa-solid fa-calendar-days d-inline"></i> 
+                                                    <div class ="date ms-2 d-inline">{{event.startDate | date("d-m-Y") }}</div>
+                                                </div> ""
+                                            </div>
+                                            
+                                            <div class="my-2">
+                                                <div class="scaled-xs">
+                                                    <i class="fa-solid fa-tags d-inline"></i> 
+                                                    <div class="tags ms-2 d-inline">
+                                                        {% for tag in event.tags %}
+                                                            <a href="#">{{tag.name}}</a>
+                                                        {% endfor %}
+                                                </div>    
+                                                </div>
+                                            </div>
+
+                                            <div class="my-2">    
+                                                <div class="scaled-xs">
+                                                    <i class="fa-solid fa-location-dot d-inline"></i> 
+                                                    <a href="#">
+                                                        <div class="place ms-2 d-inline">{{event.user.name}}</div>
+                                                    </a>
+                                                </div>  
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-end">
+                                                <a href="#">
+                                                    <i class="fa-solid fa-arrow-right-long me-2"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    {% else %}
+                            
+                        <p> pas d'évèment aujourd'hui</p>
+                    
+                    {% endif %}
+
+                </div>
+
+                <!--Other events -->
+                <h3 class="mt-5"> Les évènements suivant </h3>
+                <div class="separator-small"></div>
+
+
+                <div id="displayUpcomingEvents" class="d-flex flex-column flex-md-row flex-wrap">
+              
+                {# emmet : div.col-12>div.card>img+div.p-3r>h3+div.date+div.tags+div.place #}
+            
+                    {% if upcomingEvents %}
+                    
+                        {% for event in upcomingEvents %}
+                            <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
+                                <div class="card overflow-hidden">
+                                    <div class="d-flex d-flex flex-row flex-md-column">
+                                        <div class="col-4 col-sm-12 ">
+                                            <!-- pour avoir un bloc carré qui se redimensionne correctement, il faut créer un hack css avec square:after
+                                                info ici : https://spin.atomicobject.com/2015/07/14/css-responsive-square/
+                                            -->
+                                            <a href="">
+                                                <div class="square" style="background-image:url('{{event.picture}}'); background-size:cover; background-position:center center; ">
+                                                </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="sticker-category text-center scaled-xs">
+                                                    <div class="bg-category-{{event.category.slug}} d-inline"> {{event.category.name}}</div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    
+                                        <div class="col-8 col-sm-12 p-1 p-sm-3">
+                                            <a href="#">
+                                                <h3 class="name mb-2">{{event.name}}</h3>
+                                            </a>
+
+                                            <div class="my-2">
+                                                <div class="scaled-xs">
+                                                    <i class="fa-solid fa-calendar-days d-inline"></i> 
+                                                    <div class ="date ms-2 d-inline">{{event.startDate | date("d-m-Y") }}</div>
+                                                </div> 
+                                            </div>
+                                            
+                                            <div class="my-2">
+                                                <div class="scaled-xs">
+                                                    <i class="fa-solid fa-tags d-inline"></i> 
+                                                    <div class="tags ms-2 d-inline">
+                                                        {% for tag in event.tags %}
+                                                            <a href="#">{{tag.name}}</a>
+                                                        {% endfor %}
+                                                    </div>    
+                                                </div>
+                                            </div>
+
+                                            <div class="my-2">    
+                                                <div class="scaled-xs">
+                                                    <i class="fa-solid fa-location-dot d-inline"></i> 
+                                                    <a href="#">
+                                                        <div class="place ms-2 d-inline">{{event.user.name}}</div>
+                                                    </a>
+                                                </div>  
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-end">
+                                                <a href="#">
+                                                    <i class="fa-solid fa-arrow-right-long me-2"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    {% else %}
+                            
+                        <p> Pas d'évèment à venir</p>
+                    
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
 {% endblock %}

@@ -11,8 +11,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+// add this use for vichUploaderBundle
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+// add this to upload file type in class method
+use Symfony\Component\HttpFoundation\File\File;
+
 
 /**
+ * Add this on top of the class for vichUploaderBundle
+ * @Vich\Uploadable
+ *   
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @UniqueEntity(fields={"email"}, message="Une adresse mail {{ value }} existe déjà !)")
@@ -65,6 +74,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"events"})
      */
     private $city;
 
@@ -81,20 +91,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $avatar;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $banner;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $phone;
 
     /**
-     * @ORM\Column(type="date_immutable", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      */
     private $foundedIn;
 
@@ -138,7 +139,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $slug;
 
-     /**
+    /**
      * use this with slugger service
      */
     private $slugger;
@@ -158,6 +159,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $placeName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatar;
+
+    /**
+     * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="avatar")
+     * @var File 
+     */
+    private $avatarFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $banner;
+
+    /**
+     * @Vich\UploadableField(mapping="user_banner", fileNameProperty="banner")
+     * @var File
+     */
+    private $bannerFile;
+
+
+
     public function __construct(SluggerInterface $slugger)
     {   
         $this->slugger = $slugger;
@@ -165,7 +200,71 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->events = new ArrayCollection();
         
     }
+
+    /**
+     * Set the value of avatarFile
+     * @param  File  $avatarFile
+     * @return  self
+     */ 
+    public function setAvatarFile(File $avatarFile = null)
+    {   
+
+        // avatar correspond ici à avatarFile (donc au fichier)
+        // avatar en bdd prendra donc la valeur du nom du fichier
+        // et avatarFile sera le fichier stocké dans les dossiers paramètrés dans 
+        // vich_uploader.yaml et services.yaml 
+
+        $this->avatar = $avatarFile;
+
+        // si il y a un fichier avatar uploadé on met a jour la date sur updatedAt
+        if ($avatarFile) {
+
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * Get the value of avatarFile
+     * @return  File
+     */ 
+    public function getAvatarFile()
+    {
+        return $this->avatarFile;
+    }
     
+
+    /**
+     * Set the value of bannerFile
+     * @param  File  $bannerFile
+     * @return  self
+     */ 
+    public function setBannerFile(File $bannerFile = null)
+    {   
+
+        // banner correspond ici à bannerFile (donc au fichier)
+        // banner en bdd prendra donc la valeur du nom du fichier
+        // et bannerFile sera le fichier stocké dans les dossiers paramètrés dans 
+        // vich_uploader.yaml et services.yaml 
+
+        $this->banner = $bannerFile;
+
+        // si il y a un fichier avatar uploadé on met a jour la date sur updatedAt
+        if ($bannerFile) {
+
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * Get the value of avatarFile
+     * @return  File
+     */ 
+    public function getBannerFile()
+    {
+        return $this->bannerFile;
+    }
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -264,11 +363,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->name = $name;
 
-          // ici en premier je crée un slug avec le service composant Symfony slugger
-          $slug = $this->slugger->slug($name);
-          // ensuite je passe ce slug propre sans espace dans ma méthode setSlug pour flusher un slug propre
-           // à la soumission du formulaire.
-           $this->setSlug(strtolower($slug));  
+        //ici en premier je crée un slug avec le service composant Symfony slugger
+        $slug = $this->slugger->slug($name);
+        // ensuite je passe ce slug propre sans espace dans ma méthode setSlug pour flusher un slug propre
+        // à la soumission du formulaire.
+        $this->setSlug(strtolower($slug));  
 
         return $this;
     }
@@ -381,12 +480,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getFoundedIn(): ?\DateTimeImmutable
+    public function getFoundedIn(): ?\DateTime
     {
         return $this->foundedIn;
     }
 
-    public function setFoundedIn(?\DateTimeImmutable $foundedIn): self
+    public function setFoundedIn(?\DateTime $foundedIn): self
     {
         $this->foundedIn = $foundedIn;
 
@@ -559,5 +658,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->status = $status;
 
         return $this;
+    }
+
+    public function getPlaceName(): ?string
+    {
+        return $this->placeName;
+    }
+
+    public function setPlaceName(?string $placeName): self
+    {
+        $this->placeName = $placeName;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+      
+    // For CRUD ADMIN (Event)
+    public function __toString()
+    {
+        return $this->email;
     }
 }

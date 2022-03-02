@@ -33,7 +33,6 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     public function authenticate(Request $request): Passport
     {
         $email = $request->request->get('email', '');
-
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
         return new Passport(
@@ -54,7 +53,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         // For example:
         return new RedirectResponse(
 
-            $this->urlGenerator->generate('home'),
+            $this->urlGenerator->generate('main_home'),
             );
         
     }

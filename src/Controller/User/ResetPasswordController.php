@@ -21,6 +21,8 @@ use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 /**
+ * Global Route and Method for user to send a password reset request
+ * 
  * @Route("/reset-password")
  */
 class ResetPasswordController extends AbstractController
@@ -38,7 +40,8 @@ class ResetPasswordController extends AbstractController
 
     /**
      * Display & process form to request a password reset.
-     *
+     * @link ResetPasswordRequestFormType
+     * 
      * @Route("", name="app_forgot_password_request")
      */
     public function request(Request $request, MailerInterface $mailer, TranslatorInterface $translator): Response
@@ -79,7 +82,7 @@ class ResetPasswordController extends AbstractController
 
     /**
      * Validates and process the reset URL that the user clicked in their email.
-     *
+     * @link ChangePasswordFormType
      * @Route("/reset/{token}", name="app_reset_password")
      */
     public function reset(Request $request, UserPasswordHasherInterface $userPasswordHasher, TranslatorInterface $translator, string $token = null): Response
@@ -129,16 +132,28 @@ class ResetPasswordController extends AbstractController
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
 
-            return $this->redirectToRoute('home');
+            // flash message for user after success on reset password.Message actually displayed on home page.
+            $this->addFlash('password-reset-success', 'Félicitation...votre mot de passe a bien été changé !' );
+
+            return $this->redirectToRoute('main_home');
         }
 
         return $this->render('user/reset.html.twig', [
             'resetForm' => $form->createView(),
         ]);
     }
-
+    /**
+     * Method which allows to send an email to the user to be able to renew his password.
+     * 
+     * @param string $emailFormData
+     * @param MailerInterface $mailer
+     * @param TranslatorInterface $translator
+     * @return RedirectResponse
+     */
     private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, TranslatorInterface $translator): RedirectResponse
     {
+        //todo faire la traduction de la durée de validité du Token affichée dans email.html.twig
+
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
         ]);
@@ -164,15 +179,17 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_check_email');
         }
 
-        $email = (new TemplatedEmail())
-            ->from(new Address('contact@culturecity.fr', 'Culture City App'))
-            ->to($user->getEmail())
-            ->subject('Your password reset request')
-            ->htmlTemplate('user/email.html.twig')
-            ->context([
-                'resetToken' => $resetToken,
-            ])
-        ;
+            // User email with link for open reset ResetPasswordRequestFormType 
+            // where he can set a new passord for his account.
+            $email = (new TemplatedEmail())
+                ->from(new Address('contact@culturecity.fr', 'Culture City App'))
+                ->to($user->getEmail())
+                ->subject('Votre demande de changement de mot de passe')
+                ->htmlTemplate('user/email.html.twig')
+                ->context([
+                    'resetToken' => $resetToken,
+                ])
+            ;
 
         $mailer->send($email);
 
