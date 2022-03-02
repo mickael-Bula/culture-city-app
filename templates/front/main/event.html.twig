@@ -68,7 +68,7 @@
                         <div class="my-2">
                             <div class="scaled-xs">
                                 <i class="fa-solid fa-money-bill"></i>
-                                <div class ="price ms-2 d-inline">10<span>€</span></div>
+                                <div class ="price ms-2 d-inline">{{event.price}}<span>€</span></div>
                             </div> 
                         </div>
  
@@ -76,10 +76,7 @@
 
                         <div class="my-2 my-xl-3">    
                             <div class="scaled-xs">   
-                                <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-                                    Deserunt cupiditate recusandae obcaecati culpa amet ab sapiente in minima,
-                                    beatae magnam et fuga, tenetur iusto alias vitae suscipit fugiat ad omnis.
-                                </p>  
+                                <p>{{event.description}}</p>  
                             </div>  
                         </div>
 
@@ -88,21 +85,23 @@
                         <!-- contact info-->
                         <div class="scaled-xs">
                             <address class="mb-2">
-                                <i class="fa-solid fa-location-dot me-2"></i><span class="address_1">adresse 1</span> <span class="address_2">adresse 2</span> <span class="city">City</span>
+                                <i class="fa-solid fa-location-dot me-2"></i><p>{{event.user.address1}}<br>
+                                {{event.user.address2}}<br>
+                                {{event.user.zip}} {{event.user.city}}</p>
                             </address>
                             <div class="my-2 my-xl-3">
-                                <i class="fa-solid fa-phone me-2" ></i><a href="tel:+07070707" class="phone">07 07 07 07</a>
+                                <i class="fa-solid fa-phone me-2" ></i><a href="tel:+{{event.user.phone}}" class="phone">{{event.user.phone}}</a>
                             </div>
                             <div class="my-2 my-xl-3">
-                                <i class="fa-solid fa-envelope me-2"></i><a href="mailto:mon.mail@ici.com " class="email">mon.mail@ici.com</a>
+                                <i class="fa-solid fa-envelope me-2"></i><a href="mailto:{{event.user.email}}" class="email">{{event.user.email}}</a>
                             </div>
                         </div>
                         <!-- end contact info-->
                         
                         <!-- back to home or toher page-->
                         <div class="d-flex justify-content-start mt-5">
-                            <a href="#">
-                                <i class="fa-solid fa-circle-arrow-left fa-2xl"></i> back to home or categorie page
+                            <a href="{{ path('show_category', {slug: 'exposition'}) }}">
+                                <i class="fa-solid fa-circle-arrow-left fa-2xl d-inline"></i> <p class="d-inline scaled-xs">retour page catégorie</p>
                             </a>
                         </div>
                         <!-- end back to home-->
