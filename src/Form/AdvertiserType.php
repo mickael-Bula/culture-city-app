@@ -3,11 +3,18 @@
 namespace App\Form;
 
 use App\Entity\User;
+use DateTimeImmutable;
 use Symfony\Component\Form\AbstractType;
+use Doctrine\DBAL\Types\DateTimeImmutableType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 // add this use to upload File Type
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 
 class AdvertiserType extends AbstractType
@@ -41,19 +48,94 @@ class AdvertiserType extends AbstractType
             ])   
 
 
+            ->add('placeName', TextType::class, [
 
-            ->add('address_1')
-            ->add('address_2')
-            ->add('city')
-            ->add('zip')
-            ->add('siren')
-            ->add('phone')
-            ->add('foundedIn')
-            ->add('website')
-            ->add('capacity')
-            ->add('facebook')
-            ->add('twitter')
-            ->add('instagram')
+                'label' => 'Le nom de votre structure...',
+                'required' => true,     
+            ])   
+
+            ->add('description', TextareaType::class, [
+
+                'label' => 'Décrivez votre structure...',
+                'required' => true,     
+            ])   
+
+            ->add('address_1', TextType::class, [
+
+                'label' => 'Adresse 1',
+                'required' => true,     
+            ])   
+
+            ->add('address_2', TextType::class, [
+
+                'label' => 'Adresse 2',
+                'required' => true,     
+            ])   
+
+
+            ->add('city', TextType::class, [
+
+                'label' => 'Ville',
+                'required' => true,     
+            ])   
+
+
+            ->add('zip', NumberType::class, [
+
+                'label' => 'Code Postal',
+                'required' => true,     
+            ])  
+
+
+            ->add('siren', NumberType::class, [
+
+                'label' => 'Siren',
+                'required' => true,     
+            ]) 
+
+
+              ->add('phone', TextType::class, [
+
+                'label' => 'Téléphone',
+                'required' => true,     
+            ]) 
+
+            ->add('foundedIn', DateType::class, [
+
+                'label' => 'Date de fondation',
+                'required' => true,     
+            ])  
+
+            
+            ->add('capacity', NumberType::class, [
+
+                'label' => 'Capacité d\'acceuil',
+                'required' => true,     
+            ]) 
+
+            ->add('website', UrlType::class, [
+
+                'label' => 'Site web',
+                'required' => true,     
+            ]) 
+
+            ->add('facebook', UrlType::class, [
+
+                'label' => 'Facebook',
+                'required' => true,     
+            ]) 
+
+            ->add('twitter', UrlType::class, [
+
+                'label' => 'Twitter',
+                'required' => true,     
+            ]) 
+
+            ->add('instagram', UrlType::class, [
+
+                'label' => 'Instagram',
+                'required' => true,     
+            ]) 
         ;
     }
 
