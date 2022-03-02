@@ -92,8 +92,15 @@ const app = {
             eventTemplate.querySelector(".eventPlace").textContent = element.user.city;
 
             // if an event matches the date picker we display it as 'Current Event', otherwise as 'Upcoming Events'
+            // to achieve the comparison we weed to convert dates in the same format
             const startDate = new Date(element.startDate);
-            if (datePicker.getTime() >= startDate.getTime())
+            const reformateStartDate = startDate.toLocaleDateString();
+            const reformateDatePicker = datePicker.toLocaleDateString();
+
+            // comparing dates
+            reformateStartDate === reformateDatePicker ? console.log("égaux") : console.log("inégaux");
+
+            if (reformateDatePicker >= reformateStartDate)
             {
                 // when an event starts before the date picker or takes place this day, we add it to Current Events list
                 displayCurrentElement.appendChild(eventTemplate);
