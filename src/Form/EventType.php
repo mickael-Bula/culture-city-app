@@ -8,42 +8,77 @@ use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-// add this use to upload File Type
 use Symfony\Component\OptionsResolver\OptionsResolver;
+// add this use to upload File Type
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class EventType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('price')
-            ->add('description')
-            ->add('isPremium')
-            ->add('startDate')
-            ->add('endDate')
+            ->add('name', TextType::class, [
+
+                'label' => 'Nom',
+                'required' => true,     
+            ])   
+
+            ->add('price', NumberType::class, [
+
+                'label' => 'Tarif',
+                'required' => true,     
+            ])  
+
+            ->add('description', TextareaType::class, [
+
+                'label' => 'Décrivez votre évènement...',
+                'required' => true,     
+            ])   
+
+            ->add('isPremium', CheckboxType::class, [
+
+                'label' => 'Souhaitez vous mettre votre évènement à la une ?',
+                'required' => false, 
+            ])
+
+            ->add('startDate', DateType::class, [
+
+                'label' => 'Date de votre évènement',
+                'required' => true,     
+            ])  
+
+            ->add('endDate', DateType::class, [
+
+                'label' => 'Date de fin de votre évènement',
+                'required' => true,     
+            ])  
            
             // upload user event picture file
             ->add('picture' , FileType::class, [
 
-                'label' => 'Image de votre événement (Format: jpg, png ou gif file)',
+                'label' => 'Image de votre évènement (Format: jpg, png ou gif file)',
                 'mapped' => false,
                 'required' => false,     
             ])  
 
             // select event category
             ->add('category', EntityType::class, [
+
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'multiple' => false,
-                //'expanded' => true,
                 'required' => true,
             ]) 
             
             // select tags for event
             ->add('tags', EntityType::class, [
+
                 'class' => Tag::class,
                 'choice_label' => 'name',
                 'multiple' => true,
@@ -51,10 +86,6 @@ class EventType extends AbstractType
                 //'required' => false,
             ]) 
 
-            //->add('user')
-            //->add('createdAt')
-            //->add('updatedAt')
-            //->add('slug')
         ;
     }
 
