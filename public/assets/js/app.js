@@ -102,8 +102,8 @@ const app = {
     {
         // add a link to tag's page for each tag and append it to DOM
         let newLink = document.createElement("a");
-        newLink.href = "/front/tag/" + tag.name;
-        newLink.textContent = tag.name + " ";
+        newLink.href = "/front/tag/" + tag.slug;
+        newLink.textContent = tag.slug + " ";
         console.log(eventTemplate);
         eventTemplate.querySelector(".eventTags").appendChild(newLink);
     }
