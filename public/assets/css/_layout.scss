@@ -31,6 +31,17 @@
     border-color: var(--main-color-grey);
 }
 
+.square {
+    @extend .border-radius;
+    width:100%;
+}
+
+.square:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
 .bg-category {
     @extend .border-radius;
     @extend .transition;

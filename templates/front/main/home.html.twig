@@ -93,8 +93,15 @@
                             <div class="d-flex d-flex flex-row flex-md-column">
                                 <div class="col-4 col-sm-12 ">
                                     <a href="">
-                                        <img class="img-fluid w-100 border-radius" src="{{ asset('assets/images/image-concert-600px.jpg') }}" alt="">
+                                        <div class="square" style="background-image:url('{{ asset('assets/images/image-concert-600px.jpg') }}'); background-size:cover; background-position:center center; ">
+                                        </div>
+                                        <!--<img class="img-fluid w-100 border-radius" src="{#{ asset('assets/images/image-concert-600px.jpg')}#}" alt="">-->
                                     </a>
+                                    {# <a href="#">
+                                        <div class="sticker-category text-center scaled-xs">
+                                            <div class="bg-category-{{event.category.slug}} d-inline "> {{event.category.name}}</div>
+                                        </div>
+                                    </a> #}
                                 </div>
                             
                                 <div class="col-8 col-sm-12 p-1 p-sm-3">

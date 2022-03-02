@@ -100,7 +100,7 @@ table {
           box-shadow: 10px 10px 0px var(--main-color-blue-med);
 }
 
-.border-radius, .aside, .card, .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-exposition, .bg-category-loisir, .bg-category-evenementiel {
+.border-radius, .aside, .card, .square, .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-exposition, .bg-category-loisir, .bg-category-evenementiel {
   border-radius: 30px;
 }
 
@@ -139,6 +139,16 @@ table {
 /**card event **/
 .card {
   border-color: var(--main-color-grey);
+}
+
+.square {
+  width: 100%;
+}
+
+.square:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
 }
 
 .bg-category, .bg-category-concert, .bg-category-spectacle, .bg-category-exposition, .bg-category-loisir, .bg-category-evenementiel {
