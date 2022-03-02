@@ -12,28 +12,28 @@
 
                     <!-- event picture -->
                     <div class="col-12 mb-3">
-                        <a href="">
-                            {% if vich_uploader_asset (event, 'pictureFile') %}
-                            <img class="img-fluid w-100 border-radius box-shadow" src="{{ vich_uploader_asset (event, 'pictureFile') | imagine_filter ('event_picture_300') }}" alt="{{ event.name }}" />
-                            {% else %}
-                            <img class="img-fluid w-100 border-radius box-shadow" src="{{ vich_uploader_asset (event, 'pictureFile') ?: '/upload/default_picture/default_event.jpg' | imagine_filter ('event_picture_300') }}" alt="{{ event.name }}" />
-                            {% endif %}
-                        </a>
+                       
+                        {% if vich_uploader_asset (event, 'pictureFile') %}
+                        <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') | imagine_filter ('event_picture_600') }}" alt="{{ event.name }}" />
+                        {% else %}
+                        <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') ?: '/upload/default_picture/default_event.jpg' | imagine_filter ('event_picture_600') }}" alt="{{ event.name }}" />
+                        {% endif %}
+                        
                     </div>
 
                     <!-- event details -->
                     <div class="col-12 p-1 p-sm-3">
                         <div class="my-3 mb-lg-4">
                             <div class="scaled-xs"> 
-                                <a href="#">  
-                                    <div class ="category bg-category-concert d-inline">{{event.category.name}}</div>
+                                <a href="{{ path('show_category', {slug: event.category.slug}) }}">  
+                                    <div class ="category bg-category-{{event.category.slug}} d-inline">{{event.category.name}}</div>
                                 </a>
                             </div> 
                         </div>
                         
-                        <a href="#">
-                            <h1 class="name mb-2 mb-xl-3">{{event.name}}</h1>
-                        </a>
+                        
+                        <h1 class="name mb-2 mb-xl-3">{{event.name}}</h1>
+                        
 
                         <div class="my-2">
                             <div class="scaled-xs">
@@ -54,7 +54,7 @@
                                 <i class="fa-solid fa-tags d-inline"></i> 
                                 <div class="tags ms-2 d-inline"> 
                                     {% for tag in event.tags %}
-                                        <a href="#">{{tag.name}}</a>
+                                        <a href="{{ path('show_tag', {slug: tag.slug}) }}">{{tag.name}}</a>
                                     {% endfor %}
                                 </div>    
                             </div>
@@ -63,7 +63,7 @@
                         <div class="my-2">    
                             <div class="scaled-xs">
                                 <i class="fa-solid fa-location-dot d-inline"></i> 
-                                <a href="#">
+                                <a href="{{ path('show_advertiser_page', {slug: event.user.slug}) }}">
                                     <div class="place ms-2 d-inline">{{event.user.name}}</div>
                                 </a>
                             </div>  
@@ -104,7 +104,7 @@
                         
                         <!-- back to home or toher page-->
                         <div class="d-flex justify-content-start mt-5">
-                            <a href="{{ path('show_category', {slug: 'exposition'}) }}">
+                            <a href="{{ path('show_category', {slug: event.category.slug}) }}">
                                 <i class="fa-solid fa-circle-arrow-left fa-2xl d-inline"></i> <p class="d-inline scaled-xs">retour page catégorie</p>
                             </a>
                         </div>

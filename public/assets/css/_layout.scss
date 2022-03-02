@@ -109,6 +109,12 @@
     border-radius: 100px;
 }
 
+.avatar-header {
+    max-width: 150px;
+    border : 2px solid var(--main-color-white);
+    border-radius: 100px;
+}
+
 .avatar img {
     width: 100%;
     height:auto;

@@ -30,8 +30,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link categories" href="{{ path('show_category', {slug: 'evenementiel'}) }}">Evènementiel</a>
-                                </li>
-                                </li>
+                                </li>                               
                             </ul>
                         </div>
 
@@ -53,8 +52,21 @@
                 <!--profile with link back office-->
                 <div class="dropdown  mt-3 mt-lg-0">
                     <a class="dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-circle-user fa-2xl text-white"></i>
+                        
+                        {% if app.user %}
+                            <div class="avatar-header">
+                                {% if vich_uploader_asset (app.user, 'avatarFile') %}
+                                    <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (app.user, 'avatarFile') | imagine_filter ('avatar_50') }}" alt="{{ app.user.name }}" />
+                                {% else %}
+                                    <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (app.user, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_50') }}" alt="{{ app.user.name }}" />
+                                {% endif %} 
+                            </div>
+                        {% else %}
+                            <i class="fa-solid fa-circle-user fa-2xl text-white"></i>
+                        {% endif %}
+  
                     </a>
+                    
                     <ul class="dropdown-menu dropdown-menu-white dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
                         <li>
                             <a class="dropdown-item active" href="{{ path('app_login') }}">Connexion</a>

@@ -135,7 +135,7 @@ class AdvertiserController extends AbstractController
 
         //if (!$eventsList)
         //{
-        //    throw $this->createNotFoundException('No event to display');
+        //throw $this->createNotFoundException('No event to display');
         //}
 
         return $this->render('front/main/advertiser.html.twig', compact('user', 'eventsList'));
