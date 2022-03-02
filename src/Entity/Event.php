@@ -5,12 +5,15 @@ namespace App\Entity;
 use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 // add this use for vichUploaderBundle
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 // add this to upload file type in class method
 use Symfony\Component\HttpFoundation\File\File;
+
+
 
 /**
  * Add this on top of the class for vichUploaderBundle
@@ -101,18 +104,27 @@ class Event
     private $user;
 
     /**
+     * @Assert\File(
+     *     maxSize = "1024k",
+     *     maxSizeMessage = "Le fichier image est trop loud ({{ size }} {{ suffix }}). Le poids maxmum autorisé pour le fichier est de {{ limit }} {{ suffix }}",
+     *     notFoundMessage = "Le fichier image n'a pas été trouvé ! Veuillez joindre à nouveau votre fichier image !"
+     * )
+     * 
+     * @Assert\Image(
+     *     minWidth = "600",
+     *     minWidthMessage = "La largeur de l'image est trop petite ({{ width }}px). La largeur minimale attendue est de {{ min_width }}px",   
+     *     minHeight = "600",
+     *     minHeightMessage = "La hauteur de l'image est trop petite ({{ height }}px). La largeur minimale attendue est de {{ min_height }}px",
+     *     mimeTypes = {"image/jpeg", "image/png","image/jpg", "image/gif"},
+     *     mimeTypesMessage = "Uniqument les images de type .jpeg .png .jpg and .gif sont autorisés !"
+     * )
+     * 
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"events"})
      */
     private $picture;
 
     /**
-     * Ici on passe picture qui correspond à la propriété
-     * picture en Bdd pour faire le lien
-     * entre le fichier téléchargé soit la valeur de $pictureFile
-     * et le nom à associer qui est stocké en bdd
-     * pour résoudre le lien et servir l'image
-     * 
      * @Vich\UploadableField(mapping="event_picture", fileNameProperty="picture")
      * @var File
      */

@@ -17,6 +17,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 // add this to upload file type in class method
 use Symfony\Component\HttpFoundation\File\File;
 
+
 /**
  * Add this on top of the class for vichUploaderBundle
  * @Vich\Uploadable
@@ -93,7 +94,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $phone;
 
     /**
-     * @ORM\Column(type="date_immutable", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      */
     private $foundedIn;
 
@@ -165,15 +167,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $avatar;
 
     /**
-     * Ici on passe avatar qui correspond à la propriété
-     * avatar en Bdd pour faire le lien
-     * entre le fichier téléchargé soit la valeur de $avatarFile
-     * et le nom à associer qui est stocké en bdd
-     * pour résoudre le lien et servir l'image
-     * 
      * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="avatar")
      * @var File 
      */
@@ -182,24 +183,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $description;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $banner;
 
     /**
-     * Ici on passe banner qui correspond à la propriété
-     * banner en Bdd pour faire le lien
-     * entre le fichier téléchargé soit la valeur de $bannerFile
-     * et le nom à associer qui est stocké en bdd
-     * pour résoudre le lien et servir l'image
-     * 
      * @Vich\UploadableField(mapping="user_banner", fileNameProperty="banner")
      * @var File
      */
     private $bannerFile;
+
+
 
     public function __construct(SluggerInterface $slugger)
     {   
@@ -488,12 +480,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getFoundedIn(): ?\DateTimeImmutable
+    public function getFoundedIn(): ?\DateTime
     {
         return $this->foundedIn;
     }
 
-    public function setFoundedIn(?\DateTimeImmutable $foundedIn): self
+    public function setFoundedIn(?\DateTime $foundedIn): self
     {
         $this->foundedIn = $foundedIn;
 
