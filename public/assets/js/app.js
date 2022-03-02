@@ -56,7 +56,6 @@ const app = {
         datePicker = datePicker.toLocaleDateString('fr-FR', options);
 
         console.log(datePicker);
-        //TODO récupérer l'id  pour ajouter la date dans le code html
         document.getElementById("curentDate").innerHTML = datePicker;
     },
 
@@ -67,8 +66,15 @@ const app = {
             mode:   'cors',
             cache:  'no-cache'
         };
-        response = await fetch(url + '?' + queryString, fetchOptions);
-        data = await response.json();
+        try
+        {
+            response = await fetch(url + '?' + queryString, fetchOptions);
+            data = await response.json();
+        }
+        catch (error)
+        {
+            // display an error message
+        }
         app.displayEvents(data);
     },
 
