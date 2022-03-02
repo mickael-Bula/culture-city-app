@@ -108,6 +108,10 @@ const app = {
             let urlPicture = (element.picture !== null) ? "upload/eventpicture/" + element.picture : "upload/default_picture/default_event.jpg";
             eventTemplate.querySelector(".square").style.cssText += "background-image:url('" + urlPicture + "'); background-size:cover; background-position:center center;";
 
+            // add all links to event's card
+            //TODO ajouter les liens suivants (avec des id si closest continue à poser des problèmes)
+            eventTemplate.querySelector(".square").closest('a').href = "/event/" + element.slug;
+        
             // display event's category name
             eventTemplate.querySelector(".square-category").className = "square-category bg-category-" + element.category.slug + " d-inline";
             eventTemplate.querySelector(".square-category").textContent = element.category.name;
