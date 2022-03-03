@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\File\File;
  * @Vich\Uploadable
  * 
  * @ORM\Entity(repositoryClass=EventRepository::class)
- * @UniqueEntity(fields={"name"}, message="Un évènement {{ value }} existe déjà !)")
+ * @UniqueEntity(fields={"name"}, message="Un évènement {{ value }} existe déjà !")
  */
 class Event
 {
