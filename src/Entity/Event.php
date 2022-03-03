@@ -106,8 +106,6 @@ class Event
     private $user;
 
     /**
-     * 
-     * 
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"events"})
      */
@@ -134,11 +132,6 @@ class Event
      */ 
     public function setPictureFile(File $pictureFile = null)
     {   
-
-        // picture correspond ici à pictureFile (donc au fichier)
-        // picture en bdd prendra donc la valeur du nom du fichier
-        // et pictureFile sera le fichier stocké dans les dossiers paramètrés dans 
-        // vich_uploader.yaml et services.yaml 
 
         $this->picture = $pictureFile;
 
