@@ -226,8 +226,8 @@
                                     
                                         <div class="col-8 col-sm-12 p-1 p-sm-3">
                                             <a href="{{ path('show_event', {slug: event.slug}) }}">
-                                                {# limit event name caracters  #}
-                                                <h3 class="name mb-2">{{ event.name > 5 ? event.name|slice(0, 15) ~ '...' : event.name  }}</h3>
+                                                {# limit event name caracters #}
+                                                <h3 class="name mb-2">{{ event.name > 5 ? event.name|slice(0, 15) ~ '...' : event.name }}</h3>
                                             </a>
 
                                             <div class="my-2">
