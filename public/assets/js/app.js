@@ -113,6 +113,8 @@ const app = {
             // reformate event's date and display it
             let eventDate = new Date(element.endDate).toLocaleDateString();
             eventTemplate.querySelector(".eventStartDate").textContent = eventDate;
+
+            // TODO sort dates by current date
             
             // display event's image
             let urlPicture = (element.picture !== null) ? "upload/eventpicture/" + element.picture : "upload/default_picture/default_event.jpg";
@@ -120,6 +122,7 @@ const app = {
 
             // add all links to event's card
             eventTemplate.querySelector(".square").closest('a').href = "/event/" + element.slug;
+            eventTemplate.querySelector(".eventArrow").closest('a').href = "/event/" + element.slug;
             eventTemplate.querySelector(".eventName").closest('a').href = "/event/" + element.slug;
             eventTemplate.querySelector(".square-category").closest('a').href = "/event/" + element.category;
             eventTemplate.querySelector(".eventPlace").closest('a').href = "/annonceur/" + element.user.slug;
