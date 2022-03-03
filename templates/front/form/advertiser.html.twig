@@ -9,9 +9,11 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello advertiser !</h1>
+    {% if app.user %}
+      <h1>Hello {{ app.user.name }}</h1> 
+    {% endif %}
 
-    Cette page est le formulaire pour éditer un annonceur
+ <h4 class = "mb-4">Cette page est le formulaire pour renseigner votre profil. !</h4>
 
     {# read and display just one flash message type #}
     {% for message in app.flashes('success') %}
