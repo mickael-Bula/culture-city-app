@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 
 use App\Entity\Event;
+use App\Entity\Tag;
 use App\Form\EventType;
 use App\Entity\Category;
 use App\Repository\EventRepository;
@@ -15,6 +16,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
 
 
 class EventController extends AbstractController
@@ -35,43 +37,35 @@ class EventController extends AbstractController
      * @Route("/create/event", name="create_event", methods={"GET", "POST"})
      */
     public function createEvent(EntityManagerInterface $entityManager, 
-        Request $request, 
-        SluggerInterface $slugger): Response
-    {
-        $form = $this->createForm(EventType::class);
+            Request $request, 
+            SluggerInterface $slugger
+            ): Response 
+        {
+        
+        // New Empty event
+        $event = New Event();
+        
+        // Automatically initialise this new Event with form values
+        $form = $this->createForm(EventType::class, $event);
+
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid())
-        
-        { 
-                $event = New Event();
 
+        {           
                 $user = $this->getUser();
                 $event->setUser($user);
 
+                // need to sluggify event by event name property
                 $name = $form->get('name')->getData();
-                $price = $form->get('price')->getData();
-                $description = $form->get('description')->getData();
-                $isPremium = $form->get('isPremium')->getData();
-                $startDate = $form->get('startDate')->getData();
-                $endDate = $form->get('endDate')->getData();
-                $eventFile = $form->get('picture')->getData();
-                $category = $form->get('category')->getData();
                 $slug = $slugger->slug($name);
-
-                $event->setName($name)
-                    ->setPrice($price)
-                    ->setDescription($description)
-                    ->setIsPremium($isPremium)
-                    ->setStartDate($startDate)
-                    ->setStartDate($startDate)
-                    ->setEndDate($endDate)
-                    ->setCategory($category)
-                    ->setSlug(strtolower($slug));   
+                $event->setSlug(strtolower($slug));
 
                 //! Au cas ou on utilise ce form pour mettre à jour l'événement 
                 //! on ne passe ici que si il y a eu une image modifiée.
-                
+
+                $eventFile = $form->get('picture')->getData();
+
                 if ($form->get('picture')->getData() != null) {
 
                     if ($eventFile) {
@@ -102,7 +96,6 @@ class EventController extends AbstractController
 
             return $this->renderForm('front/form/event.html.twig', compact('form'));
     }
-
 
     /**
      * @Route("/edit/{slug}", name="event_edit", methods={"GET", "POST"})
@@ -151,6 +144,4 @@ class EventController extends AbstractController
 
         return $this->renderForm('front/form/edit_event.html.twig', compact('form'));
     }
-
-
 }

@@ -27,14 +27,15 @@ class EventRepository extends ServiceEntityRepository
      */
     public function findByCategory($category)
     {
-        // on crée la requête depuis le repository Event que l'on nomme ici 'e'
         return $this->createQueryBuilder('e')
-            // on fait une jointure à partir de la propriété event.category que l'on nomme 'e_c'
+            // we join category table
             ->join('e.category', 'e_c')
             // on sélectionne les events dont la categorie correspond à un paramètre lié
             ->andWhere('e_c.name = :val')
             // on lie le paramètre à la valeur $category (fournit en paramètre de la requête)
             ->setParameter('val', $category)
+            // sort by date
+            ->orderBy('e.startDate', 'ASC')
             // on lance la requête
             ->getQuery()
             // on retourne le résultat
@@ -55,6 +56,7 @@ class EventRepository extends ServiceEntityRepository
             ->join('e.category', 'e_c')
             ->andWhere('e_c.name IN (:vals)')
             ->setParameter(':vals', array_values($filters))
+            ->orderBy('e.startDate', 'ASC')
             ->getQuery()
             ->getResult()
         ;

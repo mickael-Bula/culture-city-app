@@ -77,15 +77,17 @@
                 <!-- Checked switch -->
                 {% for category in categories %}
 
-                <div class="form-check form-switch d-flex align-items-center my-3">
-                    <input class="form-check-input" name="filters[]" type="checkbox" role="switch3" value="{{ category.name }}" id="flexSwitchCheckChecked"/>
-                    <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">{{ category.name }}</label>
-                </div>
+                    <div class="form-check form-switch d-flex align-items-center my-3">
+                        <input class="form-check-input" name="filters[]" type="checkbox" role="switch3" value="{{ category.name }}" id="flexSwitchCheckChecked"/>
+                        <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">{{ category.name }}</label>
+                    </div>
 
                 {% endfor %}
-                
+
+                <!-- Reset filter & date -->
+                <div class="btn btn-primary">Réinitaliser</div>      
             </div>
-            </form>
+        </form>
         </div>
 
         <div class="col-12 col-lg-8 col-xl-9">
@@ -134,7 +136,7 @@
                                             <div class="my-2">
                                                 <div class="scaled-xs">
                                                     <i class="fa-solid fa-calendar-days d-inline"></i> 
-                                                    <div class ="date ms-2 d-inline">{{event.startDate | date("d-m-Y") }}</div>
+                                                    <div class ="date ms-2 d-inline">{{event.startDate | date("l F Y") }}</div>
                                                 </div>
                                             </div>
                                             

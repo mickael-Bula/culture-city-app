@@ -6,6 +6,7 @@ use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 // add this use for vichUploaderBundle
@@ -15,7 +16,11 @@ use Symfony\Component\HttpFoundation\File\File;
 
 
 
+
 /**
+ * 
+ * @UniqueEntity(fields={"name"}, message="Un événement nommé {{ value }} existe déjà !")
+ * 
  * Add this on top of the class for vichUploaderBundle
  * @Vich\Uploadable
  * 
@@ -31,8 +36,10 @@ class Event
     private $id;
 
     /**
+     * @Assert\NotBlank (message = "Ce champ est requis !")
      * @ORM\Column(type="string", length=255)
      * @Groups({"events"})
+     * 
      */
     private $name;
 
@@ -52,6 +59,7 @@ class Event
     private $isPremium;
 
     /**
+     * @Assert\NotBlank (message = "Vous devez renseigner une date et une heure !")
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"events"})
      */
@@ -91,6 +99,7 @@ class Event
     private $tags;
 
     /**
+    * @Assert\NotBlank (message = "Vous devez choisir une catégorie pour votre évènement !")
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"events"})
@@ -101,7 +110,6 @@ class Event
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"events"})
-     * 
      */
     private $user;
 
