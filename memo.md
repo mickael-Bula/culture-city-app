@@ -30,5 +30,11 @@ https://sass-lang.com/
 ## Box shadows
 https://boxshadows.com/
 
-## coouleur adjacente harmonie
+## couleur adjacente harmonie
 http://colorsafe.co/
+
+## package intl php manquant sur la VM
+https://www.dotkernel.com/php-troubleshooting/where-is-the-intl-php-extension-problem-solved/
+
+## hack css pour cadrer une image carrée sans élément à l'interieur juste un background
+https://spin.atomicobject.com/2015/07/14/css-responsive-square/
