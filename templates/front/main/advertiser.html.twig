@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <!-- advertiser-infos -->
     <div class="row">
-        <h1> Annonceur {{ user.name }} </h1>
+        <h1> Annonceur {{ user.placeName }} </h1>
         <div class="separator"></div>
 
         <!-- user banner-->
@@ -43,9 +43,8 @@
 
                 <div class="separator-small"></div>
 
-                <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, corrupti. Nostrum, inventore dolores unde sunt repellat 
-                    veniam molestiae excepturi culpa, numquam ipsam quis architecto eligendi laborum, quo officia obcaecati eum.
-                </p>
+                <p>{%user.description%}</p>
+
                 {% if user.capacity %} 
                     <p><em>Capacité : {{ user.capacity }} personnes</em></p>
                 {% endif %}
