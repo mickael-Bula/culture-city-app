@@ -111,10 +111,8 @@ const app = {
             for (const tag of tags) { app.addTagLinkElementToDOM(eventTemplate, tag) }
             
             // reformate event's date and display it
-            let eventDate = new Date(element.endDate).toLocaleDateString();
+            let eventDate = new Date(element.startDate).toLocaleDateString();
             eventTemplate.querySelector(".eventStartDate").textContent = eventDate;
-
-            // TODO sort dates by current date
             
             // display event's image
             let urlPicture = (element.picture !== null) ? "upload/eventpicture/" + element.picture : "upload/default_picture/default_event.jpg";

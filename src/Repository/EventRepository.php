@@ -56,6 +56,7 @@ class EventRepository extends ServiceEntityRepository
             ->join('e.category', 'e_c')
             ->andWhere('e_c.name IN (:vals)')
             ->setParameter(':vals', array_values($filters))
+            ->orderBy('e.startDate', 'ASC')
             ->getQuery()
             ->getResult()
         ;
