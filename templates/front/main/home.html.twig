@@ -4,55 +4,56 @@
 
 {% block body %}
 
-{# affiche le user name du user en session  #}
-{% if app.user %}
-    <h5 class="text-center mt-5">Hello ! {{ app.user.username }}<h5> 
-{% endif %}
+<div class="container">
+    {# affiche le user name du user en session  #}
+    {% if app.user %}
+        <h5 class="text-center mt-5">Hello ! {{ app.user.username }}</h5> 
+    {% endif %}
 
-{# flash message après email vérification  #}
-{% for message in app.flashes('emailverification') %}
-    <div class="container alert alert-success">
-        {{ message }}
-    </div>
-{% endfor %}
-
-{# flash message après login  #}
-{% for message in app.flashes('success-login') %}
-    <div class="container alert alert-success">
-        {{ message }}
-    </div>
-{% endfor %}
-
-{# flash message après login et enregistrement statut annonceur  #}
-{% for message in app.flashes('success-register-annonceur') %}
-    <div class="container alert alert-success">
-        {{ message }}
-    </div>
-{% endfor %}
-
-{# flash message après login et enregistrement statut user  #}
-{% for message in app.flashes('success-register-user') %}
-    <div class="container alert alert-success">
-        {{ message }}
-    </div>
-{% endfor %}
-
-{# flash message après paswword reset  #}
-{% for message in app.flashes('password-reset-success') %}
-    <div class="container alert alert-success">
-        {{ message }}
-    </div>
-{% endfor %}
-
-{# flash message aprèsajout événement  #}
-
-  {% for message in app.flashes('event_create') %}
-         <div class="alert alert-success" role="alert">
+    {# flash message après email vérification  #}
+    {% for message in app.flashes('emailverification') %}
+        <div class="container alert alert-success">
             {{ message }}
         </div>
     {% endfor %}
 
+    {# flash message après login  #}
+    {% for message in app.flashes('success-login') %}
+        <div class="container alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
 
+    {# flash message après login et enregistrement statut annonceur  #}
+    {% for message in app.flashes('success-register-annonceur') %}
+        <div class="container alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {# flash message après login et enregistrement statut user  #}
+    {% for message in app.flashes('success-register-user') %}
+        <div class="container alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {# flash message après paswword reset  #}
+    {% for message in app.flashes('password-reset-success') %}
+        <div class="container alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {# flash message aprèsajout événement  #}
+
+    {% for message in app.flashes('event_create') %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+</div>
 
     <h2>Événements à venir</h2>
     <div class="separator"></div>
@@ -85,7 +86,7 @@
             <div class="main">
                 
                 <!-- Day events-->
-                <h3 id="curentDate"> Les évènements du {{ "now"|date("d-m-Y") }}</h3>
+                <h3 id="curentDate">{{ "now"| format_datetime('full', 'none', locale='fr') }}</h3>
                 <div class="separator-small"></div>
 
                 <div id="displayCurrentEvents" class="d-flex flex-column flex-md-row flex-wrap">
