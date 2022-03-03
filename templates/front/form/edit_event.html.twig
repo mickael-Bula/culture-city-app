@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire création événement{% endblock %}
+
+{% block body %}
+
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+      <h1>Hello advertiser !</h1>
+
+      Cette page est le formulaire pour modifier votre évènement
+
+  {% if app.user %}
+      <h1>Hello {{ app.user.name }}</h1> 
+  {% endif %}
+
+  {% for message in app.flashes('danger') %}
+      <div class="alert alert-danger" role="alert">
+          {{ message }}
+      </div>
+  {% endfor %}
+
+      <h4 class = "mb-4">Renseigner les informations de votre événement !</h4>
+
+      <div class="row">
+
+                  {{ form_start (form, {attr: {'novalidate': 'novalidate'}}) }}
+                  {{ form_end (form)}}
+
+      </div> {# close row #}
+           
+</div>
+{% endblock %}
