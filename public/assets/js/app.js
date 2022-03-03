@@ -111,6 +111,7 @@ const app = {
             // add all links to event's card
             //TODO ajouter les liens suivants (avec des id si closest continue à poser des problèmes)
             eventTemplate.querySelector(".square").closest('a').href = "/event/" + element.slug;
+            eventTemplate.querySelector(".square-category").closest('a').href = "/event/" + element.category;
         
             // display event's category name
             eventTemplate.querySelector(".square-category").className = "square-category bg-category-" + element.category.slug + " d-inline";
