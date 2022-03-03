@@ -19,11 +19,13 @@ class registrationType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
+
             ->add('name', TextType::class)
+            
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Confirm Password']
+                'first_options' => ['label' => 'mot de passe'],
+                'second_options' => ['label' => 'Confirmez votre mot de passe']
             ])
             
             ->add('status', CheckboxType::class, [

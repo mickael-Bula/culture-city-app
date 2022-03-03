@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 // add this use for vichUploaderBundle
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\File\File;
  * @Vich\Uploadable
  * 
  * @ORM\Entity(repositoryClass=EventRepository::class)
+ * @UniqueEntity(fields={"name"}, message="Un évènement {{ value }} existe déjà !)")
  */
 class Event
 {

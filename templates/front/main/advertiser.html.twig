@@ -8,8 +8,15 @@
 <div class="container-fluid">
     <!-- advertiser-infos -->
     <div class="row">
-        <h1> Annonceur {{ user.placeName }} </h1>
+        <h1> {{ user.placeName }} </h1>
         <div class="separator"></div>
+
+         {# flash message succes after edit profile  #}
+        {% for message in app.flashes('success-advertiser-edit') %}
+            <div class="container alert alert-success text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
 
         <!-- user banner-->
         <div class="col-12">  
@@ -40,6 +47,8 @@
                 </div> 
                 
                 <h2 class="mb-3">à propos de nous</h2>
+
+                  
 
                 <div class="separator-small"></div>
 
