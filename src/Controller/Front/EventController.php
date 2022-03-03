@@ -51,10 +51,15 @@ class EventController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid())
-        
+
         {           
                 $user = $this->getUser();
                 $event->setUser($user);
+
+                // need to sluggify event by event name property
+                $name = $form->get('name')->getData();
+                $slug = $slugger->slug($name);
+                $event->setSlug(strtolower($slug));
 
                 //! Au cas ou on utilise ce form pour mettre à jour l'événement 
                 //! on ne passe ici que si il y a eu une image modifiée.
