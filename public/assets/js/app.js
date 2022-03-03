@@ -82,6 +82,7 @@ const app = {
         catch (error)
         {
             // display an error message
+            console.log(error.code);
         }
         app.displayEvents(data);
     },
