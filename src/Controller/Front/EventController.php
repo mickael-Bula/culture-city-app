@@ -97,4 +97,51 @@ class EventController extends AbstractController
             return $this->renderForm('front/form/event.html.twig', compact('form'));
     }
 
+    /**
+     * @Route("/edit/{slug}", name="event_edit", methods={"GET", "POST"})
+     */
+    public function editEvent(Request $request, EntityManagerInterface $entityManager, Event $event, SluggerInterface $slugger): Response
+    {
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $name = $form->get('name')->getData();
+            $slug = $slugger->slug($name);
+            $event->setSlug(strtolower($slug));
+
+            if ($form->get('picture')->getData() != null) {
+
+                $eventFile = $form->get('picture')->getData();
+
+                if ($eventFile) {
+                    $originalFilename = pathinfo($eventFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$eventFile->guessExtension();
+    
+                    try {
+                        $eventFile->move(
+                            $this->getParameter('event_picture'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        // ... gérer les exeptions si problème d'upload en fonction des restrictions qu'on a pu donner dans le form
+                    }
+    
+                    $event->setPicture($newFilename);
+                }
+            }
+            
+            $this->addFlash(
+                'event_edit', 'Les modifications ont été bien sauvegardées'
+            );
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('main_home', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('front/form/edit_event.html.twig', compact('form'));
+    }
 }
