@@ -15,8 +15,11 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\File;
 
 class EventType extends AbstractType
 {
@@ -25,20 +28,20 @@ class EventType extends AbstractType
         $builder
             ->add('name', TextType::class, [
 
-                'label' => 'Nom',
-                'required' => true,     
+                'label' => 'Nom de l\'événement',
+                'required' => true,   
             ])   
 
             ->add('price', NumberType::class, [
 
                 'label' => 'Tarif',
-                'required' => true,     
+                'required' => false,     
             ])  
 
             ->add('description', TextareaType::class, [
 
-                'label' => 'Décrivez votre évènement...',
-                'required' => true,     
+                'label' => 'Description de votre évènement...',
+                'required' => false,     
             ])   
 
             ->add('isPremium', CheckboxType::class, [
@@ -47,30 +50,39 @@ class EventType extends AbstractType
                 'required' => false, 
             ])
 
-            ->add('startDate', DateType::class, [
+            ->add('startDate', DateTimeType::class, [
 
-                'label' => 'Date de votre évènement',
-                'required' => true,     
+                'label' => 'Date et heure de votre évènement',
+                'required' => true, 
+                'placeholder' => [
+                    'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
+                    'hour' => 'Heure', 'minute' => 'Minute',
+                ],    
             ])  
 
-            ->add('endDate', DateType::class, [
+            ->add('endDate', DateTimeType::class, [
 
-                'label' => 'Date de fin de votre évènement',
-                'required' => true,     
+                'label' => 'Date et heure de fin de votre évènement (Optionnel !)',
+                'required' => false,
+                'placeholder' => [
+                    'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
+                    'hour' => 'Heure', 'minute' => 'Minute',
+                ],       
             ])  
            
             // upload user event picture file
             ->add('picture' , FileType::class, [
 
                 'label' => 'Image de votre évènement (Format: jpg, png ou gif file)',
-                'mapped' => false,
-                'required' => false,     
+                'required' => true,
+                'mapped' => true,
             ])  
 
             // select event category
             ->add('category', EntityType::class, [
 
                 'class' => Category::class,
+                'label' => 'Associez une catégorie à votre évènement',
                 'choice_label' => 'name',
                 'multiple' => false,
                 'required' => true,
@@ -80,12 +92,13 @@ class EventType extends AbstractType
             ->add('tags', EntityType::class, [
 
                 'class' => Tag::class,
+                'label' => 'Vous pouvez aussi associer votre événement à des mots clés !',
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
-                //'required' => false,
             ]) 
-
+            
+            ->add('publier', SubmitType::class)
         ;
     }
 

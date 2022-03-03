@@ -6,6 +6,7 @@ use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 // add this use for vichUploaderBundle
@@ -15,7 +16,11 @@ use Symfony\Component\HttpFoundation\File\File;
 
 
 
+
 /**
+ * 
+ * @UniqueEntity(fields={"name"}, message="Un événement nommé {{ value }} existe déjà !")
+ * 
  * Add this on top of the class for vichUploaderBundle
  * @Vich\Uploadable
  * 
@@ -31,8 +36,10 @@ class Event
     private $id;
 
     /**
+     * @Assert\NotBlank (message = "Ce champ est requis !")
      * @ORM\Column(type="string", length=255)
      * @Groups({"events"})
+     * 
      */
     private $name;
 
@@ -52,6 +59,7 @@ class Event
     private $isPremium;
 
     /**
+     * @Assert\NotBlank (message = "Vous devez renseigner une date et une heure !")
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"events"})
      */
@@ -91,6 +99,7 @@ class Event
     private $tags;
 
     /**
+    * @Assert\NotBlank (message = "Vous devez choisir une catégorie pour votre évènement !")
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"events"})
@@ -105,21 +114,22 @@ class Event
     private $user;
 
     /**
+     * @Assert\NotBlank(message="Vous devez ajouter une image")
+     * 
      * @Assert\File(
      *     maxSize = "1024k",
      *     maxSizeMessage = "Le fichier image est trop loud ({{ size }} {{ suffix }}). Le poids maxmum autorisé pour le fichier est de {{ limit }} {{ suffix }}",
-     *     notFoundMessage = "Le fichier image n'a pas été trouvé ! Veuillez joindre à nouveau votre fichier image !"
+     *     notFoundMessage = "Le fichier image n'a pas été trouvé ! Veuillez joindre à nouveau votre fichier image ! - (@assert)"
      * )
      * 
      * @Assert\Image(
-     *     minWidth = "600",
+     *     minWidth = "400",
      *     minWidthMessage = "La largeur de l'image est trop petite ({{ width }}px). La largeur minimale attendue est de {{ min_width }}px",   
-     *     minHeight = "600",
+     *     minHeight = "400",
      *     minHeightMessage = "La hauteur de l'image est trop petite ({{ height }}px). La largeur minimale attendue est de {{ min_height }}px",
      *     mimeTypes = {"image/jpeg", "image/png","image/jpg", "image/gif"},
      *     mimeTypesMessage = "Uniqument les images de type .jpeg .png .jpg and .gif sont autorisés !"
      * )
-     * 
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"events"})
      */
