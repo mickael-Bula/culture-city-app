@@ -15,7 +15,7 @@ const app = {
     addAllEventListeners: function()
     {
         // we verify if current page is 'home' to handle filters form
-        if (window.location.href === app.state.base_url)
+        if (window.location.pathname === '/')
         {
             // add listeners to 'categories' buttons
             document.querySelectorAll("#navbarNav .categories").forEach(category => category.addEventListener("click", app.handleClickCategoryBtn));
@@ -82,6 +82,7 @@ const app = {
         catch (error)
         {
             // display an error message
+            console.log(error);
         }
         app.displayEvents(data);
     },
