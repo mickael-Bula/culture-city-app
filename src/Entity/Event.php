@@ -158,7 +158,19 @@ class Event
 
     public function getName(): ?string
     {
+      /*   $name = $this->name;
+
+        $max = 2;
+        if (strlen($name) >= $max)
+        {
+        $chaine = substr($name, 0, $max);
+        $espace = strrpos($chaine, " ");
+        $chaine = substr($chaine, 0, $espace)."...";
+        } */
+
         return $this->name;
+        
+
     }
 
     public function setName(string $name): self
