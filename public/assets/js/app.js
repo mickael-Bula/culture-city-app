@@ -6,16 +6,26 @@ const app = {
         app.addAllEventListeners();
     },
 
+    state:
+    {
+        // we declare our base URL to generate paths
+        base_url: 'http://localhost:8000/'
+    },
+
     addAllEventListeners: function()
     {
-        // add listeners to 'categories' buttons
-        document.querySelectorAll("#navbarNav .categories").forEach(category => category.addEventListener("click", app.handleClickCategoryBtn));
-
-        // add listeners on inputs form
-        document.querySelectorAll("#filters input").forEach(filter => filter.addEventListener("change", app.handleChangeFiltersForm));
-
-        // add listener on date picker to display it as chosen date
-        document.querySelector("#start").addEventListener("change", app.handleDatePickerElement);
+        // we verify if current page is 'home' to handle filters form
+        if (window.location.href === app.state.base_url)
+        {
+            // add listeners to 'categories' buttons
+            document.querySelectorAll("#navbarNav .categories").forEach(category => category.addEventListener("click", app.handleClickCategoryBtn));
+    
+            // add listeners on inputs form
+            document.querySelectorAll("#filters input").forEach(filter => filter.addEventListener("change", app.handleChangeFiltersForm));
+    
+            // add listener on date picker to display it as chosen date
+            document.querySelector("#start").addEventListener("change", app.handleDatePickerElement);
+        }
     },
 
     handleClickCategoryBtn: function(event)
@@ -43,7 +53,7 @@ const app = {
         const queryStringParams = new URLSearchParams();
         form.forEach((value, key) => queryStringParams.append(key, value));
 
-        app.fetchEvents('http://localhost:8000/front/api/filters', queryStringParams.toString());
+        app.fetchEvents(app.state.base_url + 'front/api/filters', queryStringParams.toString());
     },
 
     handleDatePickerElement: function(event)
@@ -109,9 +119,10 @@ const app = {
             eventTemplate.querySelector(".square").style.cssText += "background-image:url('" + urlPicture + "'); background-size:cover; background-position:center center;";
 
             // add all links to event's card
-            //TODO ajouter les liens suivants (avec des id si closest continue à poser des problèmes)
             eventTemplate.querySelector(".square").closest('a').href = "/event/" + element.slug;
+            eventTemplate.querySelector(".eventName").closest('a').href = "/event/" + element.slug;
             eventTemplate.querySelector(".square-category").closest('a').href = "/event/" + element.category;
+            eventTemplate.querySelector(".eventPlace").closest('a').href = "/annonceur/" + element.user.slug;
         
             // display event's category name
             eventTemplate.querySelector(".square-category").className = "square-category bg-category-" + element.category.slug + " d-inline";
@@ -129,7 +140,7 @@ const app = {
             // compare dates
             if (reformateDatePicker >= reformateStartDate)
             {
-                // when an event starts before the date picker or takes place this day, we add it to Current Events list
+                // when an event starts before the date picker or takes place on that day, we add it to Current Events list
                 displayCurrentElement.appendChild(eventTemplate);
             }
             // alternaltively we display it to Upcoming Events list
