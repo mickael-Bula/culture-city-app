@@ -151,7 +151,7 @@ class RegistrationController extends AbstractController
 
 
                 // flash message for user on home avec register and auto-login success
-                $this->addFlash('success-register-user', 'Merci ' . $newUserName . ' vous êtes enregistré et connecté. Veuillez vérifier vos mail pour confirmer votre adresse e-mail !');
+                $this->addFlash('success-register-user', 'Merci ' . $newUserName . ' veuillez vérifier vos mail pour confirmer votre adresse e-mail !');
 
                 //redirect on home page after register and autologin.
                 return $this->redirectToRoute('main_home');

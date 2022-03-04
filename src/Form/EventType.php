@@ -9,8 +9,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-// add this use to upload File Type
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -18,16 +18,21 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\Image;
+
 
 class EventType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+
             ->add('name', TextType::class, [
 
                 'label' => 'Nom',
-                'required' => true,     
+                'required' => true,   
+                'empty_data' => 'Non renseigné', 
+  
             ])   
 
             ->add('price', NumberType::class, [
@@ -48,24 +53,37 @@ class EventType extends AbstractType
                 'required' => false, 
             ])
 
-            ->add('startDate', DateType::class, [
+            ->add('startDate', DateTimeType::class, [
 
                 'label' => 'Date de votre évènement',
                 'required' => true,     
+                'data' => new \DateTime(),
             ])  
 
-            ->add('endDate', DateType::class, [
+            ->add('endDate', DateTimeType::class, [
 
                 'label' => 'Date de fin de votre évènement',
                 'required' => true,     
+                'data' => new \DateTime(),
             ])  
            
-            // upload user event picture file
+            // upload event picture file
             ->add('picture' , FileType::class, [
 
-                'label' => 'Image de votre évènement (Format: jpg, png ou gif file)',
+                'label' => 'Ajoutez l\'image de votre évènement',
                 'mapped' => false,
-                'required' => false,     
+                'required' => false,  
+
+                //contraint valid image file type 
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '1024k',
+                        'minWidth' => '400',
+                        'maxWidth' => '1980',
+                        'minHeight' => '400',
+                        'maxHeight' => '1980',
+                    ])
+                ]
             ])  
 
             // select event category

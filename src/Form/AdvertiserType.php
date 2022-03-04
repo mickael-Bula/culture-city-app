@@ -8,13 +8,13 @@ use Symfony\Component\Form\AbstractType;
 use Doctrine\DBAL\Types\DateTimeImmutableType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-// add this use to upload File Type
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\Image;
 
 
 class AdvertiserType extends AbstractType
@@ -22,28 +22,43 @@ class AdvertiserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-                    // upload user avatar file
+
+            // upload user avatar file
             ->add('avatar' , FileType::class, [
 
-                'label' => 'Votre image de profil (Format: jpg, png ou gif file)',
-                    // unmapped signifie que ce champ n'est associé à aucune propriété d'entité
+                'label' => 'Ajoutez votre image de profil',
                 'mapped' => false,
-                    // ne pas mettre de contrainte de 'requiere' permettra de ne pas demander
-                    // d'ajouter systèmatiquement un fichier si on utilise ce même formulaire pour que le user mette simplement
-                    // à jour son profil.
                 'required' => false,
-                    // les champs 'unmapped' ne peuvent pas définir leur contraintes de validation ici
-                    // dans l'entité associée, on devra utiliser les classes de contraintes @Assert\File(les contraintes)
-                    // pour restraindr les extentions de fichier autorisées, les dimentions min max du fichier etc.
+
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '1024k',
+                        'minWidth' => '200',
+                        'maxWidth' => '1200',
+                        'minHeight' => '200',
+                        'maxHeight' => '1200',
+                    ])
+                ]
+             
                
             ])      
 
             // upload user banner file    
             ->add('banner', FileType::class, [
 
-                'label' => 'Votre banière de page profil (Format: jpg, png ou gif file)',
+                'label' => 'Ajoutez une banière à votre page de profil',
                 'mapped' => false,
                 'required' => false,
+
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '1024k',
+                        'minWidth' => '800',
+                        'maxWidth' => '1980',
+                        'minHeight' => '800',
+                        'maxHeight' => '1980',
+                    ])
+                ]
                    
             ])   
 
@@ -51,90 +66,104 @@ class AdvertiserType extends AbstractType
             ->add('placeName', TextType::class, [
 
                 'label' => 'Le nom de votre structure...',
-                'required' => true,     
+                'required' => true,
+                'empty_data' => 'Champ à renseigner !',   
             ])   
 
             ->add('description', TextareaType::class, [
 
                 'label' => 'Décrivez votre structure...',
-                'required' => true,     
+                'required' => true,   
+                'empty_data' => 'Champ à renseigner !',        
             ])   
 
             ->add('address_1', TextType::class, [
 
                 'label' => 'Adresse 1',
-                'required' => true,     
+                'required' => true,  
+                'empty_data' => 'Champ à renseigner !',         
             ])   
 
             ->add('address_2', TextType::class, [
 
                 'label' => 'Adresse 2',
-                'required' => true,     
+                'required' => true,  
             ])   
 
 
             ->add('city', TextType::class, [
 
                 'label' => 'Ville',
-                'required' => true,     
+                'required' => true, 
+                'empty_data' => 'Champ à renseigner !',           
             ])   
 
 
             ->add('zip', NumberType::class, [
 
                 'label' => 'Code Postal',
-                'required' => true,     
+                'required' => true,  
+                'empty_data' => 000000,           
             ])  
 
 
             ->add('siren', NumberType::class, [
 
                 'label' => 'Siren',
-                'required' => true,     
+                'required' => true, 
+                'empty_data' => 000000,            
             ]) 
 
 
               ->add('phone', TextType::class, [
 
                 'label' => 'Téléphone',
-                'required' => true,     
+                'required' => true, 
+                'empty_data' => 'Champ à renseigner !',           
             ]) 
 
             ->add('foundedIn', DateType::class, [
 
+                'data' => new \DateTime(),
                 'label' => 'Date de fondation',
-                'required' => true,     
+                'required' => true, 
+                'empty_data' => 'Champ à renseigner !',           
             ])  
 
             
             ->add('capacity', NumberType::class, [
 
                 'label' => 'Capacité d\'acceuil',
-                'required' => true,     
+                'required' => true,  
+                'empty_data' => 000000,           
             ]) 
 
             ->add('website', UrlType::class, [
 
                 'label' => 'Site web',
-                'required' => true,     
+                'required' => true,  
+                'empty_data' => 'Champ à renseigner !',           
             ]) 
 
             ->add('facebook', UrlType::class, [
 
                 'label' => 'Facebook',
-                'required' => true,     
+                'required' => true, 
+                'empty_data' => 'Champ à renseigner !',            
             ]) 
 
             ->add('twitter', UrlType::class, [
 
                 'label' => 'Twitter',
-                'required' => true,     
+                'required' => true, 
+                'empty_data' => 'Champ à renseigner !',            
             ]) 
 
             ->add('instagram', UrlType::class, [
 
                 'label' => 'Instagram',
-                'required' => true,     
+                'required' => true,  
+                'empty_data' => 'Champ à renseigner !',         
             ]) 
         ;
     }
