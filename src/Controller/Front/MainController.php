@@ -31,11 +31,14 @@ class MainController extends AbstractController
         $upcomingEvents = [];
 
         // Formattage des dates pour comparaison de chaque event et stockage des events dans chaque tableau
-        foreach ($events as $event) {            
+        foreach ($events as $event) {  
+            $date = $event->getEndDate() ? $event->getEndDate() : $event->getStartDate();   
+            $date = $date->format('Y-m-d');
+
             $dateEvent = $event->getStartDate();
             $dateEvent = $dateEvent->format('Y-m-d');
 
-            if ($currentDate === $dateEvent)
+            if ($date >= $currentDate && $dateEvent <= $currentDate )
             {   
                 
                 $currentEvents[] = $event;

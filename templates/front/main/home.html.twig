@@ -136,13 +136,24 @@
                                     
                                         <div class="col-8 col-sm-12 p-1 p-sm-3">
                                             <a href="{{ path('show_event', {slug: event.slug}) }}">
-                                                {# <h3 class="name mb-2">{{ event.name }}</h3> #}
+                                                <h3 class="name mb-2">{{ event.name }}</h3>
                                             </a>
 
                                             <div class="my-2">
                                                 <div class="scaled-xs">
                                                     <i class="fa-solid fa-calendar-days d-inline"></i> 
-                                                    <div class ="date ms-2 d-inline">{{event.startDate | date("d/m/Y") }}</div>
+                                                    
+                                                    {# Condition to display the good format date if event is on more one day#}
+                                                    
+                                                    {# Condition to display the good format date if event is on more one day#}
+                                                    {% set date = 'now' | date("d/m/Y") %}
+                                                        {#% dump(date) %#}
+                                                    {% if event.startDate | date("d/m/Y") < date %}
+                                                        <div class ="date ms-2 d-inline">{{date}}</div> <div class="d-inline btn-xs">en cours</div>
+                                                    {% else %}
+                                                        <div class ="date ms-2 d-inline">{{event.startDate | date("d/m/Y") }}</div>
+                                                    {% endif %}
+                                                   
                                                 </div>
                                             </div>
                                             
@@ -153,7 +164,7 @@
                                                         {% for tag in event.tags %}
                                                             <a href="{{ path('show_tag', {slug: tag.slug}) }}">{{tag.name}}</a>
                                                         {% endfor %}
-                                                </div>    
+                                                    </div>    
                                                 </div>
                                             </div>
 
@@ -232,7 +243,7 @@
 
                                             <div class="my-2">
                                                 <div class="scaled-xs">
-                                                    <i class="fa-solid fa-calendar-days d-inline"></i> 
+                                                    <i class="fa-solid fa-calendar-days d-inline"></i>  
                                                     <div class ="date ms-2 d-inline">{{event.startDate | date("d/m/Y") }}</div>
                                                 </div> 
                                             </div>
