@@ -51,7 +51,7 @@ class MainController extends AbstractController
         }
 
         $premiumEvents = $eventRepository->findBy(['isPremium'=> 'true'],['createdAt' => 'DESC'], 5);
-        dump($premiumEvents);
+        //dump($premiumEvents);
          //dd($currentEvents, $upcomingEvents);
 
         return $this->render('front/main/home.html.twig', compact('currentEvents', 'upcomingEvents', 'categories', 'premiumEvents'));
