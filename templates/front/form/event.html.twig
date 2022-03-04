@@ -26,6 +26,16 @@
     <div class="row">
 
                 {{ form_start (form, {attr: {'novalidate': 'novalidate'}}) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.price) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.isPremium) }}
+                {{ form_row(form.startDate) }}
+
+                {# ajout d'une checkbox pour les events sur plusieurs jours #}
+                <input type="checkbox" id="addEndDate"><label for="addEndDtae">Souhaitez-vous annoncer un événement sur plusieurs jours ?</label>
+                <div class="hidden" id="hiddenDateField">{{ form_row(form.endDate) }}</div>
+                
                 {{ form_end (form)}}
 
     </div> {# close row #}
