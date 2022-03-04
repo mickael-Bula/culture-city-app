@@ -102,6 +102,8 @@ class EventController extends AbstractController
      */
     public function editEvent(Request $request, EntityManagerInterface $entityManager, Event $event, SluggerInterface $slugger): Response
     {
+
+        $this->denyAccessUnlessGranted('EDIT_EVENT', $event);
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
