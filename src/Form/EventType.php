@@ -31,6 +31,7 @@ class EventType extends AbstractType
 
                 'label' => 'Nom',
                 'required' => true,   
+                'empty_data' => 'Non renseigné', 
   
             ])   
 

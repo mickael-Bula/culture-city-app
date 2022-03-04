@@ -66,90 +66,104 @@ class AdvertiserType extends AbstractType
             ->add('placeName', TextType::class, [
 
                 'label' => 'Le nom de votre structure...',
-                'required' => true,     
+                'required' => true,
+                'empty_data' => 'Champ à renseigner !',   
             ])   
 
             ->add('description', TextareaType::class, [
 
                 'label' => 'Décrivez votre structure...',
-                'required' => true,     
+                'required' => true,   
+                'empty_data' => 'Champ à renseigner !',        
             ])   
 
             ->add('address_1', TextType::class, [
 
                 'label' => 'Adresse 1',
-                'required' => true,     
+                'required' => true,  
+                'empty_data' => 'Champ à renseigner !',         
             ])   
 
             ->add('address_2', TextType::class, [
 
                 'label' => 'Adresse 2',
-                'required' => true,     
+                'required' => true,  
             ])   
 
 
             ->add('city', TextType::class, [
 
                 'label' => 'Ville',
-                'required' => true,     
+                'required' => true, 
+                'empty_data' => 'Champ à renseigner !',           
             ])   
 
 
             ->add('zip', NumberType::class, [
 
                 'label' => 'Code Postal',
-                'required' => true,     
+                'required' => true,  
+                'empty_data' => 000000,           
             ])  
 
 
             ->add('siren', NumberType::class, [
 
                 'label' => 'Siren',
-                'required' => true,     
+                'required' => true, 
+                'empty_data' => 000000,            
             ]) 
 
 
               ->add('phone', TextType::class, [
 
                 'label' => 'Téléphone',
-                'required' => true,     
+                'required' => true, 
+                'empty_data' => 'Champ à renseigner !',           
             ]) 
 
             ->add('foundedIn', DateType::class, [
 
+                'data' => new \DateTime(),
                 'label' => 'Date de fondation',
-                'required' => true,     
+                'required' => true, 
+                'empty_data' => 'Champ à renseigner !',           
             ])  
 
             
             ->add('capacity', NumberType::class, [
 
                 'label' => 'Capacité d\'acceuil',
-                'required' => true,     
+                'required' => true,  
+                'empty_data' => 000000,           
             ]) 
 
             ->add('website', UrlType::class, [
 
                 'label' => 'Site web',
-                'required' => true,     
+                'required' => true,  
+                'empty_data' => 'Champ à renseigner !',           
             ]) 
 
             ->add('facebook', UrlType::class, [
 
                 'label' => 'Facebook',
-                'required' => true,     
+                'required' => true, 
+                'empty_data' => 'Champ à renseigner !',            
             ]) 
 
             ->add('twitter', UrlType::class, [
 
                 'label' => 'Twitter',
-                'required' => true,     
+                'required' => true, 
+                'empty_data' => 'Champ à renseigner !',            
             ]) 
 
             ->add('instagram', UrlType::class, [
 
                 'label' => 'Instagram',
-                'required' => true,     
+                'required' => true,  
+                'empty_data' => 'Champ à renseigner !',         
             ]) 
         ;
     }
