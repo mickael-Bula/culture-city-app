@@ -115,6 +115,8 @@
                             <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') ?: '/upload/default_picture/default_event.jpg' | imagine_filter ('event_picture_300') }}" alt="{{ event.name }}" />
                             {% endif %}
 
+                            
+
                             {# <a href="#">
                                 <div class="square" style="background-image:url('{{event.picture}}'); background-size:cover; background-position:center center; ">
                                 </div>
@@ -129,7 +131,7 @@
                 
                     <div class="col-8 col-sm-12 p-1 p-sm-3">
                         <a href="{{ path('show_event', {slug: event.slug}) }}">
-                            {# <h3 class="name mb-2">{{ event.name }}</h3> #}
+                            <h3 class="name mb-2">{{ event.name }}</h3>
                         </a>
 
                         <div class="my-2">
