@@ -123,8 +123,16 @@ const app = {
             // for an easier comparison we convert dates using the getTime() method which returns the number of milliseconds since the ECMAScript epoch
             const getDate = document.getElementById("start").value;
             const datePicker = new Date(getDate);
-            const endDate = new Date(element.endDate);
-            if (datePicker.getTime() > endDate.getTime()) { continue }
+
+            // we use end date for comparison if exist, otherwise start date
+            let referenceDate = (element.endDate !== null) ? element.endDate : element.starDate;
+            
+            referenceDate = new Date(referenceDate);
+            if (datePicker.getTime() > referenceDate.getTime()) { continue }
+
+            // if an event starts before the current day, we set its startDate as current date
+            const startDate = new Date(element.startDate);
+            if (element.endDate !== null && startDate.getTime() < datePicker.getTime()) { element.startDate = document.getElementById("start").value }
 
             // get event's tags and create a link for each
             let tags = element.tags;
@@ -155,7 +163,6 @@ const app = {
 
             // if an event matches the date picker we display it as 'Current Event', otherwise as 'Upcoming Events'
             // to achieve the comparison we weed to convert dates in the same format
-            const startDate = new Date(element.startDate);
             const reformateStartDate = startDate.toLocaleDateString();
             const reformateDatePicker = datePicker.toLocaleDateString();
 
