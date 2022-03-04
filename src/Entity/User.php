@@ -16,8 +16,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 // add this to upload file type in class method
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
-
 
 
 /**
@@ -27,6 +25,7 @@ use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @UniqueEntity(fields={"email"}, message="Une adresse mail {{ value }} existe déjà !)")
+
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -48,9 +47,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $roles = [];
 
     /**
-     * @SecurityAssert\UserPassword(
-     * message = "Mot de passe invalide !"
-     * )
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
