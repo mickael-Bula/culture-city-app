@@ -179,12 +179,24 @@
                                     </a>
                                 </div>  
                             </div>
+
+                            <!-- edit button if it's your own event -->
+                            {% if is_granted("EVENT_EDIT", event) %}
+                            <div class="my-2">    
+                                <div class="scaled-xs">
+                                    <a href="{{ path("event_edit", {slug: event.slug}) }}">EDITER</a>
+                                </div>  
+                            </div>
+                            {% endif %}
+                            <!-- end edit button -->
                             
                             <div class="d-flex justify-content-end">
                                 <a href="{{ path('show_event', {slug:event.slug}) }}">
                                     <i class="fa-solid fa-arrow-right-long me-2"></i>
                                 </a>
                             </div>
+
+                            
                         </div>
                     </div>
 
