@@ -52,9 +52,9 @@ class AdvertiserType extends AbstractType
 
                 'constraints' => [
                     new Image([
-                        'maxSize' => '1024k',
+                        'maxSize' => '2024k',
                         'minWidth' => '800',
-                        'maxWidth' => '1980',
+                        'maxWidth' => '3960',
                         'minHeight' => '800',
                         'maxHeight' => '1980',
                     ])
