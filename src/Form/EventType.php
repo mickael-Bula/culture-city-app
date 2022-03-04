@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -50,14 +51,14 @@ class EventType extends AbstractType
                 'required' => false, 
             ])
 
-            ->add('startDate', DateType::class, [
+            ->add('startDate', DateTimeType::class, [
 
                 'label' => 'Date de votre évènement',
                 'required' => true,     
                 'data' => new \DateTime(),
             ])  
 
-            ->add('endDate', DateType::class, [
+            ->add('endDate', DateTimeType::class, [
 
                 'label' => 'Date de fin de votre évènement',
                 'required' => true,     
