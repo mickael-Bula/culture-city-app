@@ -33,8 +33,8 @@
                 {{ form_row(form.startDate) }}
 
                 {# ajout d'une checkbox pour les events sur plusieurs jours #}
-                <input type="checkbox" id="addEndDate"><label for="addEndDtae">Souhaitez-vous annoncer un événement sur plusieurs jours ?</label>
-                <div class="hidden" id="hiddenDateField">{{ form_row(form.endDate) }}</div>
+                <input type="checkbox" id="addEndDate"><label for="hiddenDateField">Souhaitez-vous annoncer un événement sur plusieurs jours ?</label>
+                <div id="hiddenDateField" style="display: none;">{{ form_row(form.endDate) }}</div>
                 
                 {{ form_end (form)}}
 

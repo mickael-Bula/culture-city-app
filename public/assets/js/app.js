@@ -30,7 +30,7 @@ const app = {
         // we verify if current page is 'create/event' to handle endDate's checkbox
         if (window.location.pathname === '/create/event')
         {
-            document.querySelector("#addEndDate").addEventListener("change", app.handleChangeEventForm);
+            document.getElementById("addEndDate").addEventListener("change", app.handleChangeEventForm);
         }
     },
 
@@ -49,7 +49,16 @@ const app = {
 
     handleChangeEventForm: function()
     {
-        console.log("checkbox cliquée");
+        // toggle between showing and hiding the end date field
+        const endDateField = document.getElementById("hiddenDateField");
+        if (endDateField.style.display === 'none')
+        {
+            endDateField.style.display = 'block';
+        }
+        else
+        {
+            endDateField.style.display = 'none';
+        }
     },
 
     handleChangeFiltersForm: function()
