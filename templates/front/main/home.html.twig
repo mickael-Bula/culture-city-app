@@ -84,8 +84,8 @@
                 {% for category in categories %}
 
                     <div class="form-check form-switch d-flex align-items-center my-3">
-                        <input class="form-check-input" name="filters[]" type="checkbox" role="switch3" value="{{ category.name }}" id="flexSwitchCheckChecked"/>
-                        <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">{{ category.name }}</label>
+                        <input class="form-check-input" name="filters[]" type="checkbox" role="switch3" value="{{ category.name }}" id="flexSwitchCheckChecked{{ category.name }}"/>
+                        <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked{{ category.name }}">{{ category.name }}</label>
                     </div>
 
                 {% endfor %}
