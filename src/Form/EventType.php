@@ -54,12 +54,14 @@ class EventType extends AbstractType
 
                 'label' => 'Date de votre évènement',
                 'required' => true,     
+                'data' => new \DateTime(),
             ])  
 
             ->add('endDate', DateType::class, [
 
                 'label' => 'Date de fin de votre évènement',
                 'required' => true,     
+                'data' => new \DateTime(),
             ])  
            
             // upload event picture file
