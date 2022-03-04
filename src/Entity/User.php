@@ -100,6 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $foundedIn;
 
     /**
+     * @Assert\Url
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $website;
@@ -110,16 +111,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $capacity;
 
     /**
+     * @Assert\Url
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $facebook;
 
     /**
+     * @Assert\Url
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $twitter;
 
     /**
+     * @Assert\Url
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $instagram;
