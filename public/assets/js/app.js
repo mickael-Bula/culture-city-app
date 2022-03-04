@@ -133,7 +133,7 @@ const app = {
             // if an event starts before the current day, we set its startDate as current date
             const startDate = new Date(element.startDate);
             if (element.endDate !== null && startDate.getTime() < datePicker.getTime()) { element.startDate = document.getElementById("start").value }
-
+            console.log(element.startDate);
             // get event's tags and create a link for each
             let tags = element.tags;
             // for (const tag of tags) { eventTemplate.querySelector(".eventTags").textContent += tag.name + " " }
