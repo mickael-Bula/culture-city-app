@@ -14,9 +14,15 @@ class TagController extends AbstractController
     /**
      * @Route("/tag/{slug}", name="show_tag", methods={"GET"})
      */
-    public function showByName(Tag $tag): Response
+    public function showByName(TagRepository $tagRepository, EventRepository $eventRepository, string $slug): Response
     {
-       
-        return $this->render('front/main/tag.html.twig', compact('tag'));
+        // We get the tag by his slug
+        $tag = $tagRepository->findOneBy(['slug' => $slug]);
+
+        // Display all events by custom query SQL in TagRepository
+        $events = $tagRepository->findEventsDQL($tag);
+      
+        
+        return $this->render('front/main/tag.html.twig', compact('tag', 'events'));
     }
 }

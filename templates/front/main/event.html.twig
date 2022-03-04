@@ -45,7 +45,7 @@
                         <div class="my-2">
                             <div class="scaled-xs">
                                 <i class="fa-solid fa-clock"></i>
-                                <div class ="start-time ms-2 d-inline">{{event.startDate | date("g:ia")}}</div>
+                                <div class ="start-time ms-2 d-inline">{{event.startDate | date("G : i")}}</div>
                             </div> 
                         </div>
                         
@@ -101,6 +101,16 @@
                             </div>
                         </div>
                         <!-- end contact info-->
+
+                        <!-- edit button if it's your own event -->
+                        {% if is_granted("EVENT_EDIT", event) %}
+                            <div class="my-2">    
+                                <div class="scaled-xs">
+                                    <a href="{{ path("event_edit", {slug: event.slug}) }}">EDITER</a>
+                                </div>  
+                            </div>
+                        {% endif %}
+                        <!-- end edit button -->
                         
                         <!-- back to home or toher page-->
                         <div class="d-flex justify-content-start mt-5">

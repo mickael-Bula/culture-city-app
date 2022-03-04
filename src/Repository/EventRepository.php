@@ -44,6 +44,30 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
+     * custom request gathering events by tag name
+     *
+     * @param string $tag
+     * @return void
+     */
+    public function findByTag($tagId)
+    {
+        return $this->createQueryBuilder('f')
+            // we join tag table
+            ->join('f.event_tag', 'e_c')
+            // on sélectionne les events dont le tag correspond à un paramètre lié
+            ->andWhere('e_c = :tag')
+            // on lie le paramètre à la valeur $tag (fournit en paramètre de la requête)
+            ->setParameter('tag', $tagId)
+            // sort by date
+            //->orderBy('e.startDate', 'ASC')
+            // on lance la requête
+            ->getQuery()
+            // on retourne le résultat
+            ->getResult()
+        ;
+    }
+
+    /**
      * custom request gathering events by filters
      * return events which category.name is in filters array
      *
@@ -60,5 +84,15 @@ class EventRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+     * Custom FindALL to have OrderBy startDate
+     *
+     * @return void
+     */
+    public function findAll()
+    {
+        return $this->findBy([],['startDate' => 'ASC'] );
     }
 }
