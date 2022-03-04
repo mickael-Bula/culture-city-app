@@ -19,14 +19,14 @@ class MainController extends AbstractController
     {
         $categories = $categoryRepository->findAll();
         
-        // On récupère tous les évènements grâce à requête FindALL custom EventRepository
+        // On récupère tous les événements grâce à requête FindALL custom EventRepository
         $events = $eventRepository->findAll();
  
         // Je récupère la date du jour
         $currentDate = new DateTime('now');
         $currentDate = $currentDate->format('Y-m-d');
 
-        // On stocke les évènements dans 2 tableaux
+        // On stocke les événements dans 2 tableaux
         $currentEvents = [];
         $upcomingEvents = [];
 
