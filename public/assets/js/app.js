@@ -26,6 +26,12 @@ const app = {
             // add listener on date picker to display it as chosen date
             document.querySelector("#start").addEventListener("change", app.handleDatePickerElement);
         }
+
+        // we verify if current page is 'create/event' to handle endDate's checkbox
+        if (window.location.pathname === '/create/event')
+        {
+            document.querySelector("#addEndDate").addEventListener("change", app.handleChangeEventForm);
+        }
     },
 
     handleClickCategoryBtn: function(event)
@@ -39,6 +45,11 @@ const app = {
         }
         event.currentTarget.classList.add("active");
         event.currentTarget.setAttribute("aria-current", "page");
+    },
+
+    handleChangeEventForm: function()
+    {
+        console.log("checkbox cliquée");
     },
 
     handleChangeFiltersForm: function()
