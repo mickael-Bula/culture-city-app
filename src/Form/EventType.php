@@ -30,7 +30,8 @@ class EventType extends AbstractType
             ->add('name', TextType::class, [
 
                 'label' => 'Nom',
-                'required' => true,     
+                'required' => true,   
+  
             ])   
 
             ->add('price', NumberType::class, [
