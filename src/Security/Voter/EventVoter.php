@@ -14,8 +14,6 @@ class EventVoter extends Voter
 
     protected function supports(string $attribute, $event): bool
     {
-        // replace with your own logic
-        // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::EVENT_EDIT])
             && $event instanceof \App\Entity\Event;
     }
@@ -28,13 +26,12 @@ class EventVoter extends Voter
             return false;
         }
 
-        //L'event à un annonceur ?
+        // if the event has an advertiser
         if(null === $event->getUser())
         {
             return false;
         }
 
-        // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::EVENT_EDIT:
                 return $this->canEdit($event, $user);
@@ -44,6 +41,7 @@ class EventVoter extends Voter
         return false;
     }
 
+    // if the user matche the event user
     private function canEdit(Event $event, User $user)
     {
         return $user === $event->getUser();
