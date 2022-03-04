@@ -22,7 +22,7 @@ class MainController extends AbstractController
         // On récupère tous les évènements
         $events = $eventRepository->findAll();
  
-        // je récupère la date du jour
+        // Je récupère la date du jour
         $currentDate = new DateTime('now');
         $currentDate = $currentDate->format('Y-m-d');
 
