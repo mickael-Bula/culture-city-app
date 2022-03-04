@@ -19,7 +19,7 @@ class MainController extends AbstractController
     {
         $categories = $categoryRepository->findAll();
         
-        // On récupère tous les évènements
+        // On récupère tous les évènements grâce à requête FindALL custom EventRepository
         $events = $eventRepository->findAll();
  
         // Je récupère la date du jour
