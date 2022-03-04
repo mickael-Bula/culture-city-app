@@ -87,12 +87,26 @@
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <li>
                             <hr class="dropdown-divider"></hr>
+
+                        {% if is_granted('ROLE_ANNONCEUR') %}
                         <li>
                             <a class="dropdown-item" href="{{ path('show_advertiser_page', {slug: app.user.slug}) }}">Voir mon profil</a>
                         </li>
+                        {% elseif is_granted('ROLE_USER') %}
+                        <li>
+                            <a class="dropdown-item" href="{{ path('show_user_page', {slug: app.user.slug}) }}">Voir mon profil</a>
+                        </li>
+                        {% endif %}
+
+                        {% if is_granted('ROLE_ANNONCEUR', 'ROLE_USER') %}
                          <li>      
                             <a class="dropdown-item" href="{{ path('advertise_edit_profile', {slug: app.user.slug}) }}">Editer mon profil</a>    
                         </li>
+                        {% elseif is_granted('ROLE_USER') %}
+                        <li>      
+                            <a class="dropdown-item" href="{{ path('user_edit_profile', {slug: app.user.slug}) }}">Editer mon profil</a>    
+                        </li>
+                        {% endif %}
                         <li>
                             <a class="dropdown-item" href="{{ path('back_admin') }}">Accès au back office</a>
                     {% endif %}

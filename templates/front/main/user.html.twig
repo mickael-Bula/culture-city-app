@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Annonceur {{ user.name }}{% endblock %}
+
+{% block body %}
+
+
+<div class="container-fluid">
+    <!-- advertiser-infos -->
+    <div class="row">
+        <h1> {{ user.placeName }} </h1>
+        <div class="separator"></div>
+
+         {# flash message succes after edit profile  #}
+        {% for message in app.flashes('success-advertiser-edit') %}
+            <div class="container alert alert-success text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <!-- user banner-->
+        <div class="col-12">  
+            {# <img class="img-fluid w-100 border-radius" src="{{ asset('assets/images/banner.jpg') }}" alt="">   #}
+           
+            {% if vich_uploader_asset (user, 'bannerFile') %}
+            <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'bannerFile') | imagine_filter ('user_cover_1200') }}" alt="{{ user.name }}" />
+            {% else %}
+            <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'bannerFile') ?: '/upload/default_picture/default_user_banner.jpg' | imagine_filter ('user_cover_1200') }}" alt="{{ user.name }}" />
+            {% endif %} 
+            {# <img class="img-fluid w-100 border-radius" src="{{event.picture}}" alt="{{event.name}}"> #}
+            
+        </div>    
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <!-- user description-->
+            <div class="col-12">
+                <div class="avatar">
+                    {% if vich_uploader_asset (user, 'avatarFile') %}
+                    <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
+                    {% else %}
+                    <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
+                    {% endif %} 
+                    
+                    {# <img class="img-fluid w-100 rounded-circle" src="{{ asset('assets/images/avatar.png') }}" alt=""> #}
+                </div> 
+                
+                <h2 class="mb-3">{{ user.name}}</h2>
+
+                <div class="separator-small"></div>
+
+                <p>{{ user.description }}</p>
+            </div>
+
+            <!-- Other user infos-->
+            <div class="d-flex justify-content-start flex-wrap">
+ 
+                <div class="my-2 me-5">   
+                    <div class="d-flex justify-conternt-center" >
+                        <a href="{{ user.facebook }}" class="me-3 my-3"><i class="fa-brands fa-facebook fa-2xl"></i></a> 
+                        <a href="{{ user.instagram }}" class="me-3 my-3"><i class="fa-brands fa-instagram fa-2xl"></i></a> 
+                        <a href="{{ user.twitter }}" class="my-3"><i class="fa-brands fa-twitter fa-2xl"></i></a> 
+                    </div>  
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
+   
