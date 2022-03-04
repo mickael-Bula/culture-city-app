@@ -249,6 +249,15 @@ table {
   border-color: var(--main-color-blue-med);
 }
 
+.btn-xs {
+  padding: 5px;
+  border-radius: 10px;
+  color: var(--main-color-white);
+  background-color: var(--main-color-blue-med);
+  border-color: var(--main-color-blue-med);
+  font-size: 0.8em;
+}
+
 .separator, .separator-small {
   width: 300px;
   height: 5px;

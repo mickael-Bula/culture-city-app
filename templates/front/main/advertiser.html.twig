@@ -48,8 +48,6 @@
                 
                 <h2 class="mb-3">à propos de nous</h2>
 
-                  
-
                 <div class="separator-small"></div>
 
                 <p>{{ user.description }}</p>
@@ -57,6 +55,8 @@
                 {% if user.capacity %} 
                     <p><em>Capacité : {{ user.capacity }} personnes</em></p>
                 {% endif %}
+
+                <p>Date d'ouverture : {{user.foundedIn | date("d-m-Y")}}</p>
             </div>
 
             <!-- Other user infos-->
