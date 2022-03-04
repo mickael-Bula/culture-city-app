@@ -13,14 +13,7 @@
       <h1>Hello {{ app.user.name }}</h1> 
     {% endif %}
 
- <h4 class = "mb-4">Cette page est le formulaire pour renseigner votre profil. !</h4>
-
-    {# read and display just one flash message type #}
-    {% for message in app.flashes('success') %}
-         <div class="alert alert-success" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
+ <h4 class = "mb-4">Cette page est le formulaire pour renseigner votre profil.</h4>
 
     {% for message in app.flashes('danger') %}
          <div class="alert alert-danger" role="alert">

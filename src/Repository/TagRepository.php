@@ -19,6 +19,36 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
+    /**
+     * Custom request DQL to display Events by Tags
+     *
+     * @param [object] $tag
+     * @return void
+     */
+    public function findEventsDQL($tag)
+    {
+        // We get the object ID
+        $tagId = $tag->getId();
+        
+        // We create a connection like PDO to make a SQL Query
+        $conn = $this->getEntityManager()->getConnection();
+
+        // This query display all events by "TagId" parameters
+        $sql = "
+            SELECT *
+            FROM event
+            INNER JOIN event_tag
+            WHERE event.id = event_id and tag_id = '$tagId'
+            ORDER BY event.start_date ASC
+            ";
+
+        // exécution de la requete
+        $results = $conn->executeQuery($sql);
+
+        // returns an array (i.e. a raw data set)
+        return $results->fetchAssociative();
+    }
+    
     // /**
     //  * @return Tag[] Returns an array of Tag objects
     //  */

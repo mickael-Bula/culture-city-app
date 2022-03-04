@@ -25,7 +25,7 @@ class AdvertiserController extends AbstractController
     public function editAdvertiserProfile(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
     {
 
-        //! ne pas s'inquièter de ce qui est souligné en rouge il n'y a pas de problème, tout fonctionne.
+        //! ne pas s'inquièter de ce qui est souligné en rouge il n'y a pas de problème, tout fonctionne...mais ce serait bien de comprendre !
        
         // get user from session
         $user = $this->getUser();
@@ -33,7 +33,7 @@ class AdvertiserController extends AbstractController
             // if no user authenticated as advertiser, we create a new one
             if ( !$user)
             {
-                $this->addFlash('danger', "vous n'êtes pas autorisé");
+                $this->addFlash('unautorized-access', "Oups ! Vous n'êtes pas autorisé à accèder à cette page !");
                 $this->redirectToRoute('main_home', [], Response::HTTP_MOVED_PERMANENTLY);
             }
 
@@ -103,15 +103,16 @@ class AdvertiserController extends AbstractController
 
                }
             
-                    // Flash message display a success message
-                    $this->addFlash('success', 'votre profil a été édité');
+                    // Flash message display a success message in user profil template
+                    $currentUser = $user->getName();
+                    $this->addFlash('success-advertiser-edit', 'Félicitation ' . $currentUser . ' votre profil a été mis à jour !');
 
                     //dd($user); 
 
                     $entityManager->persist($user);
                     $entityManager->flush();
-
-            return $this->redirectToRoute('main_home', [], Response::HTTP_SEE_OTHER);
+            //return user on his own profil page by slug   
+            return $this->redirectToRoute('show_advertiser_page', ['slug'=> $user->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('front/form/advertiser.html.twig', compact('form'));

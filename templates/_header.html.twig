@@ -68,36 +68,36 @@
                     </a>
                     
                     <ul class="dropdown-menu dropdown-menu-white dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li>
+                            <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+                        </li>
+                    {% else %}    
                         <li>
                             <a class="dropdown-item active" href="{{ path('app_login') }}">Connexion</a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="{{ path('user_register') }}">Inscription</a>
                         </li>
+                        <li>    
+                            <a class="dropdown-item" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a>  
+                        </li>
+                    {% endif %}   
+
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <li>
                             <hr class="dropdown-divider"></hr>
                         <li>
-                            {% if app.user %}
                             <a class="dropdown-item" href="{{ path('show_advertiser_page', {slug: app.user.slug}) }}">Voir mon profil</a>
-                            {% endif %}
                         </li>
-                         <li>
-                            {% if app.user %}
-                            <a class="dropdown-item" href="{{ path('advertise_edit_profile', {slug: app.user.slug}) }}">Editer mon profil</a>
-                            {% endif %}
+                         <li>      
+                            <a class="dropdown-item" href="{{ path('advertise_edit_profile', {slug: app.user.slug}) }}">Editer mon profil</a>    
                         </li>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <li>
-                            <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
-                        </li>
-                         <li>
-                            {% if app.user %}
-                            <a class="dropdown-item" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a>
-                            {% endif %}
-                        </li>
-                        <li>
-                            {% if app.user %}
                             <a class="dropdown-item" href="{{ path('back_admin') }}">Accès au back office</a>
-                            {% endif %}
+                        {% endif %}
+                    {% endif %}
                         </li>
                     </ul>
                 </div>

@@ -8,8 +8,15 @@
 <div class="container-fluid">
     <!-- advertiser-infos -->
     <div class="row">
-        <h1> Annonceur {{ user.placeName }} </h1>
+        <h1> {{ user.placeName }} </h1>
         <div class="separator"></div>
+
+         {# flash message succes after edit profile  #}
+        {% for message in app.flashes('success-advertiser-edit') %}
+            <div class="container alert alert-success text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
 
         <!-- user banner-->
         <div class="col-12">  
@@ -40,6 +47,8 @@
                 </div> 
                 
                 <h2 class="mb-3">à propos de nous</h2>
+
+                  
 
                 <div class="separator-small"></div>
 
@@ -141,7 +150,7 @@
                     
                         <div class="col-8 col-sm-12 p-1 p-sm-3">
                             <a href="{{ path('show_event', {slug: event.slug}) }}">
-                                <h3 class="name mb-2">{{event.name}}</h3>
+                                <h3 class="name mb-2">{{ event.name > 5 ? event.name|slice(0, 15) ~ '...' : event.name }}</h3>
                             </a>
 
                             <div class="my-2">
@@ -170,12 +179,24 @@
                                     </a>
                                 </div>  
                             </div>
+
+                            <!-- edit button if it's your own event -->
+                            {% if is_granted("EVENT_EDIT", event) %}
+                            <div class="my-2">    
+                                <div class="scaled-xs">
+                                    <a href="{{ path("event_edit", {slug: event.slug}) }}">EDITER</a>
+                                </div>  
+                            </div>
+                            {% endif %}
+                            <!-- end edit button -->
                             
                             <div class="d-flex justify-content-end">
                                 <a href="{{ path('show_event', {slug:event.slug}) }}">
                                     <i class="fa-solid fa-arrow-right-long me-2"></i>
                                 </a>
                             </div>
+
+                            
                         </div>
                     </div>
 
