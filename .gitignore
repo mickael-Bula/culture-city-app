@@ -18,5 +18,8 @@ yarn-error.log
 
 ###> liip/imagine-bundle ###
 /public/media/cache/
-/public/media/upload/
+/public/media/
+/public/media/upload/eventpicture
+/public/media/upload/useravatar
+/public/media/upload/userbanner
 ###< liip/imagine-bundle ###
