@@ -27,6 +27,8 @@ class EventController extends AbstractController
     public function showEventBySlug(EventRepository $eventRepository, string $slug): Response
     {
         $event = $eventRepository->findOneBy(["slug" => $slug]);
+        dump($event);
+        
         if (!$event) {
             throw $this->createNotFoundException('Il n\'y a pas d\'événement');
         }
