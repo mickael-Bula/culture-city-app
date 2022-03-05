@@ -61,3 +61,13 @@
             </div>
     {% endfor %}
 
+    {# flash si non autorisé à commenter un event  #}
+    {% for message in app.flashes('unautorized-comment') %}
+            <div class="alert alert-danger text-center mb-4" role="alert">
+                {{ message }}
+            </div>
+    {% endfor %}
+
+
+    
+

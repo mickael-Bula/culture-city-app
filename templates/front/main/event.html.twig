@@ -7,6 +7,12 @@
     <div class="container">
         <div class="row">
 
+         {% for message in app.flashes('succes-comment') %}
+            <div class="alert alert-success text-center mb-4" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
             <div class="col-12 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
                 <div class="main">
 
