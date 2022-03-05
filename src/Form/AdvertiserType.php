@@ -155,15 +155,12 @@ class AdvertiserType extends AbstractType
             ->add('twitter', UrlType::class, [
 
                 'label' => 'Twitter',
-                'required' => true, 
-                'empty_data' => 'Champ à renseigner !',            
+                'required' => true,             
             ]) 
 
             ->add('instagram', UrlType::class, [
 
-                'label' => 'Instagram',
-                'required' => true,  
-                'empty_data' => 'Champ à renseigner !',         
+                'label' => 'Instagram',      
             ]) 
         ;
     }

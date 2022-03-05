@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -43,6 +44,10 @@ class UserCrudController extends AbstractCrudController
             UrlField::new('twitter')->hideOnIndex(),
             UrlField::new('instagram')->hideOnIndex(),
             DateField::new('created_at')->hideOnForm(),
+            ImageField::new('avatar','Image')
+            ->setBasePath('/media/cache/avatar_50/upload/useravatar')
+            ->setUploadDir('public/upload/useravatar')
+            ->setUploadedFileNamePattern('[randomhash].[extension]'),
         ];
     }
     
