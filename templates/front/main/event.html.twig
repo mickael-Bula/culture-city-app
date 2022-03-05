@@ -98,7 +98,10 @@
                         <div class="scaled-xs">
                             <address class="mb-2">
                                 <i class="fa-solid fa-location-dot me-2"></i><p>{{event.user.address1}}<br>
-                                {{event.user.address2}}<br>
+                                {% if event.user.address2 %}
+                                        {{event.user.address2}}<br>
+                                    {% else %}
+                                {% endif %}
                                 {{event.user.zip}} {{event.user.city}}</p>
                             </address>
                             <div class="my-2 my-xl-3">
@@ -133,10 +136,10 @@
                                     {% else %} 
                                     <img class="" src="{{ vich_uploader_asset (posts.author, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_50') }}" alt="{{ posts.author.name  }}" />
                                 {% endif %}
-                                Par : {{ posts.author.name }}   
+                                <div class="place ms-2">Par: {{ posts.author.name }}</div>    
                             </div>    
 
-                        <div class="place ms-2">Commentaire : {{ posts.content }}</div> 
+                        <div class="place ms-2 mb-3">Commentaire: {{ posts.content }}</div> 
                         {% endfor %}
                         </div>
 
@@ -148,9 +151,9 @@
                             </div>  
 
                         {% else %}
-                            <p>Vous devez être connecté pour ajouter un commentaire sur {{event.name}}</p>
+                           <div class="place ms-2 mb-2 d-inline">Connectez vous pour ajouter un commentaire sur {{event.name}}</div>
                                 <div class="d-flex justify-content-start">  
-                                    <button type="button" class="btn btn-warning mb-3"><a href="{{ path("app_login", {slug: event.slug}) }}">Login</a></button>
+                                    <button type="button" class="btn btn-warning mt-3"><a href="{{ path("app_login", {slug: event.slug}) }}">Login</a></button>
                                 </div>  
 
                         {% endif %}
