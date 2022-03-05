@@ -10,6 +10,14 @@
             <div class="col-12 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
                 <div class="main">
 
+                       <!-- edit button if it's your own event -->
+                        {% if is_granted("EVENT_EDIT", event) %}
+                                <div class="d-flex justify-content-start text-center">  
+                                    <button type="button" class="btn btn-warning mb-3"><a href="{{ path("event_edit", {slug: event.slug}) }}">Modifier votre événement</a></button>
+                                </div>  
+                        {% endif %}
+                        <!-- end edit button -->
+
                     <!-- event picture -->
                     <div class="col-12 mb-3">
                        
@@ -101,16 +109,6 @@
                             </div>
                         </div>
                         <!-- end contact info-->
-
-                        <!-- edit button if it's your own event -->
-                        {% if is_granted("EVENT_EDIT", event) %}
-                            <div class="my-2">    
-                                <div class="scaled-xs">
-                                    <a href="{{ path("event_edit", {slug: event.slug}) }}">EDITER</a>
-                                </div>  
-                            </div>
-                        {% endif %}
-                        <!-- end edit button -->
                         
                         <!-- back to home or toher page-->
                         <div class="d-flex justify-content-start mt-5">
@@ -121,10 +119,51 @@
                         <!-- end back to home-->
 
                     </div> <!-- end event details -->
+
+                    {# start comments div #}
+                    <div class="container mt-3">
+                    <h5 class="name mb-2 mb-xl-3">Derniers commentaires sur {{event.name}}</h5>
+
+                    <div class="container mt-3">
+
+                        {% for posts in event.posts %}
+                            <div class="place ms-2 mb-2 d-inline">
+                                {% if vich_uploader_asset (posts.author, 'avatarFile') %}
+                                    <img class="" src="{{ vich_uploader_asset (posts.author, 'avatarFile') | imagine_filter ('avatar_50') }}" alt="{{ posts.author.name  }}" />
+                                    {% else %} 
+                                    <img class="" src="{{ vich_uploader_asset (posts.author, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_50') }}" alt="{{ posts.author.name  }}" />
+                                {% endif %}
+                                Par : {{ posts.author.name }}   
+                            </div>    
+
+                        <div class="place ms-2">Commentaire : {{ posts.content }}</div> 
+                        {% endfor %}
+                        </div>
+
+
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                            <div class="d-flex justify-content-start mt-3">  
+                                <button type="button" class="btn btn-warning mb-3"><a href="{{ path("event_post_comment", {slug: event.slug}) }}">Commenter</a></button>
+                            </div>  
+
+                        {% else %}
+                            <p>Vous devez être connecté pour ajouter un commentaire sur {{event.name}}</p>
+                                <div class="d-flex justify-content-start">  
+                                    <button type="button" class="btn btn-warning mb-3"><a href="{{ path("app_login", {slug: event.slug}) }}">Login</a></button>
+                                </div>  
+
+                        {% endif %}
+                    </div>{# end comments div #}
                 </div>     
             </div> 
-
+     
         </div>
     </div>  
+
+
+
 {% endblock %}
+
+
 

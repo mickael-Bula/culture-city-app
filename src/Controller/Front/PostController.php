@@ -37,12 +37,10 @@ class PostController extends AbstractController
             $this->redirectToRoute('user_register', [], Response::HTTP_MOVED_PERMANENTLY);
         }
 
-        // get curent event
+        // get the curent event
         $event = $eventRepository->findOneBy(['slug' => $slug]);
 
-        //dump($event);
-
-        //set new post Object
+        //set empty new post Object
         $post = new Post();
 
         // get postType and bind new Post object on curent event
@@ -53,12 +51,12 @@ class PostController extends AbstractController
 
             $postCreatedAt = new DateTimeImmutable('now');
             $post->setCreatedAt($postCreatedAt);
-        
+            
+            //set post author xith curent user from session and link current post to current event.
             $post->setAuthor($user)
                  ->setEvent($event);
 
-            //dd($post);
-                        
+            //persist the new comment in dataBase.            
             $entityManager->persist($post);
             $entityManager->flush();
             //return user on commented event
