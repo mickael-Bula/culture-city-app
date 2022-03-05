@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * @UniqueEntity("content", message="Ce commentaire existe déjà !")
+ * @UniqueEntity("content", message="Ce commentaire existe déjà !.")
  * @ORM\Entity(repositoryClass=PostRepository::class)
  */
 class Post
@@ -112,4 +112,6 @@ class Post
 
         return $this;
     }
+
+  
 }
