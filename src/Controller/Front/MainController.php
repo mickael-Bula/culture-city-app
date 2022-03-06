@@ -25,7 +25,7 @@ class MainController extends AbstractController
         dump($locality);
 
         // si locality n'est pas nul on l'utilise, sinon on récupère tous les events
-        $events = ($locality !== null) ? $eventRepository->findByLocality($locality) : $eventRepository->findAll();
+        $events = ($locality === null) ? $eventRepository->findAll() : $eventRepository->findByLocality($locality);
         dump($events);
         // TODO fin  de test
         

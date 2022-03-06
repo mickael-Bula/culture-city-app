@@ -7,7 +7,7 @@ const app = {
         // if a locality cookie doesn't exists we launch geolocation
         if ( !document.cookie.split('; ').find(row => row.startsWith("locality"))) { locality.init() }
 
-        // get locality cookie if exists or set a defaut value 
+        // get locality cookie if exists or set a defaut value if not
         const zip = document.cookie.split('; ').find(row => row.startsWith("locality")) ?? null;
         console.log(zip);
 
@@ -132,19 +132,22 @@ const app = {
             const getDate = document.getElementById("start").value;
             const datePicker = new Date(getDate);
 
-            // we use end date for comparison if exist, otherwise start date
-            let referenceDate = (element.endDate !== null) ? element.endDate : element.starDate;
-            
+            // we use end date for comparison if exists, start date if not
+            let referenceDate = (element.endDate === null) ? element.startDate : element.endDate;
+
             referenceDate = new Date(referenceDate);
             if (datePicker.getTime() > referenceDate.getTime()) { continue }
 
-            // if an event starts before the current day, we set its startDate as current date
+            // if an event starts before the current day, we set its startDate as current date and add it tag 'en cours'
             const startDate = new Date(element.startDate);
-            if (element.endDate !== null && startDate.getTime() < datePicker.getTime()) { element.startDate = document.getElementById("start").value }
-            console.log(element.startDate);
+            if (element.endDate !== null && startDate.getTime() < datePicker.getTime())
+            {
+                element.startDate = document.getElementById("start").value;
+                // TODO ajouter le tag 'en cours'
+            }
+
             // get event's tags and create a link for each
             let tags = element.tags;
-            // for (const tag of tags) { eventTemplate.querySelector(".eventTags").textContent += tag.name + " " }
             for (const tag of tags) { app.addTagLinkElementToDOM(eventTemplate, tag) }
             
             // reformate event's date and display it
