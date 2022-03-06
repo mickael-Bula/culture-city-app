@@ -13,7 +13,7 @@
       <h1>Hello {{ app.user.name }}</h1> 
     {% endif %}
 
- <h4 class = "mb-4">Cette page est le formulaire pour renseigner votre profil.</h4>
+ <h4 class = "mb-4">Personalisez votre profil.</h4>
 
     {% for message in app.flashes('danger') %}
          <div class="alert alert-danger" role="alert">
@@ -30,17 +30,7 @@
       
         {{ form_row(form.avatar) }}
         {{ form_row(form.banner) }}
-        {{ form_row(form.placeName) }}
-        {{ form_row(form.description) }}
-        {{ form_row(form.address_1) }}
-        {{ form_row(form.address_2) }}
-        {{ form_row(form.city) }}    
-        {{ form_row(form.zip) }}
-        {{ form_row(form.siren) }}    
-        {{ form_row(form.phone) }}
-        {{ form_row(form.foundedIn) }}
         {{ form_row(form.website) }}
-        {{ form_row(form.capacity) }}
         {{ form_row(form.facebook) }}
         {{ form_row(form.twitter) }}
         {{ form_row(form.instagram) }}
@@ -48,7 +38,7 @@
 
     <div class="col-md-4" id="some-custom-id">
 
-            <button class="btn btn-primary">Validez votre profil annonceur</button>
+            <button class="btn btn-primary">Validez</button>
 
         </div>
 

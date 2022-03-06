@@ -68,7 +68,8 @@
                     </a>
                     
                     <ul class="dropdown-menu dropdown-menu-white dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <li>
                             <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
                         </li>
@@ -85,20 +86,37 @@
                     {% endif %}   
 
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <li>
+                        
                             <hr class="dropdown-divider"></hr>
+     
+                {% if is_granted('ROLE_ANNONCEUR') %}    
                         <li>
                             <a class="dropdown-item" href="{{ path('show_advertiser_page', {slug: app.user.slug}) }}">Voir mon profil</a>
                         </li>
-                         <li>      
+                        <li>      
                             <a class="dropdown-item" href="{{ path('advertise_edit_profile', {slug: app.user.slug}) }}">Editer mon profil</a>    
+                        </li> 
+                        
+                    {% else %}<!--Pour pas faire de doublon d'affichage car un annonceur est aussi un user !-->
+
+                    {% if is_granted('ROLE_USER') %}
+                        <li>
+                            <a class="dropdown-item" href="{{ path('show_user_page', {slug: app.user.slug}) }}">Voir mon profil</a>
                         </li>
-                        {% if is_granted('ROLE_ADMIN') %}
+                        <li>      
+                            <a class="dropdown-item" href="{{ path('user_edit_profile', {slug: app.user.slug}) }}">Editer mon profil</a>    
+                        </li>
+                    {% endif %}<!--endif is_granted('ROLE_USER')-->
+
+                {% endif %} <!--endif is_granted('ROLE_ANNONCEUR')-->
+                        
+                    {% if is_granted('ROLE_ADMIN') %}
                         <li>
                             <a class="dropdown-item" href="{{ path('back_admin') }}">Accès au back office</a>
-                        {% endif %}
-                    {% endif %}
                         </li>
+                    {% endif %}
+            {% endif %}<!--endIf IS_AUTHENTICATED_FULLY-->
+                        
                     </ul>
                 </div>
             </div>
