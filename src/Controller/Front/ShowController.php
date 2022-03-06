@@ -101,7 +101,7 @@ class ShowController extends AbstractController
             
                     // Flash message display a success message in user profil template
                     $currentUser = $user->getName();
-                    $this->addFlash('success-advertiser-edit', 'Félicitation ' . $currentUser . ' votre profil a été mis à jour !');
+                    $this->addFlash('success-user-edit', 'Félicitation ' . $currentUser . ' votre profil a été mis à jour !');
 
                     //dd($user); 
 
