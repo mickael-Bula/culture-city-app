@@ -1,8 +1,8 @@
 
     {# affiche le user name du user en session  #}
-    {% if app.user %}
+    {# {% if app.user %}
         <h5 class="text-center mt-1 mb-4">Hello ! {{ app.user.name }}</h5> 
-    {% endif %}
+    {% endif %} #}
 
     {# flash message après email vérification  #}
     {% for message in app.flashes('emailverification') %}
@@ -12,11 +12,11 @@
     {% endfor %}
 
     {# flash message après login  #}
-    {% for message in app.flashes('success-login') %}
+    {# {% for message in app.flashes('success-login') %}
         <div class="container alert alert-success text-center mb-4">
             {{ message }}
         </div>
-    {% endfor %}
+    {% endfor %} #}
 
     {# flash message si demande d'accès à une page non autorisée  #}
     {% for message in app.flashes('unautorized-access') %}
