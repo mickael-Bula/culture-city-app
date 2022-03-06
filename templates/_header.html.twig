@@ -43,14 +43,16 @@
                 <div class="me-3 mt-1 d-none d-md-block ">
               
                 {% if is_granted('ROLE_ANNONCEUR') %}
+
                     <a class="btn btn-primary" href="{{ path('create_event') }}" role="button">   
                         <i class="fa-solid fa-bullhorn"></i>
                         Annoncer un évènement
                     </a>
+                    
                 {% else %} 
                  <a class="btn btn-primary" href="{{ path('app_login') }}" role="button">   
                         <i class="fa-solid fa-bullhorn"></i>
-                        Connectez vous pour annoncer vos événement...
+                        Annoncer un évènement
                     </a>
                 {% endif %}    
           
