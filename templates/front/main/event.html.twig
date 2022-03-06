@@ -24,6 +24,12 @@
                         {% endif %}
                         <!-- end edit button -->
 
+                        <!-- add event in favorite -->
+                                <div class="d-flex justify-content-start text-center">  
+                                    <button type="button" class="btn btn-warning mb-3"><a href="{{ path("add_favorite", {id: event.id}) }}">Favori</a></button>
+                                </div>  
+                        <!-- end add favorite event-->
+
                     <!-- event picture -->
                     <div class="col-12 mb-3">
                        

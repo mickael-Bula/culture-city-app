@@ -197,6 +197,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $bannerFile;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="userFavorite")
+     */
+    private $favorite;
+
 
 
     public function __construct()
@@ -205,6 +210,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         //$this->slugger = $slugger;
         $this->posts = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->favorite = new ArrayCollection();
         
     }
 
@@ -700,5 +706,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString()
     {
         return $this->email;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getFavorite(): Collection
+    {
+        return $this->favorite;
+    }
+
+    public function addFavorite(Event $favorite): self
+    {
+        if (!$this->favorite->contains($favorite)) {
+            $this->favorite[] = $favorite;
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(Event $favorite): self
+    {
+        $this->favorite->removeElement($favorite);
+
+        return $this;
     }
 }
