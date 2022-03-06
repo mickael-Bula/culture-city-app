@@ -30,7 +30,7 @@ class EventController extends AbstractController
         
         //get user for favorite link button
         $user = $this->getUser();
-        dump($user);
+      
         if (!$event) {
             throw $this->createNotFoundException('Il n\'y a pas d\'événement');
         }
