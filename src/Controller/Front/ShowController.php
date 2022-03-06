@@ -143,7 +143,7 @@ class ShowController extends AbstractController
      * @param Event $event
      * @return void
      * 
-     * @Route("/favorite/{id}", name="add_favorite", methods={"GET", "POST"})
+     * @Route("add/favorite/{id}", name="add_favorite", methods={"GET", "POST"})
      */
     public function addFavoriteEvent(EntityManagerInterface $manager, 
         UserRepository $userRepository, 
@@ -169,14 +169,14 @@ class ShowController extends AbstractController
     }
 
     /**
-     * Add Favorite event in user profile
+     * Remove Favorite event in user profile
      *
      * @param EntityManagerInterface $manager
      * @param UserRepository $userRepository
      * @param Event $event
      * @return void
      * 
-     * @Route("/favorite/remove/{id}", name="remove_favorite", methods={"GET", "POST"})
+     * @Route("remove/favorite/{id}", name="remove_favorite", methods={"GET", "POST"})
      */
     public function removeFavoriteEvent(EntityManagerInterface $manager, 
         UserRepository $userRepository, 
