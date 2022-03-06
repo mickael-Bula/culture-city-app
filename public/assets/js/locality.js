@@ -4,9 +4,10 @@ const locality = {
     {
         console.log("locality.init()");
 
-        // récupération des coordonnées géographiques après consentement de l'utilisateur
-        // on passe locality.getCity comme fonction de rappel (callback) à notre méthode 
-        // lui permettant de n'être exécutée qu'une fois les données de géolocalisation récupérée
+        // if a locality cookie exists we use it
+        if (document.cookie.split('; ').find(row => row.startsWith("locality"))) { return }
+
+        // sinon on récupère les coordonnées géographiques après consentement de l'utilisateur
         locality.getPosition(locality.getCity);
     },
 
@@ -54,12 +55,16 @@ const locality = {
         {
             console.log(error.code);
         }
-        // affichage du code postal récupéré
-        // locality.status.textContent += data.results[0].locations[0].postalCode;
-
-        // TODO il faudra enregistrer le contenu de data dans un cookie ou en session
-        console.log(data.results[0].locations[0].postalCode);
+        
+        // récupération du code postal et enregistrement dans un cookie
+        const zip = data.results[0].locations[0].postalCode;
+        
+        // on fixe la durée du cookie à 1h
+        const expire = new Date();
+        expire.setTime(expire.getTime() + (60*60*1000));
+        let expires = "expires="+ expire.toUTCString();
+        document.cookie = `locality=${zip}; expires=${expires}`;
     }
 }
 
-document.addEventListener("DOMContentLoaded", locality.init);
+// document.addEventListener("DOMContentLoaded", locality.init);
