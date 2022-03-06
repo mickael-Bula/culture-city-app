@@ -18,6 +18,12 @@ class MainController extends AbstractController
     public function showHomePage(CategoryRepository $categoryRepository, EventRepository $eventRepository): Response
     {
         $categories = $categoryRepository->findAll();
+
+        // TODO récupérer la localité en session (ou dans un cookie)
+        $locality = '75017';
+        $eventsByDept = $eventRepository->findByLocality($locality);
+        dump($eventsByDept);
+        // TODO fin  de test
         
         // On récupère tous les évènements grâce à requête FindALL custom EventRepository
         $events = $eventRepository->findAll();

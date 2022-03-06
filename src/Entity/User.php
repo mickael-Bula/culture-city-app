@@ -25,7 +25,6 @@ use Symfony\Component\HttpFoundation\File\File;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @UniqueEntity(fields={"email"}, message="Une adresse mail {{ value }} existe déjà !)")
-
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
