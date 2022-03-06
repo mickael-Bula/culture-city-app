@@ -2,7 +2,7 @@
 
 namespace App\Controller\Front;
 
-use App\Entity\User;
+//use App\Entity\User;
 use App\Entity\Event;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -162,15 +162,45 @@ class ShowController extends AbstractController
         //persit user with favorite event
         $manager->persist($user);
         }
-        
-       /*  if ($event = $user->getFavorite($event)) {
-
-            $user->removeFavorite($event);
-            $manager->persist($user);
-        }   */
 
         $manager->flush();
 
         return $this->render('front/main/user_profile.html.twig', compact('user'));
     }
+
+    /**
+     * Add Favorite event in user profile
+     *
+     * @param EntityManagerInterface $manager
+     * @param UserRepository $userRepository
+     * @param Event $event
+     * @return void
+     * 
+     * @Route("/favorite/remove/{id}", name="remove_favorite", methods={"GET", "POST"})
+     */
+    public function removeFavoriteEvent(EntityManagerInterface $manager, 
+        UserRepository $userRepository, 
+        EventRepository $eventRepository,
+        int $id, 
+        Event $event)
+    {
+        //get current user in session
+        $user = $this->getUser();
+        //get current event by Id
+        $event = $eventRepository->findOneBy(['id' => $id]);
+
+        if ($event) {
+        //remove this event from this user favorite
+        $user->removeFavorite($event);
+        //persit user with favorite event
+        $manager->persist($user);
+        }
+
+        $manager->flush();
+
+        return $this->render('front/main/user_profile.html.twig', compact('user'));
+    }
+
+
+
 }

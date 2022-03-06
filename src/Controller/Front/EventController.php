@@ -27,11 +27,14 @@ class EventController extends AbstractController
     public function showEventBySlug(EventRepository $eventRepository, string $slug): Response
     {
         $event = $eventRepository->findOneBy(["slug" => $slug]);
-        dump($event);        
+        
+        //get user for favorite link button
+        $user = $this->getUser();
+        dump($user);
         if (!$event) {
             throw $this->createNotFoundException('Il n\'y a pas d\'événement');
         }
-        return $this->render('front/main/event.html.twig', compact('event'));
+        return $this->render('front/main/event.html.twig', compact('event', 'user'));
     }
 
     /**

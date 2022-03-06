@@ -23,12 +23,32 @@
                                 </div>  
                         {% endif %}
                         <!-- end edit button -->
-
+                   
+                   
+                {% if user %}
+                    {% for fav in user.favorite %}
+                        {% if fav.id == event.id %}
+                      <!-- remove event in favorite -->
+                                <div class="d-flex justify-content-start text-center">  
+                                    <button type="button" class="btn btn-warning mb-3"><a href="{{ path("remove_favorite", {id: event.id}) }}">Remove</a></button>
+                                </div>  
+                        <!-- end remove favorite event-->
+                        {% endif %} 
+                    {% endfor %}    
                         <!-- add event in favorite -->
                                 <div class="d-flex justify-content-start text-center">  
                                     <button type="button" class="btn btn-warning mb-3"><a href="{{ path("add_favorite", {id: event.id}) }}">Favori</a></button>
                                 </div>  
                         <!-- end add favorite event-->
+                {% endif %} 
+                   
+                                      
+                  
+                        
+                    
+
+                    
+                       
 
                     <!-- event picture -->
                     <div class="col-12 mb-3">
