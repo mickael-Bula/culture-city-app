@@ -20,3 +20,7 @@ yarn-error.log
 /public/media/cache/
 /public/media/upload/
 ###< liip/imagine-bundle ###
+
+###> javascript configuration file ###
+/public/assets/js/config.js
+###< javascript configuration file ###
