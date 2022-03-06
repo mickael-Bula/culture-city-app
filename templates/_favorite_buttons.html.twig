@@ -1,0 +1,18 @@
+         {% if user %}
+                    {% for fav in user.favorite %}
+
+                        {% if fav.id == event.id %}
+                                <!-- remove event in favorite -->
+                                <div class="d-flex justify-content-start text-center">  
+                                    <button type="button" class="btn btn-warning mb-3"><a href="{{ path("remove_favorite", {id: event.id}) }}">Retirer de mes favoris</a></button>
+                                </div>  
+                        {% endif %} 
+
+                    {% else %}    
+ 
+                        <!-- add event in favorite -->
+                                <div class="d-flex justify-content-start text-center">  
+                                    <button type="button" class="btn btn-warning mb-3"><a href="{{ path("add_favorite", {id: event.id}) }}">Mettre en favori</a></button>
+                                </div>  
+                    {% endfor %}  
+                {% endif %}<!-- endif user--> 
