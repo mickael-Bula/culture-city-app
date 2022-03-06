@@ -106,7 +106,6 @@ class EventRepository extends ServiceEntityRepository
     public function findByLocality($locality)
     {
         return $this->createQueryBuilder('e')
-            ->select('e, e_u.zip')
             ->join('e.user', 'e_u')
             ->andWhere('e_u.zip = :val')
             ->setParameter(':val', $locality)

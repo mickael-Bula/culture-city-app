@@ -23,12 +23,16 @@ class MainController extends AbstractController
         // récupération de la localité dans les cookies
         $locality = $request->cookies->get('locality');
         dump($locality);
-        $eventsByDept = $eventRepository->findByLocality($locality);
-        dump($eventsByDept);
+
+        // si locality n'est pas nul on l'utilise, sinon on récupère tous les events
+        $events = ($locality !== null) ? $eventRepository->findByLocality($locality) : $eventRepository->findAll();
+        dump($events);
         // TODO fin  de test
         
-        // On récupère tous les évènements grâce à requête FindALL custom EventRepository
-        $events = $eventRepository->findAll();
+        // TODO à remettre si ce qui précède n'est pas convaiquant
+        // // On récupère tous les évènements grâce à requête FindALL custom EventRepository
+        // $events = $eventRepository->findAll();
+        // TODO fin de ce qui serait à réintégrer
  
         // Je récupère la date du jour
         $currentDate = new DateTime('now');
@@ -39,22 +43,21 @@ class MainController extends AbstractController
         $upcomingEvents = [];
 
         // Formattage des dates pour comparaison de chaque event et stockage des events dans chaque tableau
-        foreach ($events as $event) {  
+        foreach ($events as $event)
+        {  
             $date = $event->getEndDate() ? $event->getEndDate() : $event->getStartDate();   
             $date = $date->format('Y-m-d');
 
             $dateEvent = $event->getStartDate();
             $dateEvent = $dateEvent->format('Y-m-d');
 
-            if ($date >= $currentDate && $dateEvent <= $currentDate )
-            {   
-                
-                $currentEvents[] = $event;
-    
-            } elseif ($dateEvent > $currentDate) {
-                
-                $upcomingEvents[] = $event;
-           
+            if ($date >= $currentDate && $dateEvent <= $currentDate)
+            {                
+                $currentEvents[] = $event;    
+            } 
+            elseif ($dateEvent > $currentDate)
+            {                
+                $upcomingEvents[] = $event;           
             } 
         }
 
