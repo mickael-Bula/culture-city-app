@@ -4,10 +4,7 @@ const locality = {
     {
         console.log("locality.init()");
 
-        // if a locality cookie exists we use it
-        if (document.cookie.split('; ').find(row => row.startsWith("locality"))) { return }
-
-        // sinon on récupère les coordonnées géographiques après consentement de l'utilisateur
+        // on lance l'outil de la géolocalisation après accord de l'utilisateur
         locality.getPosition(locality.getCity);
     },
 
@@ -28,6 +25,7 @@ const locality = {
             return null;
         }
 
+        // on teste la présence de la géolocalisation dans le navigateur
         if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(success, error) }
         return null;
     },
@@ -46,6 +44,7 @@ const locality = {
             mode:   'cors',
             cache:  'no-cache'
         };
+
         try
         {
             response = await fetch(url, fetchOptions);
@@ -58,13 +57,15 @@ const locality = {
         
         // récupération du code postal et enregistrement dans un cookie
         const zip = data.results[0].locations[0].postalCode;
-        
-        // on fixe la durée du cookie à 1h
-        const expire = new Date();
-        expire.setTime(expire.getTime() + (60*60*1000));
-        let expires = "expires="+ expire.toUTCString();
-        document.cookie = `locality=${zip}; expires=${expires}`;
+
+        // si une donnée est bien récupérée on la sauvegarde dans les cookies
+        if (zip !== null && zip !== '')
+        {
+            // on fixe la durée du cookie à 1h
+            const expire = new Date();
+            expire.setTime(expire.getTime() + (60*60*1000));
+            const expires = "expires="+ expire.toUTCString();
+            document.cookie = `locality=${zip}; expires=${expires}`;
+        }
     }
 }
-
-// document.addEventListener("DOMContentLoaded", locality.init);

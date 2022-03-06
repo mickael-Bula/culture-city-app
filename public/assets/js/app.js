@@ -3,6 +3,14 @@ const app = {
     init: function ()
     {
         console.log("app.init()");
+
+        // if a locality cookie doesn't exists we launch geolocation
+        if ( !document.cookie.split('; ').find(row => row.startsWith("locality"))) { locality.init() }
+
+        // get locality cookie if exists or set a defaut value 
+        const zip = document.cookie.split('; ').find(row => row.startsWith("locality")) ?? null;
+        console.log(zip);
+
         app.addAllEventListeners();
     },
 

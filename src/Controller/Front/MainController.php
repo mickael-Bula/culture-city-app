@@ -2,25 +2,27 @@
 
 namespace App\Controller\Front;
 
-use App\Entity\Event;
-use App\Entity\User;
-use App\Repository\{ CategoryRepository, EventRepository };
 use DateTime;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use App\Entity\User;
+use App\Entity\Event;
+use Symfony\Component\HttpFoundation\{ Request, Response};
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\{ CategoryRepository, EventRepository };
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
     /**
      * @Route("/", name="main_home")
      */
-    public function showHomePage(CategoryRepository $categoryRepository, EventRepository $eventRepository): Response
+    public function showHomePage(CategoryRepository $categoryRepository, EventRepository $eventRepository, Request $request): Response
     {
         $categories = $categoryRepository->findAll();
 
-        // TODO récupérer la localité en session (ou dans un cookie)
-        $locality = '75017';
+        // TODO test intégration géolocalisation
+        // récupération de la localité dans les cookies
+        $locality = $request->cookies->get('locality');
+        dump($locality);
         $eventsByDept = $eventRepository->findByLocality($locality);
         dump($eventsByDept);
         // TODO fin  de test
