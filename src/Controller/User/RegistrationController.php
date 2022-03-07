@@ -45,7 +45,7 @@ class RegistrationController extends AbstractController
         MailerInterface $mailer): Response
     {
 
-        $user = new User($slugger);
+        $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
@@ -66,7 +66,15 @@ class RegistrationController extends AbstractController
 
             // set user.name and persit this on flush.
             $newUserName = $form->get('name')->getData();
+
             $user->setName($newUserName);
+
+            // sluggify user name on register
+            $slug = $slugger->slug($newUserName);
+            $user->setSlug((strtolower($slug)));
+            //dd($user);
+            
+
 
             // set user.createdAt on NOW and persit this on flush.
             $created = new DateTimeImmutable('now');

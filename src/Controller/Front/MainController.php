@@ -26,7 +26,7 @@ class MainController extends AbstractController
         $currentDate = new \DateTime('now');
         $currentDate = $currentDate->format('Y-m-d');
 
-        // On stocke les évènements dans 2 tableaux
+        // On stocke les événements dans 2 tableaux
         $currentEvents = [];
         $upcomingEvents = [];
 

@@ -110,8 +110,9 @@ class AdvertiserController extends AbstractController
             //return user on his own profil page by slug   
             return $this->redirectToRoute('show_advertiser_page', ['slug'=> $user->getSlug()], Response::HTTP_SEE_OTHER);
         }
+            
+            return $this->renderForm('front/form/advertiser.html.twig', compact('form'));
 
-        return $this->renderForm('front/form/advertiser.html.twig', compact('form'));
     }
 
      /**

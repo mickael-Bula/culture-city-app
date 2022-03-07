@@ -56,8 +56,8 @@ class EventType extends AbstractType
 
                 'widget' => 'single_text',
                 'label' => 'Date de fin de votre événement',
-                'required' => true,     
-                'data' => new \DateTime(),
+                'required' => false,     
+                //'data' => new \DateTime(),
             ])  
            
             // upload event picture file

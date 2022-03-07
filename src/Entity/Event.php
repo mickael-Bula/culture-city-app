@@ -117,11 +117,17 @@ class Event
      */
     private $pictureFile;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="favorite")
+     */
+    private $userFavorite;
+
 
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->userFavorite = new ArrayCollection();
     }
 
 
@@ -361,4 +367,40 @@ class Event
 
         return $this;
     }
+
+    //use this to resolve and display relation between Entity Event name property 
+    //and Entity Post event property in EasyAdmin
+    public function __toString(): string
+    {
+        return (string) $this->name;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUserFavorite(): Collection
+    {
+        return $this->userFavorite;
+    }
+
+    public function addUserFavorite(User $userFavorite): self
+    {
+        if (!$this->userFavorite->contains($userFavorite)) {
+            $this->userFavorite[] = $userFavorite;
+            $userFavorite->addFavorite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserFavorite(User $userFavorite): self
+    {
+        if ($this->userFavorite->removeElement($userFavorite)) {
+            $userFavorite->removeFavorite($this);
+        }
+
+        return $this;
+    }
 }
+
+

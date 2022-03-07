@@ -17,8 +17,10 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 ###> liip/imagine-bundle ###
-/public/media/cache/
-/public/media/upload/
+/public/media/
+/public/upload/eventpicture/
+/public/upload/useravatar/
+/public/upload/userbanner/
 ###< liip/imagine-bundle ###
 
 ###> javascript configuration file ###
