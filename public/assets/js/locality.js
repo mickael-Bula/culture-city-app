@@ -67,6 +67,8 @@ const locality = {
 
         // on affiche la localité sur la page d'accueil
         const city = data.results[0].locations[0].adminArea5;
-        document.getElementById("locality").textContent = city;     // TODO élément à adapter pour un visuel correct
+
+        // on appelle la page home avec les données correspondant à la localité
+        window.location.href="http:/";        
     }
 }

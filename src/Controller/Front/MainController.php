@@ -2,9 +2,6 @@
 
 namespace App\Controller\Front;
 
-use DateTime;
-use App\Entity\User;
-use App\Entity\Event;
 use Symfony\Component\HttpFoundation\{ Request, Response};
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\{ CategoryRepository, EventRepository };
@@ -19,23 +16,14 @@ class MainController extends AbstractController
     {
         $categories = $categoryRepository->findAll();
 
-        // TODO test intégration géolocalisation
-        // récupération de la localité dans les cookies
+        // get locality from cookies
         $locality = $request->cookies->get('locality');
-        dump($locality);
 
-        // si locality n'est pas nul on l'utilise, sinon on récupère tous les events
+        // if locality exists we retrieve its events, otherwise we display all events
         $events = ($locality === null) ? $eventRepository->findAll() : $eventRepository->findByLocality($locality);
-        dump($events);
-        // TODO fin  de test
-        
-        // TODO à remettre si ce qui précède n'est pas convaiquant
-        // // On récupère tous les évènements grâce à requête FindALL custom EventRepository
-        // $events = $eventRepository->findAll();
-        // TODO fin de ce qui serait à réintégrer
  
         // Je récupère la date du jour
-        $currentDate = new DateTime('now');
+        $currentDate = new \DateTime('now');
         $currentDate = $currentDate->format('Y-m-d');
 
         // On stocke les évènements dans 2 tableaux
@@ -61,10 +49,8 @@ class MainController extends AbstractController
             } 
         }
 
-        $premiumEvents = $eventRepository->findBy(['isPremium'=> 'true'],['createdAt' => 'DESC'], 5);
-        //dump($premiumEvents);
-         //dd($currentEvents, $upcomingEvents);
+        $premiumEvents = $eventRepository->findBy(['isPremium'=> 'true'], ['createdAt' => 'DESC'], 5);
 
-        return $this->render('front/main/home.html.twig', compact('currentEvents', 'upcomingEvents', 'categories', 'premiumEvents'));
+        return $this->render('front/main/home.html.twig', compact('categories', 'currentEvents', 'upcomingEvents', 'premiumEvents'));
     }
 }
