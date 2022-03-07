@@ -62,7 +62,10 @@ const locality = {
             const expire = new Date();
             expire.setTime(expire.getTime() + (60*60*1000));
             const expires = "expires="+ expire.toUTCString();
-            document.cookie = `locality=${zip}; expires=${expires}`;
+
+            // TODO cette ligne à remplacer par celle commentée après peuplement de la database
+            document.cookie = `locality=47000; expires=${expires}`;
+            // document.cookie = `locality=${zip}; expires=${expires}`;
         }
 
         // on affiche la localité sur la page d'accueil
