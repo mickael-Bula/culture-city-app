@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Event;
 use App\Entity\Tag;
 use App\Entity\User;
+use App\Entity\Post;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -35,5 +36,11 @@ class AdminController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Events', 'fas fa-calendar-minus', Event::class);
         yield MenuItem::linkToCrud('Catégories', 'fas fa-list', Category::class);
         yield MenuItem::linkToCrud('Tags', 'fas fa-tags', Tag::class);
+        yield MenuItem::linkToCrud('Posts', 'fas fa-comments', Post::class);
     }
+
+
+  
+
+
 }
