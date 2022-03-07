@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class AdvertiserController extends AbstractController
 {
     /**
-     * @Route("/annonceur/edit/profile/{slug}", name="advertise_edit_profile", methods={"GET", "POST"})
+     * @Route("/annonceur/edit/{slug}", name="advertise_edit_profile", methods={"GET", "POST"})
      */
     public function editAdvertiserProfile(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
     {

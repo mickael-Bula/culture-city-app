@@ -64,7 +64,13 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/back, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/annonceur/edit, roles: ROLE_ANNONCEUR }
+        - { path: ^/create/event, roles: ROLE_ANNONCEUR }
+        - { path: ^/user/edit, roles: ROLE_USER }
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_ANNONCEUR, ROLE_USER]
+
 
 when@test:
     security:
