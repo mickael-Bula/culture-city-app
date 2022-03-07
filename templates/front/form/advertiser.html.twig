@@ -37,65 +37,65 @@
 
 {% endblock %}
 
-<div class="example-wrapper">
-    {% if app.user %}
-      <h1>Hello {{ app.user.name }}</h1> 
-    {% endif %}
-
- <h4 class = "mb-4">Cette page est le formulaire pour renseigner votre profil.</h4>
-
-    {% for message in app.flashes('danger') %}
-         <div class="alert alert-danger" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    
-    <div>
-        {{ form_errors(form) }}
-    </div>
-    
+<div class="container">
     <div class="row">
-    </div>
+        <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+            {% if app.user %}
+            <h1>Hello {{ app.user.name }}</h1> 
+            {% endif %}
 
-        {{ form_row(form.placeName) }}
-        {{ form_row(form.description) }}
-        {{ form_row(form.address_1) }}
-        {{ form_row(form.address_2) }}
-        {{ form_row(form.city) }}    
-        {{ form_row(form.zip) }}
-        {{ form_row(form.siren) }}    
-        {{ form_row(form.avatar) }}
-        {{ form_row(form.banner) }}
-        {{ form_row(form.phone) }}
-        {{ form_row(form.foundedIn) }}
-        {{ form_row(form.website) }}
-        {{ form_row(form.capacity) }}
-        {{ form_row(form.facebook) }}
-        {{ form_row(form.twitter) }}
-        {{ form_row(form.instagram) }}
+            <p class = "mb-4"> Cette page est le formulaire pour renseigner votre profil.</p>
 
-        <div class="col-md-4" id="some-custom-id">
+            {% for message in app.flashes('danger') %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
 
-            <button class="btn btn-primary">Validez votre profil annonceur</button>
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            
+            <div>
+                {{ form_errors(form) }}
+            </div>
+    
+            {{ form_row(form.placeName) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.address_1) }}
+            {{ form_row(form.address_2) }}
+            {{ form_row(form.city) }}    
+            {{ form_row(form.zip) }}
+            {{ form_row(form.siren) }}    
+            {{ form_row(form.avatar) }}
+            {{ form_row(form.banner) }}
+            {{ form_row(form.phone) }}
+            {{ form_row(form.foundedIn) }}
+            {{ form_row(form.website) }}
+            {{ form_row(form.capacity) }}
+            {{ form_row(form.facebook) }}
+            {{ form_row(form.twitter) }}
+            {{ form_row(form.instagram) }}
 
+            <div  id="some-custom-id">
+                <button class="btn btn-primary">Validez votre profil annonceur</button>
+            </div>
+
+            {{ form_end(form) }}
         </div>
     </div>
 
-{{ form_end(form) }}
-
-      
-
+    <div class="row mt-5">
+        <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+            <!-- For the invisible map -->
+            <div id="map"></div>
+            <!-- For the search box -->
+            <div id="search-box"></div>
+            <!-- To display the result -->
+            <div id="result"></div>  
+        </div> 
+    </div>
 </div>
 
 
-<!-- For the invisible map -->
-<div id="map"></div>
-<!-- For the search box -->
-<div id="search-box"></div>
-<!-- To display the result -->
-<div id="result"></div>
 
 <!--    DOCS : 
         https://github.com/location-iq/leaflet-geocoder 
