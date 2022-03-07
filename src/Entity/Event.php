@@ -361,4 +361,13 @@ class Event
 
         return $this;
     }
+
+    //use this to resolve and display relation between Entity Event name property 
+    //and Entity Post event property in EasyAdmin
+    public function __toString(): string
+    {
+        return (string) $this->name;
+    }
 }
+
+

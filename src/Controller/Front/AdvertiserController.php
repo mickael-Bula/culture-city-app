@@ -31,7 +31,7 @@ class AdvertiserController extends AbstractController
         $user = $this->getUser();
 
             // if no user authenticated as advertiser, we create a new one
-            if ( !$user)
+            if (!$user)
             {
                 $this->addFlash('unautorized-access', "Oups ! Vous n'êtes pas autorisé à accèder à cette page !");
                 $this->redirectToRoute('main_home', [], Response::HTTP_MOVED_PERMANENTLY);
@@ -114,8 +114,9 @@ class AdvertiserController extends AbstractController
             //return user on his own profil page by slug   
             return $this->redirectToRoute('show_advertiser_page', ['slug'=> $user->getSlug()], Response::HTTP_SEE_OTHER);
         }
+            
+            return $this->renderForm('front/form/advertiser.html.twig', compact('form'));
 
-        return $this->renderForm('front/form/advertiser.html.twig', compact('form'));
     }
 
      /**
