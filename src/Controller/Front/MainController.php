@@ -19,23 +19,26 @@ class MainController extends AbstractController
     {
         $categories = $categoryRepository->findAll();
         
-        // On récupère tous les évènements
+        // On récupère tous les événements grâce à requête FindALL custom EventRepository
         $events = $eventRepository->findAll();
  
-        // je récupère la date du jour
+        // Je récupère la date du jour
         $currentDate = new DateTime('now');
         $currentDate = $currentDate->format('Y-m-d');
 
-        // On stocke les évènements dans 2 tableaux
+        // On stocke les événements dans 2 tableaux
         $currentEvents = [];
         $upcomingEvents = [];
 
         // Formattage des dates pour comparaison de chaque event et stockage des events dans chaque tableau
-        foreach ($events as $event) {            
+        foreach ($events as $event) {  
+            $date = $event->getEndDate() ? $event->getEndDate() : $event->getStartDate();   
+            $date = $date->format('Y-m-d');
+
             $dateEvent = $event->getStartDate();
             $dateEvent = $dateEvent->format('Y-m-d');
 
-            if ($currentDate === $dateEvent)
+            if ($date >= $currentDate && $dateEvent <= $currentDate )
             {   
                 
                 $currentEvents[] = $event;
@@ -47,8 +50,10 @@ class MainController extends AbstractController
             } 
         }
 
+        $premiumEvents = $eventRepository->findBy(['isPremium'=> 'true'],['createdAt' => 'DESC'], 5);
+        //dump($premiumEvents);
          //dd($currentEvents, $upcomingEvents);
 
-        return $this->render('front/main/home.html.twig', compact('currentEvents', 'upcomingEvents', 'categories' ));
+        return $this->render('front/main/home.html.twig', compact('currentEvents', 'upcomingEvents', 'categories', 'premiumEvents'));
     }
 }

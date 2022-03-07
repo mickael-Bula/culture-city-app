@@ -1,5 +1,5 @@
 
-@media screen and (min-width:0px) and (max-width: 768px) {
+@media screen and (min-width:0px) and (max-width: 767px) {
 
     h1 {
         font-size : 2em;
@@ -32,9 +32,21 @@
     }
 
     .separator {
-        
+        width : 250px;
         &-small {
             margin-bottom: 15px;
         }
+    }
+
+    .avatar-header {
+        position: relative;
+        top: -10px;
+    }
+
+    .footer {
+        background-color: var(--main-color-blue-med);
+        position: relative;
+        bottom: none;
+        width: 100%;
     }
 }

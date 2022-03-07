@@ -109,10 +109,19 @@
     border-radius: 100px;
 }
 
+.avatar-header {
+    max-width: 150px;
+    border : 2px solid var(--main-color-white);
+    border-radius: 100px;
+}
+
 .avatar img {
     width: 100%;
     height:auto;
 }
+
+
+
 
 /** Footer **/
 .footer {
@@ -138,6 +147,15 @@
     color: var(--main-color-blue-med);
     background-color: var(--main-color-white);
     border-color: var(--main-color-blue-med);
+}
+
+.btn-xs {
+    padding:5px;
+    border-radius: 10px;
+    color: var(--main-color-white);
+    background-color: var(--main-color-blue-med);
+    border-color: var(--main-color-blue-med);
+    font-size:0.8em;
 }
 
 .separator {

@@ -6,16 +6,32 @@ const app = {
         app.addAllEventListeners();
     },
 
+    state:
+    {
+        // we declare our base URL to generate paths
+        base_url: 'http://127.0.0.1:8000/'
+    },
+
     addAllEventListeners: function()
     {
-        // add listeners to 'categories' buttons
-        document.querySelectorAll("#navbarNav .categories").forEach(category => category.addEventListener("click", app.handleClickCategoryBtn));
+        // we verify if current page is 'home' to handle filters form
+        if (window.location.pathname === '/')
+        {
+            // add listeners to 'categories' buttons
+            document.querySelectorAll("#navbarNav .categories").forEach(category => category.addEventListener("click", app.handleClickCategoryBtn));
+    
+            // add listeners on inputs form
+            document.querySelectorAll("#filters input").forEach(filter => filter.addEventListener("change", app.handleChangeFiltersForm));
+    
+            // add listener on date picker to display it as chosen date
+            document.querySelector("#start").addEventListener("change", app.handleDatePickerElement);
+        }
 
-        // add listeners on inputs form
-        document.querySelectorAll("#filters input").forEach(filter => filter.addEventListener("change", app.handleChangeFiltersForm));
-
-        // add listener on date picker to display it as chosen date
-        document.querySelector("#start").addEventListener("change", app.handleDatePickerElement);
+        // we verify if current page is 'create/event' to handle endDate's checkbox
+        if (window.location.pathname === '/create/event')
+        {
+            document.getElementById("addEndDate").addEventListener("change", app.handleChangeEventForm);
+        }
     },
 
     handleClickCategoryBtn: function(event)
@@ -31,6 +47,20 @@ const app = {
         event.currentTarget.setAttribute("aria-current", "page");
     },
 
+    handleChangeEventForm: function()
+    {
+        // toggle between showing and hiding the end date field
+        const endDateField = document.getElementById("hiddenDateField");
+        if (endDateField.style.display === 'none')
+        {
+            endDateField.style.display = 'block';
+        }
+        else
+        {
+            endDateField.style.display = 'none';
+        }
+    },
+
     handleChangeFiltersForm: function()
     {
         // retrieve form
@@ -43,7 +73,7 @@ const app = {
         const queryStringParams = new URLSearchParams();
         form.forEach((value, key) => queryStringParams.append(key, value));
 
-        app.fetchEvents('http://localhost:8000/front/api/filters', queryStringParams.toString());
+        app.fetchEvents(app.state.base_url + 'front/api/filters', queryStringParams.toString());
     },
 
     handleDatePickerElement: function(event)
@@ -72,6 +102,7 @@ const app = {
         catch (error)
         {
             // display an error message
+            console.log(error);
         }
         app.displayEvents(data);
     },
@@ -92,16 +123,24 @@ const app = {
             // for an easier comparison we convert dates using the getTime() method which returns the number of milliseconds since the ECMAScript epoch
             const getDate = document.getElementById("start").value;
             const datePicker = new Date(getDate);
-            const endDate = new Date(element.endDate);
-            if (datePicker.getTime() > endDate.getTime()) { continue }
 
+            // we use end date for comparison if exist, otherwise start date
+            let referenceDate = (element.endDate !== null) ? element.endDate : element.starDate;
+            
+            referenceDate = new Date(referenceDate);
+            if (datePicker.getTime() > referenceDate.getTime()) { continue }
+
+            // if an event starts before the current day, we set its startDate as current date
+            const startDate = new Date(element.startDate);
+            if (element.endDate !== null && startDate.getTime() < datePicker.getTime()) { element.startDate = document.getElementById("start").value }
+            console.log(element.startDate);
             // get event's tags and create a link for each
             let tags = element.tags;
             // for (const tag of tags) { eventTemplate.querySelector(".eventTags").textContent += tag.name + " " }
             for (const tag of tags) { app.addTagLinkElementToDOM(eventTemplate, tag) }
             
             // reformate event's date and display it
-            let eventDate = new Date(element.endDate).toLocaleDateString();
+            let eventDate = new Date(element.startDate).toLocaleDateString();
             eventTemplate.querySelector(".eventStartDate").textContent = eventDate;
             
             // display event's image
@@ -109,8 +148,11 @@ const app = {
             eventTemplate.querySelector(".square").style.cssText += "background-image:url('" + urlPicture + "'); background-size:cover; background-position:center center;";
 
             // add all links to event's card
-            //TODO ajouter les liens suivants (avec des id si closest continue à poser des problèmes)
             eventTemplate.querySelector(".square").closest('a').href = "/event/" + element.slug;
+            eventTemplate.querySelector(".eventArrow").closest('a').href = "/event/" + element.slug;
+            eventTemplate.querySelector(".eventName").closest('a').href = "/event/" + element.slug;
+            eventTemplate.querySelector(".square-category").closest('a').href = "/event/" + element.category;
+            eventTemplate.querySelector(".eventPlace").closest('a').href = "/annonceur/" + element.user.slug;
         
             // display event's category name
             eventTemplate.querySelector(".square-category").className = "square-category bg-category-" + element.category.slug + " d-inline";
@@ -121,14 +163,13 @@ const app = {
 
             // if an event matches the date picker we display it as 'Current Event', otherwise as 'Upcoming Events'
             // to achieve the comparison we weed to convert dates in the same format
-            const startDate = new Date(element.startDate);
             const reformateStartDate = startDate.toLocaleDateString();
             const reformateDatePicker = datePicker.toLocaleDateString();
 
             // compare dates
             if (reformateDatePicker >= reformateStartDate)
             {
-                // when an event starts before the date picker or takes place this day, we add it to Current Events list
+                // when an event starts before the date picker or takes place on that day, we add it to Current Events list
                 displayCurrentElement.appendChild(eventTemplate);
             }
             // alternaltively we display it to Upcoming Events list

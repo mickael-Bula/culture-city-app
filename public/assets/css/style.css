@@ -212,6 +212,12 @@ table {
   border-radius: 100px;
 }
 
+.avatar-header {
+  max-width: 150px;
+  border: 2px solid var(--main-color-white);
+  border-radius: 100px;
+}
+
 .avatar img {
   width: 100%;
   height: auto;
@@ -241,6 +247,15 @@ table {
   color: var(--main-color-blue-med);
   background-color: var(--main-color-white);
   border-color: var(--main-color-blue-med);
+}
+
+.btn-xs {
+  padding: 5px;
+  border-radius: 10px;
+  color: var(--main-color-white);
+  background-color: var(--main-color-blue-med);
+  border-color: var(--main-color-blue-med);
+  font-size: 0.8em;
 }
 
 .separator, .separator-small {
@@ -351,7 +366,7 @@ em {
 /*-------------------------------------------------------------------------------------*/
 /* RESPONSIVE														   
 /*-------------------------------------------------------------------------------------*/
-@media screen and (min-width: 0px) and (max-width: 768px) {
+@media screen and (min-width: 0px) and (max-width: 767px) {
   h1 {
     font-size: 2em;
     margin-bottom: 5px;
@@ -375,8 +390,21 @@ em {
     max-width: 50px;
     top: -15px;
   }
+  .separator, .separator-small {
+    width: 250px;
+  }
   .separator-small {
     margin-bottom: 15px;
+  }
+  .avatar-header {
+    position: relative;
+    top: -10px;
+  }
+  .footer {
+    background-color: var(--main-color-blue-med);
+    position: relative;
+    bottom: none;
+    width: 100%;
   }
 }
 /*# sourceMappingURL=style.css.map */

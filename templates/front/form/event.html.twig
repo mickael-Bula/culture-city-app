@@ -3,49 +3,43 @@
 {% block title %}Formulaire création événement{% endblock %}
 
 {% block body %}
+
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello advertiser !</h1>
 
-    Cette page est le formulaire pour créer un événement
+{% if app.user %}
+    <h1>Hello {{ app.user.name }}</h1> 
+{% endif %}
 
-    {% for message in app.flashes('danger') %}
-         <div class="alert alert-danger" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    <div>
-        {{ form_errors(form) }}
+{% for message in app.flashes('danger') %}
+    <div class="alert alert-danger" role="alert">
+        {{ message }}
     </div>
+{% endfor %}
+
+    <h4 class = "mb-4">Renseigner les informations de votre événement !</h4>
+    
     <div class="row">
-    </div>
-        {{ form_row(form.name) }}
-        {{ form_row(form.price) }}
-        {{ form_row(form.description) }}    
-        {{ form_row(form.isPremium) }}
-        {{ form_row(form.startDate) }}
-        {{ form_row(form.endDate) }}
-        {{ form_row(form.picture) }}
-        {{ form_row(form.category) }}
-        {{ form_row(form.tags) }} 
-      
 
 
-    <div class="col-md-4" id="some-custom-id">
+                {{ form_start (form, {attr: {'novalidate': 'novalidate'}}) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.price) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.isPremium) }}
+                {{ form_row(form.startDate) }}
 
-            <button class="btn btn-primary">Valider</button>
+                {# ajout d'une checkbox pour les events sur plusieurs jours #}
+                <input type="checkbox" id="addEndDate"><label for="hiddenDateField">Souhaitez-vous annoncer un événement sur plusieurs jours ?</label>
+                <div id="hiddenDateField" style="display: none;">{{ form_row(form.endDate) }}</div>
+                
+                {{ form_end (form)}}
 
-        </div>
-
-    </div>
-
-{{ form_end(form) }}
-
+    </div> {# close row #}
+           
 </div>
 {% endblock %}

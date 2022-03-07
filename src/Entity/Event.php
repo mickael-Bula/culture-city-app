@@ -7,19 +7,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 // add this use for vichUploaderBundle
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 // add this to upload file type in class method
 use Symfony\Component\HttpFoundation\File\File;
 
-
-
 /**
  * Add this on top of the class for vichUploaderBundle
  * @Vich\Uploadable
  * 
  * @ORM\Entity(repositoryClass=EventRepository::class)
+ * @UniqueEntity(fields={"name"}, message="Un évènement {{ value }} existe déjà !")
  */
 class Event
 {
@@ -60,6 +60,7 @@ class Event
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"events"})
+     * @Assert\GreaterThan(propertyPath="startDate")
      */
     private $endDate;
 
@@ -101,26 +102,10 @@ class Event
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"events"})
-     * 
      */
     private $user;
 
     /**
-     * @Assert\File(
-     *     maxSize = "1024k",
-     *     maxSizeMessage = "Le fichier image est trop loud ({{ size }} {{ suffix }}). Le poids maxmum autorisé pour le fichier est de {{ limit }} {{ suffix }}",
-     *     notFoundMessage = "Le fichier image n'a pas été trouvé ! Veuillez joindre à nouveau votre fichier image !"
-     * )
-     * 
-     * @Assert\Image(
-     *     minWidth = "600",
-     *     minWidthMessage = "La largeur de l'image est trop petite ({{ width }}px). La largeur minimale attendue est de {{ min_width }}px",   
-     *     minHeight = "600",
-     *     minHeightMessage = "La hauteur de l'image est trop petite ({{ height }}px). La largeur minimale attendue est de {{ min_height }}px",
-     *     mimeTypes = {"image/jpeg", "image/png","image/jpg", "image/gif"},
-     *     mimeTypesMessage = "Uniqument les images de type .jpeg .png .jpg and .gif sont autorisés !"
-     * )
-     * 
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"events"})
      */
@@ -148,11 +133,6 @@ class Event
     public function setPictureFile(File $pictureFile = null)
     {   
 
-        // picture correspond ici à pictureFile (donc au fichier)
-        // picture en bdd prendra donc la valeur du nom du fichier
-        // et pictureFile sera le fichier stocké dans les dossiers paramètrés dans 
-        // vich_uploader.yaml et services.yaml 
-
         $this->picture = $pictureFile;
 
         // si il y a un fichier picture uploadé on met a jour la date sur updatedAt
@@ -178,11 +158,15 @@ class Event
 
     public function getName(): ?string
     {
-        return $this->name;
+        // Capitalise First letter and lower others
+        return ucfirst(
+            strtolower($this->name)
+        );
     }
 
     public function setName(string $name): self
     {
+
         $this->name = $name;
 
         if ($name) {

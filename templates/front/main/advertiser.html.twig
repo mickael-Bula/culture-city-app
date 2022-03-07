@@ -8,12 +8,27 @@
 <div class="container-fluid">
     <!-- advertiser-infos -->
     <div class="row">
-        <h1> Annonceur {{ user.name }} </h1>
+        <h1> {{ user.placeName }} </h1>
         <div class="separator"></div>
+
+         {# flash message succes after edit profile  #}
+        {% for message in app.flashes('success-advertiser-edit') %}
+            <div class="container alert alert-success text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
 
         <!-- user banner-->
         <div class="col-12">  
-            <img class="img-fluid w-100 border-radius" src="{{ asset('assets/images/banner.jpg') }}" alt="">  
+            {# <img class="img-fluid w-100 border-radius" src="{{ asset('assets/images/banner.jpg') }}" alt="">   #}
+           
+            {% if vich_uploader_asset (user, 'bannerFile') %}
+            <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'bannerFile') | imagine_filter ('user_cover_1200') }}" alt="{{ user.name }}" />
+            {% else %}
+            <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'bannerFile') ?: '/upload/default_picture/default_user_banner.jpg' | imagine_filter ('user_cover_1200') }}" alt="{{ user.name }}" />
+            {% endif %} 
+            {# <img class="img-fluid w-100 border-radius" src="{{event.picture}}" alt="{{event.name}}"> #}
+            
         </div>    
     </div>
 
@@ -22,19 +37,26 @@
             <!-- user description-->
             <div class="col-12">
                 <div class="avatar">
-                    <img class="img-fluid w-100 rounded-circle" src="{{ asset('assets/images/avatar.png') }}" alt="">
+                    {% if vich_uploader_asset (user, 'avatarFile') %}
+                    <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
+                    {% else %}
+                    <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
+                    {% endif %} 
+                    
+                    {# <img class="img-fluid w-100 rounded-circle" src="{{ asset('assets/images/avatar.png') }}" alt=""> #}
                 </div> 
                 
                 <h2 class="mb-3">à propos de nous</h2>
 
                 <div class="separator-small"></div>
 
-                <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, corrupti. Nostrum, inventore dolores unde sunt repellat 
-                    veniam molestiae excepturi culpa, numquam ipsam quis architecto eligendi laborum, quo officia obcaecati eum.
-                </p>
+                <p>{{ user.description }}</p>
+
                 {% if user.capacity %} 
                     <p><em>Capacité : {{ user.capacity }} personnes</em></p>
                 {% endif %}
+
+                <p>Date d'ouverture : {{user.foundedIn | date("d-m-Y")}}</p>
             </div>
 
             <!-- Other user infos-->
@@ -98,7 +120,7 @@
         </div>
     </div>
 
-    <h2 class="my-3 mt-lg-5">les évènements à venir</h2>
+    <h2 class="my-3 mt-lg-5">les événements à venir</h2>
                 
     <div class="separator-small"></div>
 
@@ -109,10 +131,17 @@
                 <div class="card overflow-hidden">
                     <div class="d-flex d-flex flex-row flex-md-column">
                         <div class="col-4 col-sm-12 ">
-                            <a href="">
-                                <img class="img-fluid w-100 border-radius" src="{{event.picture}}" alt="">
+
+                            <a href="{{ path('show_event', {slug: event.slug}) }}">
+                                {% if vich_uploader_asset (event, 'pictureFile') %}
+                                <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') | imagine_filter ('event_picture_300') }}" alt="{{ event.name }}" />
+                                {% else %}
+                                <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') ?: '/upload/default_picture/default_event.jpg' | imagine_filter ('event_picture_300') }}" alt="{{ event.name }}" />
+                                {% endif %} 
+                                {# <img class="img-fluid w-100 border-radius" src="{{event.picture}}" alt="{{event.name}}"> #}
                             </a>
-                            <a href="#">
+
+                            <a href="{{ path('show_category', {slug:event.category.slug}) }}">
                                 <div class="sticker-category text-center scaled-xs">
                                     <div class="bg-category-{{event.category.slug}} d-inline "> {{event.category.name}}</div>
                                 </div>
@@ -120,8 +149,8 @@
                         </div>
                     
                         <div class="col-8 col-sm-12 p-1 p-sm-3">
-                            <a href="#">
-                                <h3 class="name mb-2">{{event.name}}</h3>
+                            <a href="{{ path('show_event', {slug: event.slug}) }}">
+                                <h3 class="name mb-2">{{ event.name > 5 ? event.name|slice(0, 15) ~ '...' : event.name }}</h3>
                             </a>
 
                             <div class="my-2">
@@ -136,7 +165,7 @@
                                     <i class="fa-solid fa-tags d-inline"></i> 
                                     <div class="tags ms-2 d-inline">
                                         {% for tag in event.tags %}
-                                            <a href="#">{{tag.name}}</a>
+                                            <a href="{{ path('show_tag', {slug: tag.slug}) }}">{{tag.name}}</a>
                                         {% endfor %}
                                     </div>    
                                 </div>
@@ -145,17 +174,29 @@
                             <div class="my-2">    
                                 <div class="scaled-xs">
                                     <i class="fa-solid fa-location-dot d-inline"></i> 
-                                    <a href="#">
+                                    <a href="{{ path('show_advertiser_page', {slug: event.user.slug}) }}">
                                         <div class="place ms-2 d-inline">{{user.name}}</div>
                                     </a>
                                 </div>  
                             </div>
+
+                            <!-- edit button if it's your own event -->
+                            {% if is_granted("EVENT_EDIT", event) %}
+                            <div class="my-2">    
+                                <div class="scaled-xs">
+                                    <a href="{{ path("event_edit", {slug: event.slug}) }}">EDITER</a>
+                                </div>  
+                            </div>
+                            {% endif %}
+                            <!-- end edit button -->
                             
                             <div class="d-flex justify-content-end">
                                 <a href="{{ path('show_event', {slug:event.slug}) }}">
                                     <i class="fa-solid fa-arrow-right-long me-2"></i>
                                 </a>
                             </div>
+
+                            
                         </div>
                     </div>
 

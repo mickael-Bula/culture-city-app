@@ -19,32 +19,47 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    // /**
-    //  * @return Category[] Returns an array of Category objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findPremiumEventsInCurrentCategory($curentCat)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $conn = $this->getEntityManager()->getConnection();
 
-    /*
-    public function findOneBySomeField($value): ?Category
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $curentCat = $curentCat->getSlug();
+
+        $sql = "
+            SELECT *
+            FROM event
+            INNER JOIN category            
+            ON event.category_id = category.id
+            WHERE category.slug = 'concert'
+            AND event.is_premium = '1'
+            ";
+            $results = $conn->executeQuery($sql);
+            
+            return $results->fetchAllAssociative();
     }
-    */
+
+
+
+    public function findCurrentCategoryPremiumEventsDQL($curentCat)
+    {
+        //get current category Id
+        $cat = $curentCat->getId();
+        //call entity manager
+        $entityManager = $this->getEntityManager();
+        //call query
+        $query = $entityManager->createQuery(
+        //create query on App\Entity\Event (for automatically build an Object)
+        "SELECT e
+            FROM App\Entity\Event e        
+            WHERE e.isPremium = 1
+            AND e.category = $cat
+            ");
+        
+        // returns an array of objects with relations
+        $resultats = $query->getResult();
+        // dd($resultats);
+        return $resultats;
+    }
+
+
 }

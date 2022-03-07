@@ -16,6 +16,7 @@ class TagController extends AbstractController
      */
     public function showByName(Tag $tag): Response
     {
+        // We get the tag by his slug and event sort by date with OrderBy annontation in Entity Tag
        
         return $this->render('front/main/tag.html.twig', compact('tag'));
     }
