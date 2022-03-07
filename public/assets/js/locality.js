@@ -13,11 +13,8 @@ const locality = {
     getPosition: function(callback)
     {
         function success(position)
-        {
-            const latitude  = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            
-            callback([latitude, longitude]);
+        {            
+            callback([position.coords.latitude, position.coords.longitude]);
         }
         
         function error()
@@ -67,5 +64,9 @@ const locality = {
             const expires = "expires="+ expire.toUTCString();
             document.cookie = `locality=${zip}; expires=${expires}`;
         }
+
+        // on affiche la localité sur la page d'accueil
+        const city = data.results[0].locations[0].adminArea5;
+        document.getElementById("locality").textContent = city;     // TODO élément à adapter pour un visuel correct
     }
 }
