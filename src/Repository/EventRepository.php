@@ -95,4 +95,38 @@ class EventRepository extends ServiceEntityRepository
     {
         return $this->findBy([],['startDate' => 'ASC'] );
     }
+
+    // TODO custom request to fetch events by locality
+    /**
+     * custom request to fetch events by locality
+     *
+     * @param string $locality
+     * @return void
+     */
+    public function findByLocality($locality)
+    {
+        return $this->createQueryBuilder('e')
+            ->join('e.user', 'e_u')
+            ->andWhere('e_u.zip = :val')
+            ->setParameter(':val', $locality)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findEventsByLocality($filters, $locality)
+    {
+        return $this->createQueryBuilder('e')
+            ->join('e.category', 'e_c')
+            ->join('e.user', 'e_u')
+            ->where('e_u.zip = :val')
+            ->setParameter(':val', $locality)
+            ->andWhere('e_c.name IN (:vals)')
+            ->setParameter(':vals', array_values($filters))
+            ->orderBy('e.startDate', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    // TODO end of custom request
 }
