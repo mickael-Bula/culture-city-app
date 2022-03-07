@@ -3,8 +3,21 @@ const app = {
     init: function ()
     {
         console.log("app.init()");
+
+        // if a locality cookie doesn't exists we launch geolocation
+        if ( !document.cookie.split('; ').find(row => row.startsWith("locality"))) { locality.init() }
+
+        // get locality cookie if exists or set a defaut value if not
+        zip = document.cookie.split('; ').find(row => row.startsWith("locality")) ?? null;
+
+        // get locality cookie value
+        if (zip !== null && zip !== '') { app.zip = zip.split('=')[1] }
+
         app.addAllEventListeners();
     },
+
+    // we declare a property to store locality coolie value
+    zip: '',
 
     state:
     {
@@ -73,7 +86,7 @@ const app = {
         const queryStringParams = new URLSearchParams();
         form.forEach((value, key) => queryStringParams.append(key, value));
 
-        app.fetchEvents(app.state.base_url + 'front/api/filters', queryStringParams.toString());
+        app.fetchEvents(app.state.base_url + 'front/api/filters/' + app.zip, queryStringParams.toString());
     },
 
     handleDatePickerElement: function(event)
@@ -124,19 +137,22 @@ const app = {
             const getDate = document.getElementById("start").value;
             const datePicker = new Date(getDate);
 
-            // we use end date for comparison if exist, otherwise start date
-            let referenceDate = (element.endDate !== null) ? element.endDate : element.starDate;
-            
+            // we use end date for comparison if exists, start date if not
+            let referenceDate = (element.endDate === null) ? element.startDate : element.endDate;
+
             referenceDate = new Date(referenceDate);
             if (datePicker.getTime() > referenceDate.getTime()) { continue }
 
-            // if an event starts before the current day, we set its startDate as current date
+            // if an event starts before the current day, we set its startDate as current date and add it tag 'en cours'
             const startDate = new Date(element.startDate);
-            if (element.endDate !== null && startDate.getTime() < datePicker.getTime()) { element.startDate = document.getElementById("start").value }
-            console.log(element.startDate);
+            if (element.endDate !== null && startDate.getTime() < datePicker.getTime())
+            {
+                element.startDate = document.getElementById("start").value;
+                // TODO ajouter le tag 'en cours'
+            }
+
             // get event's tags and create a link for each
             let tags = element.tags;
-            // for (const tag of tags) { eventTemplate.querySelector(".eventTags").textContent += tag.name + " " }
             for (const tag of tags) { app.addTagLinkElementToDOM(eventTemplate, tag) }
             
             // reformate event's date and display it

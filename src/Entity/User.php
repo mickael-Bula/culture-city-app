@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 // add this use for vichUploaderBundle
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 // add this to upload file type in class method
@@ -25,7 +26,6 @@ use Symfony\Component\HttpFoundation\File\File;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @UniqueEntity(fields={"email"}, message="Une adresse mail {{ value }} existe déjà !)")
-
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -147,7 +147,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * use this with slugger service
      */
-    private $slugger;
+    //private $slugger;
 
     /**
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="author", orphanRemoval=true)
@@ -206,13 +206,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $lng;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="userFavorite")
+     */
+    private $favorite;
 
-
-    public function __construct(SluggerInterface $slugger)
+    public function __construct()
     {   
-        $this->slugger = $slugger;
+        //SluggerInterface $slugger
+        //$this->slugger = $slugger;
         $this->posts = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->favorite = new ArrayCollection();
         
     }
 
@@ -378,11 +383,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->name = $name;
 
+        if ($name) {
+
+            $this->createdAt = new \DateTimeImmutable('now');
+        }
+
         //ici en premier je crée un slug avec le service composant Symfony slugger
-        $slug = $this->slugger->slug($name);
+        //$slug = $this->slugger->slug($name);
         // ensuite je passe ce slug propre sans espace dans ma méthode setSlug pour flusher un slug propre
         // à la soumission du formulaire.
-        $this->setSlug(strtolower($slug));  
+        //$this->setSlug(strtolower($slug));  
 
         return $this;
     }
@@ -713,6 +723,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLat(?string $lat): self
     {
         $this->lat = $lat;
+        return $this;
+    }
+  
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getFavorite(): Collection
+    {
+        return $this->favorite;
+    }
+
+    public function addFavorite(Event $favorite): self
+    {
+        if (!$this->favorite->contains($favorite)) {
+            $this->favorite[] = $favorite;
+        }
+
+        return $this;
+    }
+  
+    public function removeFavorite(Event $favorite): self
+    {
+        $this->favorite->removeElement($favorite);
 
         return $this;
     }
@@ -725,7 +758,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLng(?string $lng): self
     {
         $this->lng = $lng;
-
         return $this;
     }
 }

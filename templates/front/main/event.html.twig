@@ -7,8 +7,25 @@
     <div class="container">
         <div class="row">
 
+         {% for message in app.flashes('succes-comment') %}
+            <div class="alert alert-success text-center mb-4" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
             <div class="col-12 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
                 <div class="main">
+
+                       <!-- edit button if it's your own event -->
+                        {% if is_granted("EVENT_EDIT", event) %}
+                                <div class="d-flex justify-content-start text-center">  
+                                    <button type="button" class="btn btn-warning mb-3"><a href="{{ path("event_edit", {slug: event.slug}) }}">Modifier votre événement</a></button>
+                                </div>  
+                        {% endif %}
+                        <!-- end edit button -->
+
+                            <!-- Add and Remove Favorites buttons -->               
+                            {% include '_favorite_buttons.html.twig' %}
 
                     <!-- event picture -->
                     <div class="col-12 mb-3">
@@ -90,7 +107,10 @@
                         <div class="scaled-xs">
                             <address class="mb-2">
                                 <i class="fa-solid fa-location-dot me-2"></i><p>{{event.user.address1}}<br>
-                                {{event.user.address2}}<br>
+                                {% if event.user.address2 %}
+                                        {{event.user.address2}}<br>
+                                    {% else %}
+                                {% endif %}
                                 {{event.user.zip}} {{event.user.city}}</p>
                             </address>
                             <div class="my-2 my-xl-3">
@@ -101,16 +121,6 @@
                             </div>
                         </div>
                         <!-- end contact info-->
-
-                        <!-- edit button if it's your own event -->
-                        {% if is_granted("EVENT_EDIT", event) %}
-                            <div class="my-2">    
-                                <div class="scaled-xs">
-                                    <a href="{{ path("event_edit", {slug: event.slug}) }}">EDITER</a>
-                                </div>  
-                            </div>
-                        {% endif %}
-                        <!-- end edit button -->
                         
                         <!-- back to home or toher page-->
                         <div class="d-flex justify-content-start mt-5">
@@ -121,10 +131,18 @@
                         <!-- end back to home-->
 
                     </div> <!-- end event details -->
+
+                    {% include '_comments_on_event.html.twig' %}<!--User Comments -->
+                     
                 </div>     
             </div> 
-
+     
         </div>
     </div>  
+
+
+
 {% endblock %}
+
+
 

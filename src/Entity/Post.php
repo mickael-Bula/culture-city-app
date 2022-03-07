@@ -4,8 +4,12 @@ namespace App\Entity;
 
 use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
+ * @UniqueEntity("content", message="Ce commentaire existe déjà !.")
  * @ORM\Entity(repositoryClass=PostRepository::class)
  */
 class Post
@@ -18,7 +22,7 @@ class Post
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="content", unique=true)
      */
     private $content;
 
@@ -108,4 +112,6 @@ class Post
 
         return $this;
     }
+
+  
 }

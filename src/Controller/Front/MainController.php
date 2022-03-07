@@ -2,28 +2,28 @@
 
 namespace App\Controller\Front;
 
-use App\Entity\Event;
-use App\Entity\User;
-use App\Repository\{ CategoryRepository, EventRepository };
-use DateTime;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{ Request, Response};
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\{ CategoryRepository, EventRepository };
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
     /**
      * @Route("/", name="main_home")
      */
-    public function showHomePage(CategoryRepository $categoryRepository, EventRepository $eventRepository): Response
+    public function showHomePage(CategoryRepository $categoryRepository, EventRepository $eventRepository, Request $request): Response
     {
         $categories = $categoryRepository->findAll();
-        
-        // On récupère tous les événements grâce à requête FindALL custom EventRepository
-        $events = $eventRepository->findAll();
+
+        // get locality from cookies
+        $locality = $request->cookies->get('locality');
+
+        // if locality exists we retrieve its events, otherwise we display all events
+        $events = ($locality === null) ? $eventRepository->findAll() : $eventRepository->findByLocality($locality);
  
         // Je récupère la date du jour
-        $currentDate = new DateTime('now');
+        $currentDate = new \DateTime('now');
         $currentDate = $currentDate->format('Y-m-d');
 
         // On stocke les événements dans 2 tableaux
@@ -31,29 +31,26 @@ class MainController extends AbstractController
         $upcomingEvents = [];
 
         // Formattage des dates pour comparaison de chaque event et stockage des events dans chaque tableau
-        foreach ($events as $event) {  
+        foreach ($events as $event)
+        {  
             $date = $event->getEndDate() ? $event->getEndDate() : $event->getStartDate();   
             $date = $date->format('Y-m-d');
 
             $dateEvent = $event->getStartDate();
             $dateEvent = $dateEvent->format('Y-m-d');
 
-            if ($date >= $currentDate && $dateEvent <= $currentDate )
-            {   
-                
-                $currentEvents[] = $event;
-    
-            } elseif ($dateEvent > $currentDate) {
-                
-                $upcomingEvents[] = $event;
-           
+            if ($date >= $currentDate && $dateEvent <= $currentDate)
+            {                
+                $currentEvents[] = $event;    
+            } 
+            elseif ($dateEvent > $currentDate)
+            {                
+                $upcomingEvents[] = $event;           
             } 
         }
 
-        $premiumEvents = $eventRepository->findBy(['isPremium'=> 'true'],['createdAt' => 'DESC'], 5);
-        //dump($premiumEvents);
-         //dd($currentEvents, $upcomingEvents);
+        $premiumEvents = $eventRepository->findBy(['isPremium'=> 'true'], ['createdAt' => 'DESC'], 5);
 
-        return $this->render('front/main/home.html.twig', compact('currentEvents', 'upcomingEvents', 'categories', 'premiumEvents'));
+        return $this->render('front/main/home.html.twig', compact('categories', 'currentEvents', 'upcomingEvents', 'premiumEvents'));
     }
 }

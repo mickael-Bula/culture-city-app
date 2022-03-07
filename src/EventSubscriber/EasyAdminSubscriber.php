@@ -2,23 +2,27 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\Category;
-use App\Entity\Event;
 use App\Entity\Tag;
 use App\Entity\User;
+use App\Entity\Event;
 use DateTimeImmutable;
-use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
-use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
+use App\Entity\Category;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class EasyAdminSubscriber implements EventSubscriberInterface
 {
     private $slugger;
+    private $passwordEncoder;
 
-    public function __construct(SluggerInterface $slugger)
+    public function __construct(SluggerInterface $slugger, UserPasswordHasherInterface $passwordEncoder)
     {
         $this->slugger = $slugger;
+        $this->passwordEncoder = $passwordEncoder;
+
     }
 
     public static function getSubscribedEvents()
@@ -28,7 +32,8 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             BeforeEntityPersistedEvent::class => ['setTagSlug'],
             BeforeEntityPersistedEvent::class => ['setUserSlug'],
             BeforeEntityPersistedEvent::class => ['setEventSlugAndDate'],
-            BeforeEntityUpdatedEvent::class => ['updateUserRole']
+            BeforeEntityUpdatedEvent::class => ['updateUserRole'],
+            BeforeEntityPersistedEvent::class => ['addUser']
 
         ];
     }
@@ -69,6 +74,12 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         $entity->setSlug(strtolower($slug));
     }
 
+    /**
+     * Update UserRole on changing is annoncuer to 1 in EasyAdmin User Edit Panel
+     *
+     * @param BeforeEntityUpdatedEvent $updateEvent
+     * @return void
+     */
     public function updateUserRole(BeforeEntityUpdatedEvent $updateEvent)
     {
         $entity = $updateEvent->getEntityInstance();
@@ -99,4 +110,48 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         $now = new DateTimeImmutable('now');
         $entity->setCreatedAt($now);
     }
+
+    /**
+     * This Method Hash password if create a user in easy admin
+     * @link https://grafikart.fr/forum/33951
+     *
+     * @param BeforeEntityPersistedEvent $event
+     * @return void
+     */
+    public function addUser(BeforeEntityPersistedEvent $event)
+    {
+        $entity = $event->getEntityInstance();
+
+        if (!($entity instanceof User)) {
+            return;
+        }
+        $this->setPassword($entity);
+    }
+
+    /**
+     * @param User $entity
+     */
+    public function setPassword(User $entity): void
+    {
+        $pass = $entity->getPassword();
+
+        $entity->setPassword(
+            $this->passwordEncoder->hashPassword(
+                $entity,
+                $pass
+            )
+        );
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }

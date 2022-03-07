@@ -22,3 +22,7 @@ yarn-error.log
 /public/upload/useravatar/
 /public/upload/userbanner/
 ###< liip/imagine-bundle ###
+
+###> javascript configuration file ###
+/public/assets/js/config.js
+###< javascript configuration file ###
