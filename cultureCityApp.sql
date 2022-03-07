@@ -22,30 +22,6 @@ INSERT INTO `category` (`id`, `name`, `slug`) VALUES
 (4,	'Loisir',	'loisir'),
 (5,	'Évènementiel',	'evenementiel');
 
-DROP TABLE IF EXISTS `copy_category`;
-CREATE TABLE `copy_category` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `copy_category` (`id`, `name`, `slug`) VALUES
-(1,	'Concert',	'concert'),
-(2,	'Spectacle',	'spectacle'),
-(3,	'Exposition',	'exposition'),
-(4,	'Loisir',	'loisir'),
-(5,	'Évènementiel',	'evenementiel');
-
-DROP TABLE IF EXISTS `copy_doctrine_migration_versions`;
-CREATE TABLE `copy_doctrine_migration_versions` (
-  `version` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
-  `executed_at` datetime DEFAULT NULL,
-  `execution_time` int DEFAULT NULL,
-  PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
-
-
 DROP TABLE IF EXISTS `doctrine_migration_versions`;
 CREATE TABLE `doctrine_migration_versions` (
   `version` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
@@ -199,4 +175,4 @@ CREATE TABLE `user_event` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
--- 2022-03-07 12:36:22
+-- 2022-03-07 12:44:38
