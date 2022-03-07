@@ -16,8 +16,10 @@ const app = {
         app.addAllEventListeners();
     },
 
-    // we declare a property to store locality coolie value
+    // we declare a property to store locality cookie value
     zip: '',
+    latitude: '',
+    longitude: '',
 
     state:
     {
