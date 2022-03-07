@@ -8,11 +8,16 @@ const app = {
         if ( !document.cookie.split('; ').find(row => row.startsWith("locality"))) { locality.init() }
 
         // get locality cookie if exists or set a defaut value if not
-        const zip = document.cookie.split('; ').find(row => row.startsWith("locality")) ?? null;
-        console.log(zip);
+        zip = document.cookie.split('; ').find(row => row.startsWith("locality")) ?? null;
+
+        // get locality cookie value
+        if (zip !== null && zip !== '') { app.zip = zip.split('=')[1] }
 
         app.addAllEventListeners();
     },
+
+    // we declare a property to store locality coolie value
+    zip: '',
 
     state:
     {
@@ -81,7 +86,7 @@ const app = {
         const queryStringParams = new URLSearchParams();
         form.forEach((value, key) => queryStringParams.append(key, value));
 
-        app.fetchEvents(app.state.base_url + 'front/api/filters', queryStringParams.toString());
+        app.fetchEvents(app.state.base_url + 'front/api/filters/' + app.zip, queryStringParams.toString());
     },
 
     handleDatePickerElement: function(event)
