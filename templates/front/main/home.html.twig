@@ -99,9 +99,10 @@
                                             
                                             <div class="my-2">
                                                 <div class="scaled-xs">
+                                                 
                                                     <i class="fa-solid fa-tags d-inline"></i> 
                                                     <div class="tags ms-2 d-inline">
-                                                        {% for tag in event.tags %}
+                                                            {% for tag in event.tags %}
                                                             <a href="{{ path('show_tag', {slug: tag.slug}) }}">{{tag.name}}</a>
                                                         {% endfor %}
                                                     </div>    

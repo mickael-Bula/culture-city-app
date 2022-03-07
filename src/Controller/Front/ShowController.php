@@ -2,8 +2,11 @@
 
 namespace App\Controller\Front;
 
+//use App\Entity\User;
+use App\Entity\Event;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -119,16 +122,85 @@ class ShowController extends AbstractController
      * 
      * @Route("/user/{slug}", name="show_user_page")
      */
-    public function showPlacePanel(UserRepository $userRepository,  string $slug): Response
-    {
-        //todo gérer la page du user pour y mettre ses favoris ou autre par exemple.
-      
+    public function showUserPanel(UserRepository $userRepository,  string $slug): Response
+    {      
         // display user page
         $user = $userRepository->findOneBy(["slug" => $slug]);
 
-        // keep User id
+        // keep User id 
+        //!je pense que c'est pas utile là...
         $userId = $user->getId();
 
         return $this->render('front/main/user_profile.html.twig', compact('user'));
     }
+
+
+    /**
+     * Add Favorite event in user profile
+     *
+     * @param EntityManagerInterface $manager
+     * @param UserRepository $userRepository
+     * @param Event $event
+     * @return void
+     * 
+     * @Route("/favorite/{id}", name="add_favorite", methods={"GET", "POST"})
+     */
+    public function addFavoriteEvent(EntityManagerInterface $manager, 
+        UserRepository $userRepository, 
+        EventRepository $eventRepository,
+        int $id, 
+        Event $event)
+    {
+        //get current user in session
+        $user = $this->getUser();
+        //get current event by Id
+        $event = $eventRepository->findOneBy(['id' => $id]);
+
+        if ($event) {
+        //add this event in this user favorite
+        $user->addFavorite($event);
+        //persit user with favorite event
+        $manager->persist($user);
+        }
+
+        $manager->flush();
+
+        return $this->render('front/main/user_profile.html.twig', compact('user'));
+    }
+
+    /**
+     * Add Favorite event in user profile
+     *
+     * @param EntityManagerInterface $manager
+     * @param UserRepository $userRepository
+     * @param Event $event
+     * @return void
+     * 
+     * @Route("/favorite/remove/{id}", name="remove_favorite", methods={"GET", "POST"})
+     */
+    public function removeFavoriteEvent(EntityManagerInterface $manager, 
+        UserRepository $userRepository, 
+        EventRepository $eventRepository,
+        int $id, 
+        Event $event)
+    {
+        //get current user in session
+        $user = $this->getUser();
+        //get current event by Id
+        $event = $eventRepository->findOneBy(['id' => $id]);
+
+        if ($event) {
+        //remove this event from this user favorite
+        $user->removeFavorite($event);
+        //persit user with favorite event
+        $manager->persist($user);
+        }
+
+        $manager->flush();
+
+        return $this->render('front/main/user_profile.html.twig', compact('user'));
+    }
+
+
+
 }
