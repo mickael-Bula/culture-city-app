@@ -24,32 +24,31 @@ class AdvertiserController extends AbstractController
      */
     public function editAdvertiserProfile(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
     {
-
         //! ne pas s'inquièter de ce qui est souligné en rouge il n'y a pas de problème, tout fonctionne...mais ce serait bien de comprendre !
        
         // get user from session
         $user = $this->getUser();
 
-            // if no user authenticated as advertiser, we create a new one
-            if (!$user)
-            {
-                $this->addFlash('unautorized-access', "Oups ! Vous n'êtes pas autorisé à accèder à cette page !");
-                $this->redirectToRoute('main_home', [], Response::HTTP_MOVED_PERMANENTLY);
-            }
+        // if no user is authenticated as advertiser, we redirect
+        if ( !$user)
+        {
+            $this->addFlash('unautorized-access', "Oups ! Vous n'êtes pas autorisé à accèder à cette page !");
+            $this->redirectToRoute('main_home', [], Response::HTTP_MOVED_PERMANENTLY);
+        }
 
-            // get advertiserForm and bind the authenticated user
-            $form = $this->createForm(AdvertiserType::class, $user);
-            $form->handleRequest($request);
+        // get advertiserForm and bind the authenticated user
+        $form = $this->createForm(AdvertiserType::class, $user);
+        $form->handleRequest($request);
 
         
         if ($form->isSubmitted() && $form->isValid())
-        { 
+        {
 
             /** @var UploadedFile 
              **/
 
-            if ($form->get('avatar')->getData() != null) {
-                
+            if ($form->get('avatar')->getData() != null)
+            {                
                 $avatarFile = $form->get('avatar')->getData();
 
                 $user->setAvatarFile($avatarFile);
@@ -73,44 +72,41 @@ class AdvertiserController extends AbstractController
                     $user->setAvatar($newFilename);
                    
                 }
+            }
+               if ($form->get('banner')->getData() != null)
+               {
+                   $bannerFile = $form->get('banner')->getData();
 
-               }
+                    $user->setBannerFile($bannerFile);
 
-               if ($form->get('banner')->getData() != null) {
+                    if ($bannerFile)
+                    {
+                        $originalFilename = pathinfo($bannerFile->getClientOriginalName(), PATHINFO_FILENAME);
 
-                $bannerFile = $form->get('banner')->getData();
+                        $safeFilename = $slugger->slug($originalFilename);
+                        $newFilename = $safeFilename.'-'.uniqid().'.'.$bannerFile->guessExtension();
 
-                $user->setBannerFile($bannerFile);
-
-                if ($bannerFile) {
-                    $originalFilename = pathinfo($bannerFile->getClientOriginalName(), PATHINFO_FILENAME);
-
-                    $safeFilename = $slugger->slug($originalFilename);
-                    $newFilename = $safeFilename.'-'.uniqid().'.'.$bannerFile->guessExtension();
-
-                    try {
-                        $bannerFile->move(
-                            $this->getParameter('user_banner'),
-                            $newFilename
-                        );
-                    } catch (FileException $e) {
-                        // ... gérer les exeptions si problème d'upload en fonction des restrictions qu'on a pu donner dans le form
+                        try {
+                            $bannerFile->move(
+                                $this->getParameter('user_banner'),
+                                $newFilename
+                            );
+                        } catch (FileException $e) {
+                            // ... gérer les exeptions si problème d'upload en fonction des restrictions qu'on a pu donner dans le form
+                        }
+        
+                        $user->setBanner($newFilename);
+                        
                     }
-    
-                    $user->setBanner($newFilename);
-                    
-                } 
+                }
+            // Flash message display a success message in user profil template
+            $currentUser = $user->getName();
+            $this->addFlash('success-advertiser-edit', 'Félicitation ' . $currentUser . ' votre profil a été mis à jour !');
 
-               }
-            
-                    // Flash message display a success message in user profil template
-                    $currentUser = $user->getName();
-                    $this->addFlash('success-advertiser-edit', 'Félicitation ' . $currentUser . ' votre profil a été mis à jour !');
+            //dd($user);
 
-                    //dd($user); 
-
-                    $entityManager->persist($user);
-                    $entityManager->flush();
+            $entityManager->persist($user);
+            $entityManager->flush();
             //return user on his own profil page by slug   
             return $this->redirectToRoute('show_advertiser_page', ['slug'=> $user->getSlug()], Response::HTTP_SEE_OTHER);
         }
