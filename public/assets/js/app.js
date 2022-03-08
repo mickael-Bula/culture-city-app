@@ -3,6 +3,7 @@ const app = {
     init: function ()
     {
         console.log("app.init()");
+        map.init();
 
         // if a locality cookie doesn't exists we launch geolocation
         if ( !document.cookie.split('; ').find(row => row.startsWith("locality"))) { locality.init() }
