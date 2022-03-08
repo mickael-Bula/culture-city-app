@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * @UniqueEntity("content", message="Ce commentaire existe déjà !.")
  * @ORM\Entity(repositoryClass=PostRepository::class)
  */
 class Post
@@ -22,7 +21,7 @@ class Post
     private $id;
 
     /**
-     * @ORM\Column(type="text", name="content", length=1800, unique=true)
+     * @ORM\Column(type="text", name="content")
      */
     private $content;
 
