@@ -88,7 +88,7 @@ const app = {
         const queryStringParams = new URLSearchParams();
         form.forEach((value, key) => queryStringParams.append(key, value));
 
-        app.fetchEvents(app.state.base_url + 'front/api/filters/' + "75017", queryStringParams.toString()); //todo
+        app.fetchEvents(app.state.base_url + 'front/api/filters/' + app.zip, queryStringParams.toString()); //todo
     },
 
     handleDatePickerElement: function(event)
@@ -134,6 +134,10 @@ const app = {
             // cloning the template and add it to DOM for each event collected from database
             const eventTemplate = document.getElementById("eventTemplate").content.cloneNode(true);
 
+            // declare some variable as dates
+            const startDate = new Date(element.startDate);
+            const endDate = new Date(element.endDate);
+            
             // we check dates to not display a past event
             // for an easier comparison we convert dates using the getTime() method which returns the number of milliseconds since the ECMAScript epoch
             const getDate = document.getElementById("start").value;
@@ -146,11 +150,10 @@ const app = {
             if (datePicker.getTime() > referenceDate.getTime()) { continue }
 
             // if an event starts before the current day, we set its startDate as current date and add it tag 'en cours'
-            const startDate = new Date(element.startDate);
-            if (element.endDate !== null && element.endDate > datePicker.getTime() && startDate.getTime() < datePicker.getTime())
+            if (element.endDate !== null && endDate.getTime() > datePicker.getTime() && startDate.getTime() <= datePicker.getTime())
             {
                 element.startDate = document.getElementById("start").value;
-                // eventTemplate.getElementById("inProgress").classList.replace('d-none','d-inline');   // TODO tags
+                eventTemplate.getElementById("inProgress").classList.replace('d-none','d-inline');
             }
 
             // get event's tags and create a link for each
