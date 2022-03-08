@@ -3,7 +3,7 @@ const app = {
     init: function ()
     {
         console.log("app.init()");
-        map.init();
+        mapModule.init(app.eventsCoordinates);
 
         // if a locality cookie doesn't exists we launch geolocation
         if ( !document.cookie.split('; ').find(row => row.startsWith("locality"))) { locality.init() }
@@ -21,6 +21,9 @@ const app = {
     zip: '',
     latitude: '',
     longitude: '',
+
+    // an array to store events coordinates
+    eventsCoordinates: [],
 
     state:
     {
@@ -89,7 +92,7 @@ const app = {
         const queryStringParams = new URLSearchParams();
         form.forEach((value, key) => queryStringParams.append(key, value));
 
-        app.fetchEvents(app.state.base_url + 'front/api/filters/' + app.zip, queryStringParams.toString()); //todo
+        app.fetchEvents(app.state.base_url + 'front/api/filters/' + app.zip, queryStringParams.toString());
     },
 
     handleDatePickerElement: function(event)
@@ -188,6 +191,9 @@ const app = {
             const reformateStartDate = startDate.toLocaleDateString();
             const reformateDatePicker = datePicker.toLocaleDateString();
 
+            // get event's coordinates for display on the map
+            app.eventsCoordinates.push([element.user.lat, element.user.lng]);
+
             // compare dates
             if (reformateDatePicker >= reformateStartDate)
             {
@@ -202,7 +208,11 @@ const app = {
         {
             displayCurrentElement.textContent = "Il n'y a pas d'événement pour cette date";
         }
-    },
+        // refresh map
+        console.log(app.eventsCoordinates);
+        mapModule.refreshMarkers(app.eventsCoordinates);
+    },  
+
 
     addTagLinkElementToDOM: function(eventTemplate, tag)
     {
