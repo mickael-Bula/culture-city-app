@@ -22,7 +22,7 @@ class Post
     private $id;
 
     /**
-     * @ORM\Column(type="text", name="content", unique=true)
+     * @ORM\Column(type="text", name="content", length=1800, unique=true)
      */
     private $content;
 
