@@ -10,23 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ApiController extends AbstractController
 {
     /**
-     * @Route("/front/api/filters/{category}", name="api_category")
-     * 
-     * @param string $category
-     * @return Response
-     */
-    public function getEventsByCategory(EventRepository $eventRepository, string $category): Response
-    {
-        $events = $eventRepository->findByCategory($category);
-        return $this->json($events, 200, [], ["groups" => "events"]);
-    }
-
-    /**
-     * @Route("/front/api/filters", name="api_filters")
+     * @Route("/front/api/filters/{locality}", name="api_filters")
      * 
      * @return Response
      */
-    public function getEvents(EventRepository $eventRepository, Request $request): Response
+    public function getEvents(EventRepository $eventRepository, Request $request, string $locality): Response
     {
         // on récupère la clé 'filtre' de la requête
         $filters = $request->get('filters');
@@ -34,7 +22,8 @@ class ApiController extends AbstractController
         // on s'assure que cette clé est un tableau
         if (is_array($filters))
         {
-            $events = $eventRepository->findEvents($filters);
+            // if locality exists we retrieve its events, otherwise we display all events
+            $events = ($locality === null || $locality === '') ? $eventRepository->findByLocality($filters) : $eventRepository->findEventsByLocality($filters, $locality);
             return $this->json($events, 200, [], ["groups" => "events"]);
         }
         // si ce n'est pas un tableau alors elle est vide et on retourne la totalité des events (pour avoir du contenu)

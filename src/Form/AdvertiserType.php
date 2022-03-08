@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -77,7 +78,7 @@ class AdvertiserType extends AbstractType
                 //'empty_data' => 'Champ à renseigner !',        
             ])   
 
-            ->add('address_1', TextType::class, [
+            ->add('address_1',  TextType::class, [
 
                 'label' => 'Adresse 1',
                 'required' => true,  
@@ -99,12 +100,24 @@ class AdvertiserType extends AbstractType
             ])   
 
 
-            ->add('zip', NumberType::class, [
+            ->add('zip', TextType::class, [
 
                 'label' => 'Code Postal',
                 'required' => true,  
                 //'empty_data' => 000000,           
             ])  
+
+            ->add('lat',  TextType::class, [
+
+                'label' => 'Latitude',
+                'required' => true       
+            ]) 
+
+            ->add('lng',  TextType::class, [
+
+                'label' => 'Longitude',
+                'required' => true       
+            ]) 
 
 
             ->add('siren', NumberType::class, [
@@ -162,6 +175,8 @@ class AdvertiserType extends AbstractType
 
                 'label' => 'Instagram',      
             ]) 
+
+            
         ;
     }
 
