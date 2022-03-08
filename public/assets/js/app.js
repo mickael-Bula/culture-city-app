@@ -16,8 +16,10 @@ const app = {
         app.addAllEventListeners();
     },
 
-    // we declare a property to store locality coolie value
+    // we declare a property to store locality cookie value
     zip: '',
+    latitude: '',
+    longitude: '',
 
     state:
     {
@@ -86,7 +88,7 @@ const app = {
         const queryStringParams = new URLSearchParams();
         form.forEach((value, key) => queryStringParams.append(key, value));
 
-        app.fetchEvents(app.state.base_url + 'front/api/filters/' + app.zip, queryStringParams.toString());
+        app.fetchEvents(app.state.base_url + 'front/api/filters/' + "75017", queryStringParams.toString()); //todo
     },
 
     handleDatePickerElement: function(event)
@@ -145,10 +147,10 @@ const app = {
 
             // if an event starts before the current day, we set its startDate as current date and add it tag 'en cours'
             const startDate = new Date(element.startDate);
-            if (element.endDate !== null && startDate.getTime() < datePicker.getTime())
+            if (element.endDate !== null && element.endDate > datePicker.getTime() && startDate.getTime() < datePicker.getTime())
             {
                 element.startDate = document.getElementById("start").value;
-                // TODO ajouter le tag 'en cours'
+                // eventTemplate.getElementById("inProgress").classList.replace('d-none','d-inline');   // TODO tags
             }
 
             // get event's tags and create a link for each
