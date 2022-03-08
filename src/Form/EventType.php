@@ -38,12 +38,6 @@ class EventType extends AbstractType
                 'required' => true,     
             ])   
 
-            ->add('isPremium', CheckboxType::class, [
-
-                'label' => 'Souhaitez-vous mettre votre événement à la une ?',
-                'required' => false, 
-            ])
-
             ->add('startDate', DateTimeType::class, [
 
                 'widget' => 'single_text',
