@@ -116,14 +116,6 @@
                                                     </a>
                                                 </div>  
                                             </div>
-
-                                            <!-- edit button if it's your own event -->
-                                            {% if is_granted("EVENT_EDIT", event) %}
-                                                    <div class="d-flex justify-content-start mt-3">  
-                                                        <button type="button" class="btn btn-warning mb-3"><a href="{{ path("event_edit", {slug: event.slug}) }}">Modifier votre événement</a></button>
-                                                    </div>  
-                                            {% endif %}
-                                            <!-- end edit button -->
                                             
                                             <div class="d-flex justify-content-end">
                                                 <a href="{{ path('show_event', {slug: event.slug}) }}">
