@@ -197,11 +197,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $bannerFile;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lat;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lng;
+
+    /**
      * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="userFavorite")
      */
     private $favorite;
-
-
 
     public function __construct()
     {   
@@ -707,6 +715,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
+    public function getLat(): ?string
+    {
+        return $this->lat;
+    }
+
+    public function setLat(?string $lat): self
+    {
+        $this->lat = $lat;
+        return $this;
+    }
+  
     /**
      * @return Collection<int, Event>
      */
@@ -723,11 +742,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
+  
     public function removeFavorite(Event $favorite): self
     {
         $this->favorite->removeElement($favorite);
 
+        return $this;
+    }
+
+    public function getLng(): ?string
+    {
+        return $this->lng;
+    }
+
+    public function setLng(?string $lng): self
+    {
+        $this->lng = $lng;
         return $this;
     }
 }
