@@ -5,6 +5,7 @@ namespace App\Controller\Back;
 use App\Entity\Post;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class PostCrudController extends AbstractCrudController
@@ -19,8 +20,8 @@ class PostCrudController extends AbstractCrudController
     {
          return [
             TextField::new('content')->setLabel('Commentaire'),
-            TextField::new('author')->setLabel('Auteur'),
-            TextField::new('event')->setLabel('Event'),
+            AssociationField::new('author')->setLabel('Auteur'),
+            AssociationField::new('event')->setLabel('Event'),
             DateField::new('created_at')->hideOnForm(),
         ]; 
     }
