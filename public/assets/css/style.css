@@ -223,6 +223,11 @@ table {
   height: auto;
 }
 
+#map-advertiser {
+  width: 100%;
+  height: 300px;
+}
+
 /** Footer **/
 .footer {
   background-color: var(--main-color-blue-med);
