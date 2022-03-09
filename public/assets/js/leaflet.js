@@ -1,5 +1,6 @@
 const mapModule = {
 
+    // TODO get position from geolocalion or coordinates cookie
     currentMap: L.map('map').setView([48.8767488, 2.29376], 13),    // current user position
 
     displayMap: function()
@@ -35,23 +36,30 @@ const mapModule = {
         console.log(userLocation[0], userLocation[1]);
 
         // current user position
-        L.marker([userLocation[0], userLocation[1]]).addTo(map);
-        
-        // mapModule.refreshMarkers([[48.8883317, 2.298457], [48.9583317, 2.358457], [49.05, 2.40]]);
+        const marker = L.marker([userLocation[0], userLocation[1]]).addTo(map);
+        marker.bindPopup("<b>Votre position</b><br>").openPopup();
     },
 
-    refreshMarkers: function(eventsCoordinates)
+    markers: [],
+
+    refreshMarkers: function(coordinates)
     {
-        const markers = L.layerGroup();
-        mapModule.currentMap.addLayer(markers);
+        this.removeMarkers(mapModule.markers);
 
-        markers.clearLayers();
-
-        for (const coordinates of eventsCoordinates)
+        for (let i=0; i < coordinates.length; i++)
         {
-            console.log(coordinates);
-            const points = L.marker([coordinates[0], coordinates[1]]).addTo(markers);
-            points.bindPopup("<p>le nom du lieu</p>");
+            const point = L.marker([coordinates[i][0], coordinates[i][1]]);
+            point.bindPopup("<p>le nom du lieu</p>");
+            mapModule.markers.push(point);
+            mapModule.currentMap.addLayer(mapModule.markers[i]);
+        }
+    },
+
+    removeMarkers: function(markers)
+    {
+        for (const marker of markers)
+        {
+            mapModule.currentMap.removeLayer(marker);
         }
     }
 }
