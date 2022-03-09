@@ -1,9 +1,12 @@
 const mapModule = {
 
-    // TODO get position from geolocalion or coordinates cookie
+    // TODO get position from geolocation or coordinates cookie
     currentMap: L.map('map').setView([48.8767488, 2.29376], 13),    // current user position
 
-    displayMap: function()
+    // an array to store markers
+    markers: [],
+
+    displayMap: function(userLocation)
     {
         console.log("leaflet file");
 
@@ -20,27 +23,10 @@ const mapModule = {
             zoomOffset: -1,
         }).addTo(map);
 
-        // try to get position from cookies
-        userLocation = document.cookie.split('; ').find(row => row.startsWith("coordinates")) ?? null;
-
-        // get coordinates cookie value
-        if (userLocation !== null && userLocation !== '')
-        {
-            userLocation = userLocation.split('=')[1].split(',')
-        }
-        else
-        {
-            // if coordinates cookie doesn't exist we set Paris coordinates by default
-            userLocation = [48.866669, 2.33333];
-        }
-        console.log(userLocation[0], userLocation[1]);
-
         // current user position
         const marker = L.marker([userLocation[0], userLocation[1]]).addTo(map);
         marker.bindPopup("<b>Votre position</b><br>").openPopup();
     },
-
-    markers: [],
 
     refreshMarkers: function(coordinates)
     {

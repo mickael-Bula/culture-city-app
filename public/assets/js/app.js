@@ -10,8 +10,11 @@ const app = {
         // if a locality cookie doesn't exists we launch geolocation
         if ( !document.cookie.split('; ').find(row => row.startsWith("locality"))) { locality.init() }
 
-        // todo récupérer la position de l'utilisateur dans les cookies et la passer en paramètre
-        if (window.location.pathname === '/') { mapModule.displayMap() }
+        // get user's location if exists, a default position if not
+        const userLocation = app.getCoordinates();
+
+        // get user's position from cookies if exists and send it to map
+        if (window.location.pathname === '/') { mapModule.displayMap(userLocation) }
 
         // get locality cookie if exists or set a defaut value if not
         zip = document.cookie.split('; ').find(row => row.startsWith("locality")) ?? null;
@@ -61,14 +64,8 @@ const app = {
     {
         // toggle between showing and hiding the end date field
         const endDateField = document.getElementById("hiddenDateField");
-        if (endDateField.style.display === 'none')
-        {
-            endDateField.style.display = 'block';
-        }
-        else
-        {
-            endDateField.style.display = 'none';
-        }
+        if (endDateField.style.display === 'none') { endDateField.style.display = 'block' }
+        else { endDateField.style.display = 'none' }
     },
 
     handleChangeFiltersForm: function()
@@ -213,7 +210,22 @@ const app = {
         newLink.href = "/tag/" + tag.slug;
         newLink.textContent = tag.slug + " ";
         eventTemplate.querySelector(".eventTags").appendChild(newLink);
-    }
+    },
+
+    getCoordinates: function()
+    {
+        // try to get position from cookies
+        userLocation = document.cookie.split('; ').find(row => row.startsWith("coordinates")) ?? null;
+        
+        // get coordinates cookie value
+        if (userLocation !== null && userLocation !== '') { userLocation = userLocation.split('=')[1].split(',') }
+
+        // if coordinates cookie doesn't exist we set Paris coordinates by default
+        else { userLocation = [48.866669, 2.33333] }
+
+        console.log(userLocation[0], userLocation[1]);
+        return userLocation;
+    },
 }
 
 document.addEventListener("DOMContentLoaded", app.init);
