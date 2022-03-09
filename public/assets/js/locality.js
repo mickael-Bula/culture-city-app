@@ -74,6 +74,7 @@ const locality = {
             document.cookie = `locality=${zip}; expires=${expires}`;
 
             // on appelle la page home avec les données correspondant à la localité
+            //! PROD : window.location.href="http:/projet-17-culture-city-app/public/";
             window.location.href="http:/";
         }
     }
