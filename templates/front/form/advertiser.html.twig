@@ -2,52 +2,14 @@
 
 {% block title %}formulaire d'annonceur{% endblock %}
 
+{% block stylesheets %}
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.3/leaflet.css">
+    <!-- Load geocoding plugin after Leaflet :-->
+    <link rel="stylesheet" href="https://maps.locationiq.com/v2/libs/leaflet-geocoder/1.9.6/leaflet-geocoder-locationiq.min.css">
+{% endblock %}
+
 {% block body %}
-
-    {% block stylesheets %}
-        <!-- Load Leaflet from CDN -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.3/leaflet.css">
-        <!-- Load geocoding plugin after Leaflet :-->
-        <link rel="stylesheet" href="https://maps.locationiq.com/v2/libs/leaflet-geocoder/1.9.6/leaflet-geocoder-locationiq.min.css">
-
-        <style type="text/css">
-            
-            #map {
-                width: 100%;
-                height: 230px;
-                position: none;
-            }
-            #search-box {
-                padding-left: 20px;
-                padding-top: 20px;
-                width: 800px;
-                height: 100px;
-            }
-            #result {
-                padding-left: 20px;
-                padding-top: 20px;
-                width: 800px;
-                height: 100px;
-            }
-            .leaflet-locationiq-results{
-                padding-top: 0px;
-            }
-
-            .leaflet-container {
-                background: #fff;
-            }
-
-            .leaflet-left .leaflet-control {
-                margin-left: 0px; 
-            }
-            
-            .leaflet-top .leaflet-control {
-                margin-top: 0px; 
-            }
-
-        </style>
-
-    {% endblock %}
 
     <div class="container">
         <div class="row">
@@ -73,11 +35,11 @@
                 {{ form_row(form.placeName) }}
                 {{ form_row(form.description) }}
 
-                <!-- searchbar adress with locationIq and leaflet-->
+                <!-- searchbar adress with locationIq and leaflet, the javascript call is in the bottom-->
                 <div class="row mb-3">
                     <div class="col-12">
                         <label class="mb-3">Rechercher votre adresse</label>
-                        <div id="map"></div>
+                        <div id="map-advertiser-form"></div>
                     </div>
 
                     <div class="col-12">
@@ -111,11 +73,10 @@
     </div>
 {% endblock %}
 
-{% block javascripts %}
-
+{% block javascript_autocomplete_address %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.3/leaflet.js"></script>
     <script src="https://maps.locationiq.com/v2/libs/leaflet-geocoder/1.9.6/leaflet-geocoder-locationiq.min.js"></script>
-    <!-- geocoder config-->
     <script src="{{ asset('assets/js/configLocationIq.js') }}"></script>
+{% endblock %}  
 
-{% endblock %}
+

@@ -2,8 +2,14 @@
 
 {% block title %} Annonceur {{ user.name }}{% endblock %}
 
-{% block body %}
+{% block stylesheets %}
+    <!--  Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>  
+{% endblock %}
 
+{% block body %}
 
 <div class="container-fluid">
     <!-- advertiser-infos -->
@@ -119,58 +125,11 @@
             </div>
 
             <!-- Display map-->
-           
             <div class="row">
                 <div class="col-12">
                     <div id="longitude" data-longitude="{{user.lng}}"></div>
                     <div id="latitude" data-latitude="{{user.lat}}"></div>
-
-                    {% block stylesheets %}
-                        <!--  Leaflet CSS -->
-                        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-                        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-                        crossorigin=""/>
-                    {% endblock %}
-                    
-                    {% block javascripts %}
-                        <!-- Leaflet JS Make sure you put this AFTER Leaflet's CSS -->
-                        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-                        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-                        crossorigin=""></script>
-                    {% endblock %}
-                    
                     <div id="map-advertiser"></div>
-                
-                    <script type="text/javascript">
-
-                        // Get element longitude
-                        const longitude = document.getElementById("longitude");
-                        // Get longitude
-                        const lng = longitude.dataset.longitude;
-                        //console.log(lng);
-
-                        // Get element latitude 
-                        const latitude = document.getElementById('latitude');
-                        // Get latitude
-                        const lat = latitude.dataset.latitude;
-                        //console.log(lat);
-                        
-                        // Initialize Map
-                        var map = L.map('map-advertiser').setView([lat,lng ], 13);
-                        
-                        // Add Marker
-                        var marker = L.marker([lat, lng]).addTo(map);
-
-                        // Link in map bottom
-                        mapLink = 
-                        '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-                    L.tileLayer(
-                        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; ' + mapLink + ' Contributors',
-                        maxZoom: 18,
-                        }).addTo(map);
-
-                    </script>
                 </div>
             </div>
          
@@ -266,6 +225,15 @@
 
 {% endblock %}
 
+ 
+{% block javascript_map_advertiser_page %}
+    <!-- Leaflet JS Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <!-- init map with coordinates-->
+    <script src="{{ asset('assets/js/map-advertiser.js') }}"></script>
+{% endblock %}
 
 
 

@@ -1,12 +1,4 @@
-// Generate a map with latitude and longitude from the user 
-// With leaflet and OpenStreet map
-
-
-// Get element latitude 
-const latitude = document.getElementById('latitude');
-// Get latitude
-const lat = latitude.dataset.latitude;
-//console.log(lat);
+// Display map with coordinates from user table
 
 // Get element longitude
 const longitude = document.getElementById("longitude");
@@ -14,6 +6,11 @@ const longitude = document.getElementById("longitude");
 const lng = longitude.dataset.longitude;
 //console.log(lng);
 
+// Get element latitude 
+const latitude = document.getElementById('latitude');
+// Get latitude
+const lat = latitude.dataset.latitude;
+//console.log(lat);
 
 // Initialize Map
 var map = L.map('map-advertiser').setView([lat,lng ], 13);

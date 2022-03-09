@@ -228,6 +228,42 @@ table {
   height: 300px;
 }
 
+#map-advertiser-form {
+  width: 100%;
+  height: 230px;
+  position: none;
+}
+
+#search-box {
+  padding-left: 20px;
+  padding-top: 20px;
+  width: 800px;
+  height: 100px;
+}
+
+#result {
+  padding-left: 20px;
+  padding-top: 20px;
+  width: 800px;
+  height: 100px;
+}
+
+.leaflet-locationiq-results {
+  padding-top: 0px;
+}
+
+.leaflet-container {
+  background: #fff;
+}
+
+.leaflet-left .leaflet-control {
+  margin-left: 0px;
+}
+
+.leaflet-top .leaflet-control {
+  margin-top: 0px;
+}
+
 /** Footer **/
 .footer {
   background-color: var(--main-color-blue-med);
