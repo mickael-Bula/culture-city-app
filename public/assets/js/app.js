@@ -175,6 +175,7 @@ const app = {
         
             // display event's category name
             eventTemplate.querySelector(".square-category").className = "square-category bg-category-" + element.category.slug + " d-inline";
+            eventTemplate.querySelector(".square-category").closest('a').href = "/category/" + element.category.slug;
             eventTemplate.querySelector(".square-category").textContent = element.category.name;
 
             eventTemplate.querySelector(".eventName").textContent = element.name;
