@@ -70,8 +70,8 @@ const locality = {
             const expires = "expires="+ expire.toUTCString();
 
             // TODO cette ligne sera à remplacer par celle commentée après peuplement de la database
-            document.cookie = `locality=${config.city}; expires=${expires}`;
-            // document.cookie = `locality=${zip}; expires=${expires}`;
+            document.cookie = `locality=${config.city}; expires=${expires}`;    // géolocalisé
+            document.cookie = `locality=${zip}; expires=${expires}`;
 
             // on appelle la page home avec les données correspondant à la localité
             window.location.href="http:/";

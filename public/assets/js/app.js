@@ -1,14 +1,17 @@
 const app = {
+    
+    // we declare a property to store locality cookie value
+    zip: '',
 
     init: function ()
     {
         console.log("app.init()");
 
-        // todo récupérer la position de l'utilisateur dans les cookies et la passer en paramètre
-        if (window.location.pathname === '/') { mapModule.displayMap() }
-
         // if a locality cookie doesn't exists we launch geolocation
         if ( !document.cookie.split('; ').find(row => row.startsWith("locality"))) { locality.init() }
+
+        // todo récupérer la position de l'utilisateur dans les cookies et la passer en paramètre
+        if (window.location.pathname === '/') { mapModule.displayMap() }
 
         // get locality cookie if exists or set a defaut value if not
         zip = document.cookie.split('; ').find(row => row.startsWith("locality")) ?? null;
@@ -17,17 +20,6 @@ const app = {
         if (zip !== null && zip !== '') { app.zip = zip.split('=')[1] }
 
         app.addAllEventListeners();
-    },
-
-    // we declare a property to store locality cookie value
-    zip: '',
-    latitude: '',
-    longitude: '',
-
-    state:
-    {
-        // we declare our base URL to generate paths
-        base_url: 'http://127.0.0.1:8000/'
     },
 
     addAllEventListeners: function()
@@ -91,7 +83,7 @@ const app = {
         const queryStringParams = new URLSearchParams();
         form.forEach((value, key) => queryStringParams.append(key, value));
 
-        app.fetchEvents(app.state.base_url + 'front/api/filters/' + app.zip, queryStringParams.toString());
+        app.fetchEvents(config.base_url + 'front/api/filters/' + app.zip, queryStringParams.toString());
     },
 
     handleDatePickerElement: function(event)

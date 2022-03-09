@@ -19,7 +19,25 @@ const mapModule = {
             zoomOffset: -1,
         }).addTo(map);
 
-        mapModule.refreshMarkers([[48.8883317, 2.298457], [48.9583317, 2.358457], [49.05, 2.40]]);
+        // try to get position from cookies
+        userLocation = document.cookie.split('; ').find(row => row.startsWith("coordinates")) ?? null;
+
+        // get coordinates cookie value
+        if (userLocation !== null && userLocation !== '')
+        {
+            userLocation = userLocation.split('=')[1].split(',')
+        }
+        else
+        {
+            // if coordinates cookie doesn't exist we set Paris coordinates by default
+            userLocation = [48.866669, 2.33333];
+        }
+        console.log(userLocation[0], userLocation[1]);
+
+        // current user position
+        L.marker([userLocation[0], userLocation[1]]).addTo(map);
+        
+        // mapModule.refreshMarkers([[48.8883317, 2.298457], [48.9583317, 2.358457], [49.05, 2.40]]);
     },
 
     refreshMarkers: function(eventsCoordinates)
