@@ -1,14 +1,6 @@
 const mapModule = {
 
-    init: function()
-    {
-        console.log("map.init()");
-        
-        mapModule.displayMap();
-
-    },
-
-    currentMap: L.map('map').setView([48.8767488, 2.29376], 13),
+    currentMap: L.map('map').setView([48.8767488, 2.29376], 13),    // current user position
 
     displayMap: function()
     {
@@ -25,20 +17,21 @@ const mapModule = {
             id: 'mapbox/streets-v11',
             tileSize: 512,
             zoomOffset: -1,
-            accessToken: 'your.mapbox.access.token'
         }).addTo(map);
 
-        mapModule.refreshMarkers([[48.8883317, 2.298457]]);
+        mapModule.refreshMarkers([[48.8883317, 2.298457], [48.9583317, 2.358457], [49.05, 2.40]]);
     },
 
     refreshMarkers: function(eventsCoordinates)
     {
-        const markers = new L.LayerGroup().addTo(mapModule.currentMap);
+        const markers = L.layerGroup();
+        mapModule.currentMap.addLayer(markers);
 
         markers.clearLayers();
 
         for (const coordinates of eventsCoordinates)
         {
+            console.log(coordinates);
             const points = L.marker([coordinates[0], coordinates[1]]).addTo(markers);
             points.bindPopup("<p>le nom du lieu</p>");
         }

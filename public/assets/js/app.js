@@ -3,7 +3,9 @@ const app = {
     init: function ()
     {
         console.log("app.init()");
-        mapModule.init(app.eventsCoordinates);
+
+        // todo récupérer la position de l'utilisateur dans les cookies et la passer en paramètre
+        if (window.location.pathname === '/') { mapModule.displayMap() }
 
         // if a locality cookie doesn't exists we launch geolocation
         if ( !document.cookie.split('; ').find(row => row.startsWith("locality"))) { locality.init() }
@@ -21,9 +23,6 @@ const app = {
     zip: '',
     latitude: '',
     longitude: '',
-
-    // an array to store events coordinates
-    eventsCoordinates: [],
 
     state:
     {
@@ -128,6 +127,9 @@ const app = {
 
     displayEvents(data)
     {
+        // an array to store events coordinates
+        const eventsCoordinates = [];
+
         // get event's containers, one for current dates, another for upcoming dates
         const displayCurrentElement = document.getElementById("displayCurrentEvents");
         const displayUpcomingElement = document.getElementById("displayUpcomingEvents");
@@ -192,7 +194,7 @@ const app = {
             const reformateDatePicker = datePicker.toLocaleDateString();
 
             // get event's coordinates for display on the map
-            app.eventsCoordinates.push([element.user.lat, element.user.lng]);
+            eventsCoordinates.push([element.user.lat, element.user.lng]);
 
             // compare dates
             if (reformateDatePicker >= reformateStartDate)
@@ -208,11 +210,9 @@ const app = {
         {
             displayCurrentElement.textContent = "Il n'y a pas d'événement pour cette date";
         }
-        // refresh map
-        console.log(app.eventsCoordinates);
-        mapModule.refreshMarkers(app.eventsCoordinates);
-    },  
-
+        // refresh map with current events
+        mapModule.refreshMarkers(eventsCoordinates);
+    },
 
     addTagLinkElementToDOM: function(eventTemplate, tag)
     {
