@@ -96,7 +96,7 @@ class EventController extends AbstractController
             $entityManager->persist($event);
             $entityManager->flush();
 
-            return $this->redirectToRoute('main_home', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('show_advertiser_page', ['slug'=> $user->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
             return $this->renderForm('front/form/event.html.twig', compact('form'));

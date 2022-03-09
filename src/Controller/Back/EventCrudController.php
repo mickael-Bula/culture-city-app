@@ -35,7 +35,7 @@ class EventCrudController extends AbstractCrudController
             DateTimeField::new('start_date')->hideOnIndex()->setLabel('Date de début'),
             DateTimeField::new('end_date')->hideOnIndex()->setLabel('Date de fin'),
             ImageField::new('picture','Image')
-            ->setBasePath('/media/cache/event_picture_300/upload/eventpicture')
+            ->setBasePath('media/cache/event_picture_300/upload/eventpicture')
             ->setUploadDir('public/upload/eventpicture')
             ->setUploadedFileNamePattern('[randomhash].[extension]'),
         ];

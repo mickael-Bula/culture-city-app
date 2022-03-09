@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class ShowController extends AbstractController
 {
     /**
-     * @Route("/profile/edit/{slug}", name="user_edit_profile", methods={"GET", "POST"})
+     * @Route("/user/edit/{slug}", name="user_edit_profile", methods={"GET", "POST"})
      */
     public function editUserProfile(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
     {
