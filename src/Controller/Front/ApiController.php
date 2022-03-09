@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ApiController extends AbstractController
 {
     /**
-     * @Route("/front/api/filters/{locality}", name="api_filters")
+     * @Route("/front/api/filters/{locality}", name="api_filters", methods={"GET"})
      * 
      * @return Response
      */
