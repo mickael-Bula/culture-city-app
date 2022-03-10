@@ -4,6 +4,12 @@ const locality = {
     {
         console.log("locality.init()");
 
+        //! on retourne les coordonnéeés d'Agen par défaut (lignes à supprimer pour revenir à l'état de fonctionnement géolocalisé)
+        document.cookie = "locality=47000;";
+        document.cookie = "coordinates=44.200000,0.633333;";
+        return ;
+        //! fin du code centré par défaut sur Agen (lignes à supprimer pour revenir à l'état de fonctionnement géolocalisé)
+
         // on lance l'outil de la géolocalisation après accord de l'utilisateur
         locality.getPosition(locality.getCity);
     },

@@ -14,7 +14,6 @@ const app = {
         const userLocation = app.getCoordinates();
 
         // get user's position from cookies if exists and send it to map
-        //! PROD : if (window.location.pathname === '/projet-17-culture-city-app/public/') { mapModule.displayMap(userLocation) }
         if (window.location.pathname === '/') { mapModule.displayMap(userLocation) }
 
         // get locality cookie if exists or set a defaut value if not
@@ -29,7 +28,6 @@ const app = {
     addAllEventListeners: function()
     {
         // we verify if current page is 'home' to handle filters form
-        //!PROD : if (window.location.pathname === '/projet-17-culture-city-app/public/')
         if (window.location.pathname === '/')
         {
             // add listeners to 'categories' buttons
@@ -43,7 +41,6 @@ const app = {
         }
 
         // we verify if current page is 'create/event' to handle endDate's checkbox
-        //! PROD : if (window.location.pathname === '/projet-17-culture-city-app/public/create/event')
         if (window.location.pathname === '/create/event')
         {
             document.getElementById("addEndDate").addEventListener("change", app.handleChangeEventForm);
@@ -175,6 +172,7 @@ const app = {
         
             // display event's category name
             eventTemplate.querySelector(".square-category").className = "square-category bg-category-" + element.category.slug + " d-inline";
+            eventTemplate.querySelector(".square-category").closest('a').href = "/category/" + element.category.slug;
             eventTemplate.querySelector(".square-category").textContent = element.category.name;
 
             eventTemplate.querySelector(".eventName").textContent = element.name;
