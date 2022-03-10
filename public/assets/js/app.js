@@ -1,4 +1,7 @@
 const app = {
+    
+    // we declare a property to store locality cookie value
+    zip: '',
 
     init: function ()
     {
@@ -7,6 +10,12 @@ const app = {
         // if a locality cookie doesn't exists we launch geolocation
         if ( !document.cookie.split('; ').find(row => row.startsWith("locality"))) { locality.init() }
 
+        // get user's location if exists, a default position if not
+        const userLocation = app.getCoordinates();
+
+        // get user's position from cookies if exists and send it to map
+        if (window.location.pathname === '/') { mapModule.displayMap(userLocation) }
+
         // get locality cookie if exists or set a defaut value if not
         zip = document.cookie.split('; ').find(row => row.startsWith("locality")) ?? null;
 
@@ -14,17 +23,6 @@ const app = {
         if (zip !== null && zip !== '') { app.zip = zip.split('=')[1] }
 
         app.addAllEventListeners();
-    },
-
-    // we declare a property to store locality cookie value
-    zip: '',
-    latitude: '',
-    longitude: '',
-
-    state:
-    {
-        // we declare our base URL to generate paths
-        base_url: 'http://127.0.0.1:8000/'
     },
 
     addAllEventListeners: function()
@@ -66,14 +64,8 @@ const app = {
     {
         // toggle between showing and hiding the end date field
         const endDateField = document.getElementById("hiddenDateField");
-        if (endDateField.style.display === 'none')
-        {
-            endDateField.style.display = 'block';
-        }
-        else
-        {
-            endDateField.style.display = 'none';
-        }
+        if (endDateField.style.display === 'none') { endDateField.style.display = 'block' }
+        else { endDateField.style.display = 'none' }
     },
 
     handleChangeFiltersForm: function()
@@ -88,7 +80,7 @@ const app = {
         const queryStringParams = new URLSearchParams();
         form.forEach((value, key) => queryStringParams.append(key, value));
 
-        app.fetchEvents(app.state.base_url + 'front/api/filters/' + "75017", queryStringParams.toString()); //todo
+        app.fetchEvents(config.base_url + 'front/api/filters/' + app.zip, queryStringParams.toString());
     },
 
     handleDatePickerElement: function(event)
@@ -124,6 +116,9 @@ const app = {
 
     displayEvents(data)
     {
+        // an array to store events coordinates
+        const eventsCoordinates = [];
+
         // get event's containers, one for current dates, another for upcoming dates
         const displayCurrentElement = document.getElementById("displayCurrentEvents");
         const displayUpcomingElement = document.getElementById("displayUpcomingEvents");
@@ -134,6 +129,10 @@ const app = {
             // cloning the template and add it to DOM for each event collected from database
             const eventTemplate = document.getElementById("eventTemplate").content.cloneNode(true);
 
+            // declare some variable as dates
+            const startDate = new Date(element.startDate);
+            const endDate = new Date(element.endDate);
+            
             // we check dates to not display a past event
             // for an easier comparison we convert dates using the getTime() method which returns the number of milliseconds since the ECMAScript epoch
             const getDate = document.getElementById("start").value;
@@ -146,11 +145,10 @@ const app = {
             if (datePicker.getTime() > referenceDate.getTime()) { continue }
 
             // if an event starts before the current day, we set its startDate as current date and add it tag 'en cours'
-            const startDate = new Date(element.startDate);
-            if (element.endDate !== null && element.endDate > datePicker.getTime() && startDate.getTime() < datePicker.getTime())
+            if (element.endDate !== null && endDate.getTime() > datePicker.getTime() && startDate.getTime() <= datePicker.getTime())
             {
                 element.startDate = document.getElementById("start").value;
-                // eventTemplate.getElementById("inProgress").classList.replace('d-none','d-inline');   // TODO tags
+                eventTemplate.getElementById("inProgress").classList.replace('d-none','d-inline');
             }
 
             // get event's tags and create a link for each
@@ -174,6 +172,7 @@ const app = {
         
             // display event's category name
             eventTemplate.querySelector(".square-category").className = "square-category bg-category-" + element.category.slug + " d-inline";
+            eventTemplate.querySelector(".square-category").closest('a').href = "/category/" + element.category.slug;
             eventTemplate.querySelector(".square-category").textContent = element.category.name;
 
             eventTemplate.querySelector(".eventName").textContent = element.name;
@@ -183,6 +182,9 @@ const app = {
             // to achieve the comparison we weed to convert dates in the same format
             const reformateStartDate = startDate.toLocaleDateString();
             const reformateDatePicker = datePicker.toLocaleDateString();
+
+            // get event's coordinates for display on the map
+            eventsCoordinates.push([element.user.lat, element.user.lng]);
 
             // compare dates
             if (reformateDatePicker >= reformateStartDate)
@@ -198,6 +200,8 @@ const app = {
         {
             displayCurrentElement.textContent = "Il n'y a pas d'événement pour cette date";
         }
+        // refresh map with current events
+        mapModule.refreshMarkers(eventsCoordinates);
     },
 
     addTagLinkElementToDOM: function(eventTemplate, tag)
@@ -207,7 +211,22 @@ const app = {
         newLink.href = "/tag/" + tag.slug;
         newLink.textContent = tag.slug + " ";
         eventTemplate.querySelector(".eventTags").appendChild(newLink);
-    }
+    },
+
+    getCoordinates: function()
+    {
+        // try to get position from cookies
+        userLocation = document.cookie.split('; ').find(row => row.startsWith("coordinates")) ?? null;
+        
+        // get coordinates cookie value
+        if (userLocation !== null && userLocation !== '') { userLocation = userLocation.split('=')[1].split(',') }
+
+        // if coordinates cookie doesn't exist we set Paris coordinates by default
+        else { userLocation = [48.866669, 2.33333] }
+
+        console.log(userLocation[0], userLocation[1]);
+        return userLocation;
+    },
 }
 
 document.addEventListener("DOMContentLoaded", app.init);

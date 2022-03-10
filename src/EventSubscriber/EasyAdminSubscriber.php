@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Tag;
+use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Event;
 use DateTimeImmutable;
@@ -28,107 +29,84 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            BeforeEntityPersistedEvent::class => ['setCategorySlug'],
-            BeforeEntityPersistedEvent::class => ['setTagSlug'],
-            BeforeEntityPersistedEvent::class => ['setUserSlug'],
-            BeforeEntityPersistedEvent::class => ['setEventSlugAndDate'],
-            BeforeEntityUpdatedEvent::class => ['updateUserRole'],
-            BeforeEntityPersistedEvent::class => ['addUser']
-
+            BeforeEntityPersistedEvent::class => ['setData'],
+            BeforeEntityUpdatedEvent::class => ['updateData']
         ];
     }
 
-    public function setCategorySlug(BeforeEntityPersistedEvent $event)
-    {
-        $entity = $event->getEntityInstance();
-
-        if (!($entity instanceof Category)) {
-            return;
-        }
-
-        $slug = $this->slugger->slug($entity->getName());
-        $entity->setSlug(strtolower($slug));
-    }
-
-    public function setTagSlug(BeforeEntityPersistedEvent $event)
-    {
-        $entity = $event->getEntityInstance();
-
-        if (!($entity instanceof Tag)) {
-            return;
-        }
-
-        $slug = $this->slugger->slug($entity->getName());
-        $entity->setSlug(strtolower($slug));
-    }
-
-    public function setUserSlug(BeforeEntityPersistedEvent $event)
-    {
-        $entity = $event->getEntityInstance();
-
-        if (!($entity instanceof User)) {
-            return;
-        }
-
-        $slug = $this->slugger->slug($entity->getName());
-        $entity->setSlug(strtolower($slug));
-    }
-
     /**
-     * Update UserRole on changing is annoncuer to 1 in EasyAdmin User Edit Panel
-     *
-     * @param BeforeEntityUpdatedEvent $updateEvent
-     * @return void
-     */
-    public function updateUserRole(BeforeEntityUpdatedEvent $updateEvent)
-    {
-        $entity = $updateEvent->getEntityInstance();
-
-        if (!($entity instanceof User)) {
-            return;
-        }
-
-        if ($entity->getStatus() == 1)
-        {
-            $entity->setRoles(['ROLE_ANNONCEUR']);
-        } else {
-            $entity->setRoles(['ROLE_USER']);
-        }
-    }
-
-    public function setEventSlugAndDate(BeforeEntityPersistedEvent $event)
-    {
-        $entity = $event->getEntityInstance();
-
-        if (!($entity instanceof Event)) {
-            return;
-        }
-
-        $slug = $this->slugger->slug($entity->getName());
-        $entity->setSlug(strtolower($slug));
-
-        $now = new DateTimeImmutable('now');
-        $entity->setCreatedAt($now);
-    }
-
-    /**
-     * This Method Hash password if create a user in easy admin
-     * @link https://grafikart.fr/forum/33951
+     * Some actions when setting new data in CRUD Admin 
      *
      * @param BeforeEntityPersistedEvent $event
      * @return void
      */
-    public function addUser(BeforeEntityPersistedEvent $event)
+    public function setData(BeforeEntityPersistedEvent $event)
     {
         $entity = $event->getEntityInstance();
 
-        if (!($entity instanceof User)) {
-            return;
+        if (($entity instanceof Category || $entity instanceof Tag || $entity instanceof User || $entity instanceof Event)) 
+        {
+            $slug = $this->slugger->slug($entity->getName());
+            $entity->setSlug(strtolower($slug));
         }
-        $this->setPassword($entity);
+
+        if (($entity instanceof User))
+        {
+            if ($entity->getStatus() == 1)
+            {
+                $entity->setRoles(['ROLE_ANNONCEUR']);
+            } else {
+                $entity->setRoles(['ROLE_USER']);
+            }
+
+            $this->setPassword($entity);
+        }
+
+        if (($entity instanceof User || $entity instanceof Post || $entity instanceof Event))
+        {
+            $now = new DateTimeImmutable('now');
+            $entity->setCreatedAt($now);
+        }
     }
 
     /**
+     * Some actions when updating data in CRUD Admin
+     *
+     * @param BeforeEntityUpdatedEvent $event
+     * @return void
+     */
+    public function updateData(BeforeEntityUpdatedEvent $event)
+    {
+        $entity = $event->getEntityInstance();
+
+        if (($entity instanceof Category || $entity instanceof Tag)) 
+        {
+            $slug = $this->slugger->slug($entity->getName());
+            $entity->setSlug(strtolower($slug));
+        }
+
+        if (($entity instanceof User))
+        {
+            if ($entity->getStatus() == 1)
+            {
+                $entity->setRoles(['ROLE_ANNONCEUR']);
+            } else {
+                $entity->setRoles(['ROLE_USER']);
+            }
+
+            $this->setPassword($entity);
+        }
+
+        if (($entity instanceof User || $entity instanceof Post || $entity instanceof Event))
+        {
+            $now = new DateTimeImmutable('now');
+            $entity->setUpdatedAt($now);
+        }
+    }
+
+    /**
+     * Method for hashing password
+     * 
      * @param User $entity
      */
     public function setPassword(User $entity): void
@@ -136,22 +114,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         $pass = $entity->getPassword();
 
         $entity->setPassword(
-            $this->passwordEncoder->hashPassword(
-                $entity,
-                $pass
-            )
-        );
+            $this->passwordEncoder->hashPassword($entity, $pass));
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }

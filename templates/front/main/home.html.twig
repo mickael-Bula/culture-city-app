@@ -37,6 +37,16 @@
     {% include '_home_premium_events.html.twig' %}
 
         <div class="col-12 col-lg-8 col-xl-9">
+
+            {# leaflet files #}
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+            <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+            {# end of leaflet files #}
+
+            <!-- leaflet map -->
+            <div id="map" style="height: 300px;" class=""></div>
+            <!-- leaflet map -->
+
             <div class="main">
                 
                 <!-- Day events-->
@@ -76,7 +86,7 @@
                                     
                                         <div class="col-8 col-sm-12 p-1 p-sm-3">
                                             <a href="{{ path('show_event', {slug: event.slug}) }}">
-                                                <h3 class="name mb-2">{{ event.name }}</h3>
+                                                <h3 class="name mb-2">{{ event.name > 5 ? event.name|slice(0, 15) ~ '...' : event.name }}</h3>
                                             </a>
 
                                             <div class="my-2">
@@ -116,14 +126,6 @@
                                                     </a>
                                                 </div>  
                                             </div>
-
-                                            <!-- edit button if it's your own event -->
-                                            {% if is_granted("EVENT_EDIT", event) %}
-                                                    <div class="d-flex justify-content-start mt-3">  
-                                                        <button type="button" class="btn btn-warning mb-3"><a href="{{ path("event_edit", {slug: event.slug}) }}">Modifier votre événement</a></button>
-                                                    </div>  
-                                            {% endif %}
-                                            <!-- end edit button -->
                                             
                                             <div class="d-flex justify-content-end">
                                                 <a href="{{ path('show_event', {slug: event.slug}) }}">
