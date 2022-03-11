@@ -125,6 +125,11 @@
             </div>
 
             <!-- Display map-->
+            <!-- On crée 2 dataset pour stocker longitude et latitude, 
+                ces 2 données stockées sont maintenant accessibles par le fichier JS public/assetsjs/map-advertiser.js
+                Dans le fichier JS, les 2 dataset sont stockées dans des constantes elle même placé dans le setview
+                https://developer.mozilla.org/fr/docs/Learn/HTML/Howto/Use_data_attributes
+            -->
             <div class="row">
                 <div class="col-12">
                     <div id="longitude" data-longitude="{{user.lng}}"></div>
