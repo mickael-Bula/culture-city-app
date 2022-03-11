@@ -190,7 +190,9 @@ const app = {
             eventTemplate.querySelector(".square-category").closest('a').href = "/category/" + element.category.slug;
             eventTemplate.querySelector(".square-category").textContent = element.category.name;
 
-            eventTemplate.querySelector(".eventName").textContent = element.name;
+            // display a capitalize and truncated name
+            eventTemplate.querySelector(".eventName").textContent = utils.truncateString(utils.capitalize(element.name), 15);
+            
             eventTemplate.querySelector(".eventPlace").textContent = element.user.placeName;
 
             // if an event matches the date picker we display it as 'Current Event', otherwise as 'Upcoming Events'
@@ -241,7 +243,7 @@ const app = {
 
         console.log(userLocation[0], userLocation[1]);
         return userLocation;
-    },
+    }
 }
 
 document.addEventListener("DOMContentLoaded", app.init);
