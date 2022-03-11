@@ -3,3 +3,5 @@ const config = {
     LocationKey : 'pk.2da029a812df916f269b26615bf122a6',
     base_url: 'http://localhost:8000/'
 }
+
+// Test
