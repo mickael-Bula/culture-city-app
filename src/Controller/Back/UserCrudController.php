@@ -52,7 +52,7 @@ class UserCrudController extends AbstractCrudController
             UrlField::new('instagram')->hideOnIndex(),
             DateField::new('created_at')->hideOnForm(),
             ImageField::new('avatar','Image')
-            ->setBasePath('/media/cache/avatar_50/upload/useravatar')
+            ->setBasePath('media/cache/avatar_50/upload/useravatar')
             ->setUploadDir('public/upload/useravatar')
             ->setUploadedFileNamePattern('[randomhash].[extension]'),
         ];

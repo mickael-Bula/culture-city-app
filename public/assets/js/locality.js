@@ -4,6 +4,12 @@ const locality = {
     {
         console.log("locality.init()");
 
+        //! on retourne les coordonnéeés d'Agen par défaut (lignes à supprimer pour revenir à l'état de fonctionnement géolocalisé)
+        document.cookie = "locality=47000;";
+        document.cookie = "coordinates=44.200000,0.633333;";
+        return ;
+        //! fin du code centré par défaut sur Agen (lignes à supprimer pour revenir à l'état de fonctionnement géolocalisé)
+
         // on lance l'outil de la géolocalisation après accord de l'utilisateur
         locality.getPosition(locality.getCity);
     },
@@ -70,10 +76,11 @@ const locality = {
             const expires = "expires="+ expire.toUTCString();
 
             // TODO cette ligne sera à remplacer par celle commentée après peuplement de la database
-            document.cookie = `locality=47000; expires=${expires}`;
-            // document.cookie = `locality=${zip}; expires=${expires}`;
+            document.cookie = `locality=${config.city}; expires=${expires}`;    // géolocalisé
+            document.cookie = `locality=${zip}; expires=${expires}`;
 
             // on appelle la page home avec les données correspondant à la localité
+            //! PROD : window.location.href="http:/projet-17-culture-city-app/public/";
             window.location.href="http:/";
         }
     }
