@@ -32,6 +32,7 @@ const mapModule = {
 
     refreshMarkers: function(coordinates)
     {
+        console.log(coordinates);
         this.removeMarkers(this.markers);
 
         for (let i=0; i < coordinates.length; i++)

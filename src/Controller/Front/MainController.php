@@ -49,9 +49,7 @@ class MainController extends AbstractController
             } 
         }
 
-
         $premiumEvents = $eventRepository->findBy(['isPremium'=> 'true'], ['createdAt' => 'DESC'], 5);
-
 
         return $this->render('front/main/home.html.twig', compact('categories', 'currentEvents', 'upcomingEvents', 'premiumEvents'));
     }
