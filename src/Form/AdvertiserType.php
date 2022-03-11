@@ -146,7 +146,7 @@ class AdvertiserType extends AbstractType
             
             ->add('capacity', NumberType::class, [
 
-                'label' => 'Capacité d\'acceuil',
+                'label' => 'Capacité d\'accueil',
                 'required' => true,  
                 //'empty_data' => 000000,           
             ]) 

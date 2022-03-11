@@ -122,7 +122,7 @@
                                                 <div class="scaled-xs">
                                                     <i class="fa-solid fa-location-dot d-inline"></i> 
                                                     <a href="{{ path('show_advertiser_page', {slug: event.user.slug}) }}">
-                                                        <div class="place ms-2 d-inline">{{event.user.name}}</div>
+                                                        <div class="place ms-2 d-inline">{{event.user.placeName}}</div>
                                                     </a>
                                                 </div>  
                                             </div>
@@ -133,9 +133,9 @@
                                                 </a>
                                             </div>
                                             
-                                            <!-- stockage des coordonnées dans des data set pour récupération par le JS-->
-                                            <div id="longitude" data-longitude="{{event.user.lng}}"></div>
-                                            <div id="latitude" data-latitude="{{event.user.lat}}"></div>
+                                            <!-- stockage des coordonnées et du nom du lieu dans des datasets pour récupération par le JS-->
+                                            <div class="coordinates" data-coordinates="{{event.user.lat}}, {{event.user.lng}}"></div>
+                                            <div class="placeName" data-place-name="{{event.user.placeName}}"></div>
                                         </div>
                                     </div>
 
@@ -217,7 +217,7 @@
                                                 <div class="scaled-xs">
                                                     <i class="fa-solid fa-location-dot d-inline"></i> 
                                                     <a href="{{ path('show_advertiser_page', {slug: event.user.slug}) }}">
-                                                        <div class="place ms-2 d-inline">{{event.user.name}}</div>
+                                                        <div class="place ms-2 d-inline">{{event.user.PlaceName}}</div>
                                                     </a>
                                                 </div>  
                                             </div>
