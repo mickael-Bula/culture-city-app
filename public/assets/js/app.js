@@ -21,7 +21,22 @@ const app = {
 
         // get locality cookie value
         if (zip !== null && zip !== '') { app.zip = zip.split('=')[1] }
-
+        
+        const staticEvents = document.getElementsByClassName("coordinates");
+        if (staticEvents.length > 0)
+        {
+            // retrieve coordinates passed as dataset
+            const coordinates = [];
+            
+            for (const eachEvent of staticEvents)
+            {
+                coordinates.push(eachEvent.dataset.coordinates.split(', '));
+            }
+            console.log(coordinates);
+            // refresh map with current events
+            mapModule.refreshMarkers(coordinates);
+        }
+        
         app.addAllEventListeners();
     },
 
@@ -176,7 +191,7 @@ const app = {
             eventTemplate.querySelector(".square-category").textContent = element.category.name;
 
             eventTemplate.querySelector(".eventName").textContent = element.name;
-            eventTemplate.querySelector(".eventPlace").textContent = element.user.city;
+            eventTemplate.querySelector(".eventPlace").textContent = element.user.placeName;
 
             // if an event matches the date picker we display it as 'Current Event', otherwise as 'Upcoming Events'
             // to achieve the comparison we weed to convert dates in the same format
