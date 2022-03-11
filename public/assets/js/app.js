@@ -40,8 +40,8 @@ const app = {
             document.querySelector("#start").addEventListener("change", app.handleDatePickerElement);
         }
 
-        // we verify if current page is 'create/event' to handle endDate's checkbox
-        if (window.location.pathname === '/create/event')
+        // we verify if current page is 'create/event' to handle endDate's checkbox (controller : EventController::createEvent)
+        if (window.location.pathname === '/create/event')   // (view : templates/front/form/event.html.twig))
         {
             document.getElementById("addEndDate").addEventListener("change", app.handleChangeEventForm);
         }
