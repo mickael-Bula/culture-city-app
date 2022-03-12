@@ -30,6 +30,8 @@ const mapModule = {
         marker.bindPopup("<b>Votre position</b><br>").openPopup();
     },
 
+    // add markers on map using using coordinates from dataset or from API
+    // coordinates received from datasets follow this pattern : [latitude, longitude, user's slug, placename]
     refreshMarkers: function(coordinates)
     {
         console.log(coordinates);
@@ -38,7 +40,11 @@ const mapModule = {
         for (let i=0; i < coordinates.length; i++)
         {
             const point = L.marker([coordinates[i][0], coordinates[i][1]]);
-            point.bindPopup("<p>le nom du lieu</p>");
+            if (coordinates[i][2] !== null)
+            {
+                // if users's slug exists we use it to redirect to advertiser's page and display it's name in marker's popup
+                point.bindPopup('<a href="annonceur/' + coordinates[i][2] +'">'+ coordinates[i][3] +'</a>');
+            } 
             this.markers.push(point);
             this.currentMap.addLayer(this.markers[i]);
         }

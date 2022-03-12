@@ -8,31 +8,44 @@ const app = {
         console.log("app.init()");
 
         // if a locality cookie doesn't exists we launch geolocation
-        if ( !document.cookie.split('; ').find(row => row.startsWith("locality"))) { locality.init() }
+        if ( !document.cookie.split('; ').find(row => row.startsWith("locality")))
+        {
+            locality.init()
+        }
 
         // get user's location if exists, a default position if not
         const userLocation = app.getCoordinates();
 
         // get user's position from cookies if exists and send it to map
-        if (window.location.pathname === '/') { mapModule.displayMap(userLocation) }
+        if (window.location.pathname === '/')
+        {
+            mapModule.displayMap(userLocation)
+        }
 
         // get locality cookie if exists or set a defaut value if not
         zip = document.cookie.split('; ').find(row => row.startsWith("locality")) ?? null;
 
         // get locality cookie value
-        if (zip !== null && zip !== '') { app.zip = zip.split('=')[1] }
-        
-        const staticEvents = document.getElementsByClassName("coordinates");
-        if (staticEvents.length > 0)
+        if (zip !== null && zip !== '')
         {
-            // retrieve coordinates passed as dataset
+            app.zip = zip.split('=')[1]
+        }
+        
+        const datasetEvents = document.getElementsByClassName("datasetEvents");
+        const nextdatasetEvents = document.getElementsByClassName("nextDatasetEvents");
+        if (datasetEvents.length > 0)
+        {
             const coordinates = [];
-            
-            for (const eachEvent of staticEvents)
+            // retrieve coordinates of current events with their placeName and slug passed as dataset
+            for (const eachEvent of datasetEvents)
             {
                 coordinates.push(eachEvent.dataset.coordinates.split(', '));
             }
-            console.log(coordinates);
+            // retrieve coordinates of upcoming events with their placeName and slug passed as dataset
+            for (const eachEvent of nextdatasetEvents)
+            {
+                coordinates.push(eachEvent.dataset.coordinates.split(', '));
+            }
             // refresh map with current events
             mapModule.refreshMarkers(coordinates);
         }
@@ -191,7 +204,7 @@ const app = {
             eventTemplate.querySelector(".square-category").textContent = element.category.name;
 
             // display a capitalize and truncated name
-            eventTemplate.querySelector(".eventName").textContent = utils.truncateString(utils.capitalize(element.name), 15);
+            eventTemplate.querySelector(".eventName").textContent = utils.truncateString(utils.capitalize(element.name), 12);
             
             eventTemplate.querySelector(".eventPlace").textContent = element.user.placeName;
 
