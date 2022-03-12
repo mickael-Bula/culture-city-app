@@ -39,22 +39,20 @@ const mapModule = {
 
         for (let i=0; i < coordinates.length; i++)
         {
-            const point = L.marker([coordinates[i][0], coordinates[i][1]]);
-            if (coordinates[i][2] !== null)
-            {
-                // if users's slug exists we use it to redirect to advertiser's page and display it's name in marker's popup
-                point.bindPopup('<a href="annonceur/' + coordinates[i][2] +'">'+ coordinates[i][3] +'</a>');
-            } 
+            // redirect to advertiser's page and display it's name in marker's popup
+            const point = L.marker([coordinates[i][0], coordinates[i][1]]).bindPopup('<a href="annonceur/' + coordinates[i][2] +'">'+ coordinates[i][3] +'</a>');
             this.markers.push(point);
             this.currentMap.addLayer(this.markers[i]);
         }
     },
 
+    // remove markers form the map and reset markers array
     removeMarkers: function(markers)
     {
         for (const marker of markers)
         {
             this.currentMap.removeLayer(marker);
         }
+        this.markers = [];
     }
 }

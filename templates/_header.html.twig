@@ -16,20 +16,20 @@
 
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
-                            <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="{{ path('show_category', {slug: 'concert'}) }}">Concert</a>
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="{{ path('show_category', {slug: 'concert'}) }}">Concert</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link categories" href="{{ path('show_category', {slug: 'spectacle'}) }}">Spectacle</a>
+                                    <a class="nav-link" href="{{ path('show_category', {slug: 'spectacle'}) }}">Spectacle</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link categories" href="{{ path('show_category', {slug: 'exposition'}) }}">Expositions</a>
+                                    <a class="nav-link" href="{{ path('show_category', {slug: 'exposition'}) }}">Expositions</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link categories" href="{{ path('show_category', {slug: 'loisir'}) }}">Loisirs</a>
+                                    <a class="nav-link" href="{{ path('show_category', {slug: 'loisir'}) }}">Loisirs</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link categories" href="{{ path('show_category', {slug: 'evenementiel'}) }}">Evènementiel</a>
+                                    <a class="nav-link" href="{{ path('show_category', {slug: 'evenementiel'}) }}">Evénementiel</a>
                                 </li>                               
                             </ul>
                         </div>
@@ -46,13 +46,13 @@
 
                     <a class="btn btn-primary" href="{{ path('create_event') }}" role="button">   
                         <i class="fa-solid fa-bullhorn"></i>
-                        Annoncer un évènement
+                        Annoncer un événement
                     </a>
 
                 {% else %} 
                  <a class="btn btn-primary" href="{{ path('app_login') }}" role="button">   
                         <i class="fa-solid fa-bullhorn"></i>
-                        Annoncer un évènement
+                        Annoncer un événement
                     </a>
                 {% endif %}    
           

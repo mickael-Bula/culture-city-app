@@ -57,10 +57,7 @@ const app = {
     {
         // we verify if current page is 'home' to handle filters form
         if (window.location.pathname === '/')
-        {
-            // add listeners to 'categories' buttons
-            document.querySelectorAll("#navbarNav .categories").forEach(category => category.addEventListener("click", app.handleClickCategoryBtn));
-    
+        {    
             // add listeners on inputs form
             document.querySelectorAll("#filters input").forEach(filter => filter.addEventListener("change", app.handleChangeFiltersForm));
     
@@ -73,19 +70,6 @@ const app = {
         {
             document.getElementById("addEndDate").addEventListener("change", app.handleChangeEventForm);
         }
-    },
-
-    handleClickCategoryBtn: function(event)
-    {
-        // handle active class on current button
-        const currentActiveBtn = document.querySelector(".active");
-        if (currentActiveBtn)
-        {
-            currentActiveBtn.classList.remove("active");
-            currentActiveBtn.removeAttribute("aria-current", "page");
-        }
-        event.currentTarget.classList.add("active");
-        event.currentTarget.setAttribute("aria-current", "page");
     },
 
     handleChangeEventForm: function()
@@ -101,7 +85,7 @@ const app = {
         // retrieve form
         const filtersForm = document.querySelector("#filters");
 
-        // create an array of keys-value form our form
+        // create an array of keys-value from our form
         const form = new FormData(filtersForm);
 
         // add form's data to query string
@@ -214,7 +198,7 @@ const app = {
             const reformateDatePicker = datePicker.toLocaleDateString();
 
             // get event's coordinates for display on the map
-            eventsCoordinates.push([element.user.lat, element.user.lng]);
+            eventsCoordinates.push([element.user.lat, element.user.lng, element.user.slug, element.user.placeName]);
 
             // compare dates
             if (reformateDatePicker >= reformateStartDate)
