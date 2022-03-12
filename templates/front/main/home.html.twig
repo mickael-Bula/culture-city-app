@@ -67,9 +67,9 @@
                                             -->
                                             <a href="{{ path('show_event', {slug: event.slug}) }}">
                                                 {% if vich_uploader_asset (event, 'pictureFile') %}
-                                                <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') | imagine_filter ('event_picture_300') }}" alt="{{ event.name }}" />
+                                                <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') | imagine_filter ('event_picture_300') }}" type="image/webp" alt="{{ event.name }}" />
                                                 {% else %}
-                                                <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') ?: '/upload/default_picture/default_event.jpg' | imagine_filter ('event_picture_300') }}" alt="{{ event.name }}" />
+                                                <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') ?: '/upload/default_picture/default_event.jpg' | imagine_filter ('event_picture_300') }}" type="image/webp" alt="{{ event.name }}" />
                                                 {% endif %}
 
                                                 {# <a href="#">
