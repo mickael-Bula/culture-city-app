@@ -30,9 +30,7 @@ class EventController extends AbstractController
        
             //we check if there is a logged in user
             if ($user = $this->getUser()) {
-
-                //get current user
-                $user = $this->getUser();
+             
                 // get curent event id to dynamise request first param
                 $eventid = $event->getId();
                 // get curent user id to dynamise request second param
@@ -122,6 +120,7 @@ class EventController extends AbstractController
     {
 
         $this->denyAccessUnlessGranted('EVENT_EDIT', $event); // EVENT_EDIT -> Voter rule
+       
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
