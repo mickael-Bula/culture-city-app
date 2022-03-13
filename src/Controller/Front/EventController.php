@@ -28,19 +28,23 @@ class EventController extends AbstractController
     {
         $event = $eventRepository->findOneBy(["slug" => $slug]);
        
-            //get current user
-            $user = $this->getUser();
-            // get curent event id to dynamise request first param
-            $eventid = $event->getId();
-            // get curent user id to dynamise request second param
-            $userId = $user->getId();
-            //if the current event is already in the favorites of the current user.
-            $isInFavorite = $eventRepository->findIfCurrentEventIsAlreadyInUserFavorite($eventid , $userId);
-      
+            if ($user = $this->getUser()) {
+                //get current user
+                $user = $this->getUser();
+                // get curent event id to dynamise request first param
+                $eventid = $event->getId();
+                // get curent user id to dynamise request second param
+                $userId = $user->getId();
+                //if the current event is already in the favorites of the current user.
+                $isInFavorite = $eventRepository->findIfCurrentEventIsAlreadyInUserFavorite($eventid, $userId);
+
+                return $this->render('front/main/event.html.twig', compact('event', 'user' , 'isInFavorite'));
+            }
+
         if (!$event) {
             throw $this->createNotFoundException('Il n\'y a pas d\'événement');
         }
-        return $this->render('front/main/event.html.twig', compact('event', 'user' , 'isInFavorite'));
+        return $this->render('front/main/event.html.twig', compact('event', 'user'));
     }
 
     /**

@@ -1,4 +1,6 @@
                     {# {{dump(isInFavorite)}} #}   
+                    {# {% if is_granted('IS_AUTHENTICATED_FULLY') %} #}
+                    {% if is_granted('ROLE_USER') %}
                         {% if isInFavorite != null %}
                       <!-- remove event in favorite -->
                                 <div class="d-flex justify-content-start text-center">  
@@ -19,3 +21,4 @@
                                 </div>  
                         <!-- end add favorite event-->
                         {% endif %} 
+                    {% endif %}    
