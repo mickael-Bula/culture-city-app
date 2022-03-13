@@ -16,8 +16,30 @@
 
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
+
+                                {# if current page is not 'main_home' we check route's slug to add an active class to category's link #}
+                                {% if app.request.get('_route') is not same as 'main_home' %}
+
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="{{ path('show_category', {slug: 'concert'}) }}">Concert</a>
+                                    <a {% if app.request.attributes.get('_route_params')['slug'] is same as 'concert' %}class="nav-link active" aria-current="page"{% else %}class="nav-link"{% endif %} href="{{ path('show_category', {slug: 'concert'}) }}">Concert</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a {% if app.request.attributes.get('_route_params')['slug'] is same as 'spectacle' %}class="nav-link active" aria-current="page"{% else %}class="nav-link"{% endif %} href="{{ path('show_category', {slug: 'spectacle'}) }}">Spectacle</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a {% if app.request.attributes.get('_route_params')['slug'] is same as 'exposition' %}class="nav-link active" aria-current="page"{% else %}class="nav-link"{% endif %} href="{{ path('show_category', {slug: 'exposition'}) }}">Expositions</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a {% if app.request.attributes.get('_route_params')['slug'] is same as 'loisir' %}class="nav-link active" aria-current="page"{% else %}class="nav-link"{% endif %} href="{{ path('show_category', {slug: 'loisir'}) }}">Loisirs</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a {% if app.request.attributes.get('_route_params')['slug'] is same as 'evenementiel' %}class="nav-link active" aria-current="page"{% else %}class="nav-link"{% endif %} href="{{ path('show_category', {slug: 'evenementiel'}) }}">Evénementiel</a>
+                                </li>
+
+                                {% else %}
+                               
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('show_category', {slug: 'concert'}) }}">Concert</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ path('show_category', {slug: 'spectacle'}) }}">Spectacle</a>
@@ -30,10 +52,11 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ path('show_category', {slug: 'evenementiel'}) }}">Evénementiel</a>
-                                </li>                               
+                                </li>
+                                {% endif %}
+
                             </ul>
                         </div>
-
                 </nav>      
             </div>
 

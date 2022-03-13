@@ -30,11 +30,10 @@ const mapModule = {
         marker.bindPopup("<b>Votre position</b><br>").openPopup();
     },
 
-    // add markers on map using using coordinates from dataset or from API
+    // add markers on map using coordinates from dataset or from API
     // coordinates received from datasets follow this pattern : [latitude, longitude, user's slug, placename]
     refreshMarkers: function(coordinates)
     {
-        console.log(coordinates);
         this.removeMarkers(this.markers);
 
         for (let i=0; i < coordinates.length; i++)

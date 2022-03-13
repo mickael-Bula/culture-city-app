@@ -238,7 +238,6 @@ const app = {
         // if coordinates cookie doesn't exist we set Paris coordinates by default
         else { userLocation = [48.866669, 2.33333] }
 
-        console.log(userLocation[0], userLocation[1]);
         return userLocation;
     }
 }
