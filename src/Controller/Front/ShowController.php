@@ -155,6 +155,8 @@ class ShowController extends AbstractController
     {
         //get current user in session
         $user = $this->getUser();
+
+        
         //get current event by Id
         $event = $eventRepository->findOneBy(['id' => $id]);
 

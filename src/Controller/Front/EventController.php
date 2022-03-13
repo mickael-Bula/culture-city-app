@@ -27,14 +27,20 @@ class EventController extends AbstractController
     public function showEventBySlug(EventRepository $eventRepository, string $slug): Response
     {
         $event = $eventRepository->findOneBy(["slug" => $slug]);
-        
-        //get user for favorite link button
-        $user = $this->getUser();
+       
+            //get current user
+            $user = $this->getUser();
+            // get curent event id to dynamise request first param
+            $eventid = $event->getId();
+            // get curent user id to dynamise request second param
+            $userId = $user->getId();
+            //if the current event is already in the favorites of the current user.
+            $isInFavorite = $eventRepository->findIfCurrentEventIsAlreadyInUserFavorite($eventid , $userId);
       
         if (!$event) {
             throw $this->createNotFoundException('Il n\'y a pas d\'événement');
         }
-        return $this->render('front/main/event.html.twig', compact('event', 'user'));
+        return $this->render('front/main/event.html.twig', compact('event', 'user' , 'isInFavorite'));
     }
 
     /**
@@ -66,8 +72,8 @@ class EventController extends AbstractController
                 $slug = $slugger->slug($name);
                 $event->setSlug(strtolower($slug));
 
-                //! Au cas ou on utilise ce form pour mettre à jour l'événement 
-                //! on ne passe ici que si il y a eu une image modifiée.
+                // Comme on utilise ce form pour mettre à jour l'événement 
+                // on ne passe ici que si il y a eu une image modifiée.
 
                 $eventFile = $form->get('picture')->getData();
 
