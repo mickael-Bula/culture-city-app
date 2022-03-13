@@ -133,8 +133,8 @@ class EventRepository extends ServiceEntityRepository
 
 
     /**
-     * Sql custom request
-     * we check if the current event is already 
+     * Sql custom request for user favorite.
+     * We check if the current event is already 
      * in the favorites of the current user.
      *
      * @param integer $eventId
@@ -151,7 +151,7 @@ class EventRepository extends ServiceEntityRepository
                 AND event_id = $eventId
             ";
             $results = $conn->executeQuery($sql);
-            //dd($results);
+            
             return $results->fetchAllAssociative();
     }
 
