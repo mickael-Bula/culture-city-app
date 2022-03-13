@@ -43,7 +43,7 @@ class EventType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'Date de votre événement',
                 'required' => true,     
-                'data' => new \DateTime(),
+                //'data' => new \DateTime(),
             ])  
 
             ->add('endDate', DateTimeType::class, [
