@@ -1,6 +1,6 @@
 const mapModule = {
 
-    // instantiation of Leaflet map
+    // instanciation of Leaflet map
     currentMap: L.map('map'),    // current user position
 
     // an array to store markers
