@@ -163,9 +163,17 @@ const app = {
                 eventTemplate.getElementById("inProgress").classList.replace('d-none','d-inline');
             }
 
-            // get event's tags and create a link for each
+            // if an event has no tags, we don't display its icon
             let tags = element.tags;
-            for (const tag of tags) { app.addTagLinkElementToDOM(eventTemplate, tag) }
+            if (tags.length == 0)
+            {
+                eventTemplate.querySelector(".divTag").style.display = "none";
+            }
+            else
+             {
+                 // get event's tags and create a link for each
+                 for (const tag of tags) { app.addTagLinkElementToDOM(eventTemplate, tag) }
+             }
             
             // reformate event's date and display it
             let eventDate = new Date(element.startDate).toLocaleDateString();
