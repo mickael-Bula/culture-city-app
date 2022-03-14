@@ -74,13 +74,10 @@ const locality = {
             const expire = new Date();
             expire.setTime(expire.getTime() + (60*60*1000));
             const expires = "expires="+ expire.toUTCString();
-
-            // TODO cette ligne sera à remplacer par celle commentée après peuplement de la database
-            document.cookie = `locality=${config.city}; expires=${expires}; SameSite=Lax`;    // géolocalisé
-            document.cookie = `locality=${zip}; expires=${expires}; SameSite=Lax`;
+    
+            document.cookie = `locality=${zip}; expires=${expires}; SameSite=Lax`;      // géolocalisé
 
             // on appelle la page home avec les données correspondant à la localité
-            //! PROD : window.location.href="http:/projet-17-culture-city-app/public/";
             window.location.href="http:/";
         }
     }
