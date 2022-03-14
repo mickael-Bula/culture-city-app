@@ -74,7 +74,12 @@ class RegistrationController extends AbstractController
             $user->setSlug((strtolower($slug)));
             //dd($user);
             
+            // set isVerfied to false 
+            $user->setIsVerified(false);
 
+            if ( $form->get('status')->getData() == true) {
+                $user->setRoles(['ROLE_ANNONCEUR']) ;
+            } 
 
             // set user.createdAt on NOW and persit this on flush.
             $created = new DateTimeImmutable('now');
