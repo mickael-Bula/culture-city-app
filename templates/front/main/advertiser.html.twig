@@ -116,9 +116,19 @@
 
                 <div class="my-2 me-5">   
                     <div class="d-flex justify-conternt-center" >
-                        <a href="{{ user.facebook }}" class="me-3 my-3"><i class="fa-brands fa-facebook fa-2xl"></i></a> 
-                        <a href="{{ user.instagram }}" class="me-3 my-3"><i class="fa-brands fa-instagram fa-2xl"></i></a> 
+
+                    {% if user.facebook is not null %}
+                    <a href="{{ user.facebook }}" class="me-3 my-3"><i class="fa-brands fa-facebook fa-2xl"></i></a>
+                    {% endif %}
+
+                    {% if user.instagram is not null %}                         
+                        <a href="{{ user.instagram }}" class="me-3 my-3"><i class="fa-brands fa-instagram fa-2xl"></i></a>
+                    {% endif %}
+
+                    {% if user.twitter is not null %}
                         <a href="{{ user.twitter }}" class="my-3"><i class="fa-brands fa-twitter fa-2xl"></i></a> 
+                    {% endif %}
+
                     </div>  
                 </div>
 
