@@ -8,20 +8,48 @@ const app = {
         console.log("app.init()");
 
         // if a locality cookie doesn't exists we launch geolocation
-        if ( !document.cookie.split('; ').find(row => row.startsWith("locality"))) { locality.init() }
+        if ( !document.cookie.split('; ').find(row => row.startsWith("locality")))
+        {
+            locality.init()
+        }
 
         // get user's location if exists, a default position if not
         const userLocation = app.getCoordinates();
 
         // get user's position from cookies if exists and send it to map
-        if (window.location.pathname === '/') { mapModule.displayMap(userLocation) }
+        if (window.location.pathname === '/')
+        {
+            mapModule.displayMap(userLocation)
+        }
 
         // get locality cookie if exists or set a defaut value if not
         zip = document.cookie.split('; ').find(row => row.startsWith("locality")) ?? null;
 
         // get locality cookie value
-        if (zip !== null && zip !== '') { app.zip = zip.split('=')[1] }
-
+        if (zip !== null && zip !== '')
+        {
+            app.zip = zip.split('=')[1]
+        }
+        
+        const datasetEvents = document.getElementsByClassName("datasetEvents");
+        const nextdatasetEvents = document.getElementsByClassName("nextDatasetEvents");
+        if (datasetEvents.length > 0)
+        {
+            const coordinates = [];
+            // retrieve coordinates of current events with their placeName and slug passed as dataset
+            for (const eachEvent of datasetEvents)
+            {
+                coordinates.push(eachEvent.dataset.coordinates.split(', '));
+            }
+            // retrieve coordinates of upcoming events with their placeName and slug passed as dataset
+            for (const eachEvent of nextdatasetEvents)
+            {
+                coordinates.push(eachEvent.dataset.coordinates.split(', '));
+            }
+            // refresh map with current events
+            mapModule.refreshMarkers(coordinates);
+        }
+        
         app.addAllEventListeners();
     },
 
@@ -29,10 +57,7 @@ const app = {
     {
         // we verify if current page is 'home' to handle filters form
         if (window.location.pathname === '/')
-        {
-            // add listeners to 'categories' buttons
-            document.querySelectorAll("#navbarNav .categories").forEach(category => category.addEventListener("click", app.handleClickCategoryBtn));
-    
+        {    
             // add listeners on inputs form
             document.querySelectorAll("#filters input").forEach(filter => filter.addEventListener("change", app.handleChangeFiltersForm));
     
@@ -45,19 +70,6 @@ const app = {
         {
             document.getElementById("addEndDate").addEventListener("change", app.handleChangeEventForm);
         }
-    },
-
-    handleClickCategoryBtn: function(event)
-    {
-        // handle active class on current button
-        const currentActiveBtn = document.querySelector(".active");
-        if (currentActiveBtn)
-        {
-            currentActiveBtn.classList.remove("active");
-            currentActiveBtn.removeAttribute("aria-current", "page");
-        }
-        event.currentTarget.classList.add("active");
-        event.currentTarget.setAttribute("aria-current", "page");
     },
 
     handleChangeEventForm: function()
@@ -73,7 +85,7 @@ const app = {
         // retrieve form
         const filtersForm = document.querySelector("#filters");
 
-        // create an array of keys-value form our form
+        // create an array of keys-value from our form
         const form = new FormData(filtersForm);
 
         // add form's data to query string
@@ -175,8 +187,10 @@ const app = {
             eventTemplate.querySelector(".square-category").closest('a').href = "/category/" + element.category.slug;
             eventTemplate.querySelector(".square-category").textContent = element.category.name;
 
-            eventTemplate.querySelector(".eventName").textContent = element.name;
-            eventTemplate.querySelector(".eventPlace").textContent = element.user.city;
+            // display a capitalize and truncated name
+            eventTemplate.querySelector(".eventName").textContent = utils.truncateString(utils.capitalize(element.name), 12);
+            
+            eventTemplate.querySelector(".eventPlace").textContent = element.user.placeName;
 
             // if an event matches the date picker we display it as 'Current Event', otherwise as 'Upcoming Events'
             // to achieve the comparison we weed to convert dates in the same format
@@ -184,7 +198,7 @@ const app = {
             const reformateDatePicker = datePicker.toLocaleDateString();
 
             // get event's coordinates for display on the map
-            eventsCoordinates.push([element.user.lat, element.user.lng]);
+            eventsCoordinates.push([element.user.lat, element.user.lng, element.user.slug, element.user.placeName]);
 
             // compare dates
             if (reformateDatePicker >= reformateStartDate)
@@ -224,9 +238,8 @@ const app = {
         // if coordinates cookie doesn't exist we set Paris coordinates by default
         else { userLocation = [48.866669, 2.33333] }
 
-        console.log(userLocation[0], userLocation[1]);
         return userLocation;
-    },
+    }
 }
 
 document.addEventListener("DOMContentLoaded", app.init);

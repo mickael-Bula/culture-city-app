@@ -33,11 +33,11 @@ class AdvertiserType extends AbstractType
 
                 'constraints' => [
                     new Image([
-                        'maxSize' => '1024k',
-                        'minWidth' => '200',
-                        'maxWidth' => '1200',
-                        'minHeight' => '200',
-                        'maxHeight' => '1200',
+                        'maxSize' => '2024k',
+                        'minWidth' => '400',
+                        'maxWidth' => '4000',
+                        'minHeight' => '400',
+                        'maxHeight' => '4000',
                     ])
                 ]
              
@@ -54,10 +54,10 @@ class AdvertiserType extends AbstractType
                 'constraints' => [
                     new Image([
                         'maxSize' => '2024k',
-                        'minWidth' => '800',
-                        'maxWidth' => '3960',
-                        'minHeight' => '800',
-                        'maxHeight' => '1980',
+                        'minWidth' => '400',
+                        'maxWidth' => '4000',
+                        'minHeight' => '400',
+                        'maxHeight' => '4000',
                     ])
                 ]
                    
@@ -146,7 +146,7 @@ class AdvertiserType extends AbstractType
             
             ->add('capacity', NumberType::class, [
 
-                'label' => 'Capacité d\'acceuil',
+                'label' => 'Capacité d\'accueil',
                 'required' => true,  
                 //'empty_data' => 000000,           
             ]) 

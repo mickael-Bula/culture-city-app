@@ -27,6 +27,6 @@ class ApiController extends AbstractController
             return $this->json($events, 200, [], ["groups" => "events"]);
         }
         // si ce n'est pas un tableau alors elle est vide et on retourne la totalité des events (pour avoir du contenu)
-        return $this->json($eventRepository->findAll(), 200, [], ["groups" => "events"]);
+        return $this->json($eventRepository->findByLocality($locality), 200, [], ["groups" => "events"]);
     }
 }

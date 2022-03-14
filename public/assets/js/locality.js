@@ -19,7 +19,7 @@ const locality = {
     getPosition: function(callback)
     {
         function success(position)
-        {            
+        {    
             callback([position.coords.latitude, position.coords.longitude]);
 
             // on conserve les coordonnées dans un cookie
@@ -35,7 +35,7 @@ const locality = {
         }
 
         // on teste la présence de la géolocalisation dans le navigateur
-        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(success, error) }
+        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(success, error, options) }
         return null;
     },
 

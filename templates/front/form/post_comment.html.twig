@@ -18,7 +18,8 @@
   {% endfor %}
 
 {% if app.user %}
-      <h4 class = "mb-4">{{ app.user.name }} commentez l'événement : {{ event.name }}</h4>
+      <h4 class = "mb-4">{{ app.user.name }} commentez l'événement :
+      <br>{{ event.name }}</h4>
 {% endif %}
 
       <div class="row">
@@ -27,6 +28,12 @@
         {{ form_end (form)}}
 
       </div> 
+
+        {% if vich_uploader_asset (event, 'pictureFile') %}
+              <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') | imagine_filter ('event_picture_300') }}" alt="{{ event.name }}" />
+          {% else %}
+              <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') ?: '/upload/default_picture/default_event.jpg' | imagine_filter ('event_picture_300') }}" alt="{{ event.name }}" />
+        {% endif %}
            
 </div>
 {% endblock %}
