@@ -2,6 +2,7 @@
 
 namespace App\Controller\User;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +14,7 @@ class LoginController extends AbstractController
      * Method allowing a user to connect on the app.
      * @Route("/login", name="app_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -26,7 +27,12 @@ class LoginController extends AbstractController
        
         return $this->render('user/login.html.twig', [
             'last_username' => $last_username, 
-            'error' => $error
+            'error' => $error,
+            // on récupère l'url dans la query string et on passe cette variable au champ caché du formulaire de login
+            //comme target path de redirection après login.
+            dd($request->headers->get('referer')),
+            'redirect_user_after_login' => $request->headers->get('referer'),
+            
         ]);
 
     }
