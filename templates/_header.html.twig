@@ -18,7 +18,7 @@
                             <ul class="navbar-nav">
 
                                 {# add an active class to category's link if current path has a slug #}
-                                {% if app.request.attributes.get('_route_params') is not empty %}
+                                {% if app.request.attributes.get('_route') is same as 'show_category' %}
 
                                 <li class="nav-item">
                                     <a {% if app.request.attributes.get('_route_params')['slug'] is same as 'concert' %}class="nav-link active" aria-current="page"{% else %}class="nav-link"{% endif %} href="{{ path('show_category', {slug: 'concert'}) }}">Concert</a>
