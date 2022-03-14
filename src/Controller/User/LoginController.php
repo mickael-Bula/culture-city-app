@@ -30,7 +30,7 @@ class LoginController extends AbstractController
             'error' => $error,
             // on récupère l'url dans la query string et on passe cette variable au champ caché du formulaire de login
             //comme target path de redirection après login.
-            dd($request->headers->get('referer')),
+            //dd($request->headers->get('referer')),
             'redirect_user_after_login' => $request->headers->get('referer'),
             
         ]);
