@@ -208,6 +208,9 @@ const app = {
             // get event's coordinates for display on the map
             eventsCoordinates.push([element.user.lat, element.user.lng, element.user.slug, element.user.placeName]);
 
+            // add price
+            eventTemplate.querySelector(".eventPrice").textContent = element.price + " €";
+
             // compare dates
             if (reformateDatePicker >= reformateStartDate)
             {
@@ -216,6 +219,7 @@ const app = {
             }
             // alternaltively we display it to Upcoming Events list
             displayUpcomingElement.appendChild(eventTemplate);
+
         }
         // if a list of events is empty we display a message
         if (displayCurrentElement.firstElementChild == null)
