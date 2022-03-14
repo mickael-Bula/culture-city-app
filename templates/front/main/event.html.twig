@@ -16,41 +16,50 @@
             <div class="col-12 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
                 <div class="main">
 
-                       <!-- edit button if it's your own event -->
-                        {% if is_granted("EVENT_EDIT", event) %}
-                                <div class="d-flex justify-content-start text-center">  
-                                    <button type="button" class="btn btn-warning mb-3"><a href="{{ path("event_edit", {slug: event.slug}) }}">Modifier votre événement</a></button>
+                    <div class="row">
+                        <div class="col d-flex align-items-center justify-content-center">
+                            <!-- edit button if it's your own event -->
+         
+                            {% if is_granted("EVENT_EDIT", event) %}
+                                <div class="text-center">  
+                                    <button type="button" class="btn btn-warning mb-3">
+                                        <a href="{{ path("event_edit", {slug: event.slug}) }}">Modifier votre événement</a>
+                                    </button>
                                 </div>  
-                        {% endif %}
-                        <!-- end edit button -->
-
+                            {% endif %}
+                            <!-- end edit button -->
+                        </div>
+                        
+                        <div class="col text-center d-flex align-items-center justify-content-center">
                             <!-- Add and Remove Favorites buttons -->               
                             {% include '_favorite_buttons.html.twig' %}
-
+                        </div>
+                        
+                    </div>
                     <!-- event picture -->
                     <div class="col-12 mb-3">
                        
                         {% if vich_uploader_asset (event, 'pictureFile') %}
                         <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') | imagine_filter ('event_picture_600') }}" alt="{{ event.name }}" />
                         {% else %}
-                        <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') ?: '/upload/default_picture/default_event.jpg' | imagine_filter ('event_picture_600') }}" alt="{{ event.name }}" />
+                            <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') ?: '/upload/default_picture/default_event.jpg' | imagine_filter ('event_picture_600') }}" alt="{{ event.name }}" />
                         {% endif %}
-                        
-                    </div>
 
-                    <!-- event details -->
-                    <div class="col-12 p-1 p-sm-3">
-                        <div class="my-3 mb-lg-4">
-                            <div class="scaled-xs"> 
+                        <!-- event details category -->
+                        <div class="mb-lg-4">
+                            <div class="sticker-category text-center scaled-xs"> 
                                 <a href="{{ path('show_category', {slug: event.category.slug}) }}">  
                                     <div class ="category bg-category-{{event.category.slug}} d-inline">{{event.category.name}}</div>
                                 </a>
                             </div> 
-                        </div>
-                        
-                        
+                        </div> 
+                      
+                    </div>
+
+                    <!-- event details -->
+                    <div class="col-12 p-1 p-sm-3">
+
                         <h1 class="name mb-2 mb-xl-3">{{event.name}}</h1>
-                        
 
                         <div class="my-2">
                             <div class="scaled-xs">
@@ -77,21 +86,23 @@
                             </div>
                         </div>
 
-                        <div class="my-2">    
-                            <div class="scaled-xs">
-                                <i class="fa-solid fa-location-dot d-inline"></i> 
-                                <a href="{{ path('show_advertiser_page', {slug: event.user.slug}) }}">
-                                    <div class="place ms-2 d-inline">{{event.user.name}}</div>
-                                </a>
-                            </div>  
-                        </div>
-
                         <div class="my-2">
                             <div class="scaled-xs">
                                 <i class="fa-solid fa-money-bill"></i>
                                 <div class ="price ms-2 d-inline">{{event.price}}<span>€</span></div>
                             </div> 
                         </div>
+
+                        <div class="my-2">    
+                            <div class="scaled-xs btn btn-primary">
+                                <a href="{{ path('show_advertiser_page', {slug: event.user.slug}) }}">
+                                    <i class="fa-solid fa-location-dot d-inline"></i> 
+                                    <span class="ms-2"> {{event.user.name}} </span>  
+                                </a>
+                            </div>  
+                        </div>
+
+                        
  
                         <div class="separator mt-4"></div>
 
