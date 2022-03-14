@@ -4,17 +4,21 @@ html {
 
 }
 
+body {
+    background-color: var(--main-color-blue-med);
+}
+
 /** Typo **/
 
 h1 {
-    font-size : 3em;
+    font-size : 2.8em;
     font-family: 'Nunito', sans-serif;
     font-weight: 900;
     margin-bottom:10px
 }
 
 h2 {
-    font-size : 2.5em;
+    font-size : 2.4em;
     font-family: 'Nunito', sans-serif;
     font-weight: 700;
     line-height: 1em;
@@ -22,7 +26,7 @@ h2 {
 }
 
 h3 {
-    font-size : 2em;
+    font-size : 1.9em;
     font-family: 'Nunito', sans-serif;
     font-weight: 700;
     line-height: 1em;
@@ -56,6 +60,10 @@ em {
     font-family: 'Nunito', sans-serif;
     font-style: italic;
     font-weight: 700;
+}
+
+b {
+    font-weight: 900;  
 }
 
 /* Footer */

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}page d'accueil{% endblock %}
+{% block title %}Culture City App - accueil{% endblock %}
 
 {% block body %}
 
@@ -44,10 +44,10 @@
             {# end of leaflet files #}
 
             <!-- leaflet map -->
-            <div id="map" style="height: 300px;" class=""></div>
+            <div id="map" style="height: 300px;" class="mb-5"></div>
             <!-- leaflet map -->
 
-            <div class="main">
+            <div class="">
                 
                 <!-- Day events-->
                 <h3 id="curentDate">{{ "now"| format_datetime('full', 'none', locale='fr') }}</h3>
@@ -125,6 +125,13 @@
                                                         <div class="place ms-2 d-inline">{{event.user.placeName}}</div>
                                                     </a>
                                                 </div>  
+                                            </div>
+
+                                            <div class="my-2">
+                                                <div class="scaled-xs">
+                                                    <i class="fa-solid fa-money-bill"></i>
+                                                    <div class ="price ms-2 d-inline">{{event.price}}<span>€</span></div>
+                                                </div> 
                                             </div>
                                             
                                             <div class="d-flex justify-content-end">
@@ -219,6 +226,13 @@
                                                         <div class="place ms-2 d-inline">{{event.user.PlaceName}}</div>
                                                     </a>
                                                 </div>  
+                                            </div>
+
+                                            <div class="my-2">
+                                                <div class="scaled-xs">
+                                                    <i class="fa-solid fa-money-bill"></i>
+                                                    <div class ="price ms-2 d-inline">{{event.price}}<span>€</span></div>
+                                                </div> 
                                             </div>
                                             
                                             <div class="d-flex justify-content-end">

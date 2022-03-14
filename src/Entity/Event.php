@@ -38,6 +38,7 @@ class Event
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"events"})
      */
     private $price;
 

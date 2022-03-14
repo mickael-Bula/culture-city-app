@@ -163,9 +163,17 @@ const app = {
                 eventTemplate.getElementById("inProgress").classList.replace('d-none','d-inline');
             }
 
-            // get event's tags and create a link for each
+            // if an event has no tags, we don't display its icon
             let tags = element.tags;
-            for (const tag of tags) { app.addTagLinkElementToDOM(eventTemplate, tag) }
+            if (tags.length == 0)
+            {
+                eventTemplate.querySelector(".divTag").style.display = "none";
+            }
+            else
+             {
+                 // get event's tags and create a link for each
+                 for (const tag of tags) { app.addTagLinkElementToDOM(eventTemplate, tag) }
+             }
             
             // reformate event's date and display it
             let eventDate = new Date(element.startDate).toLocaleDateString();
@@ -200,6 +208,9 @@ const app = {
             // get event's coordinates for display on the map
             eventsCoordinates.push([element.user.lat, element.user.lng, element.user.slug, element.user.placeName]);
 
+            // add price
+            eventTemplate.querySelector(".eventPrice").textContent = element.price + " €";
+
             // compare dates
             if (reformateDatePicker >= reformateStartDate)
             {
@@ -208,12 +219,19 @@ const app = {
             }
             // alternaltively we display it to Upcoming Events list
             displayUpcomingElement.appendChild(eventTemplate);
+
         }
-        // if the list of events is empty we display a message
+        // if a list of events is empty we display a message
         if (displayCurrentElement.firstElementChild == null)
         {
             displayCurrentElement.textContent = "Il n'y a pas d'événement pour cette date";
         }
+        if (displayUpcomingElement.firstElementChild == null)
+        {
+            displayUpcomingElement.textContent = "Il n'y a pas d'événement à venir";
+        }
+
+
         // refresh map with current events
         mapModule.refreshMarkers(eventsCoordinates);
     },

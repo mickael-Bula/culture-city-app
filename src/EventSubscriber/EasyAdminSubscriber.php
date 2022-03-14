@@ -79,7 +79,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     {
         $entity = $event->getEntityInstance();
 
-        if (($entity instanceof Category || $entity instanceof Tag)) 
+        if (($entity instanceof Category || $entity instanceof Tag || $entity instanceof User || $entity instanceof Event)) 
         {
             $slug = $this->slugger->slug($entity->getName());
             $entity->setSlug(strtolower($slug));
