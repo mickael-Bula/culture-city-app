@@ -3,6 +3,7 @@
 namespace App\Controller\Front;
 
 //use App\Entity\User;
+use App\Entity\User;
 use App\Entity\Event;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -21,11 +22,12 @@ class ShowController extends AbstractController
     /**
      * @Route("/user/edit/{slug}", name="user_edit_profile", methods={"GET", "POST"})
      */
-    public function editUserProfile(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
+    public function editUserProfile(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger, User $user): Response
     {
 
         //! ne pas s'inquièter de ce qui est souligné en rouge il n'y a pas de problème, tout fonctionne...mais ce serait bien de comprendre !
        
+        $user = new User();
         // get user from session
         $user = $this->getUser();
 
@@ -153,6 +155,8 @@ class ShowController extends AbstractController
     {
         //get current user in session
         $user = $this->getUser();
+
+        
         //get current event by Id
         $event = $eventRepository->findOneBy(['id' => $id]);
 

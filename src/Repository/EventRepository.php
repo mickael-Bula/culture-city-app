@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repository;
-
+use App\Entity\User;
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -59,7 +59,7 @@ class EventRepository extends ServiceEntityRepository
             // on lie le paramètre à la valeur $tag (fournit en paramètre de la requête)
             ->setParameter('tag', $tagId)
             // sort by date
-            //->orderBy('e.startDate', 'ASC')
+            ->orderBy('e.startDate', 'ASC')
             // on lance la requête
             ->getQuery()
             // on retourne le résultat
@@ -96,7 +96,6 @@ class EventRepository extends ServiceEntityRepository
         return $this->findBy([],['startDate' => 'ASC'] );
     }
 
-    // TODO custom request to fetch events by locality
     /**
      * custom request to fetch events by locality
      *
@@ -114,6 +113,13 @@ class EventRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * custom request to fetch events by locality and filters
+     *
+     * @param array $filters
+     * @param string $locality
+     * @return void
+     */
     public function findEventsByLocality($filters, $locality)
     {
         return $this->createQueryBuilder('e')
@@ -128,5 +134,31 @@ class EventRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
     // TODO end of custom request
+
+
+
+    /**
+     * Sql custom request for user favorite.
+     * We check if the current event is already 
+     * in the favorites of the current user.
+     *
+     * @param integer $eventId
+     * @param integer $userId
+     * @return [] 
+     */
+    public function findIfCurrentEventIsAlreadyInUserFavorite(int $eventId , int $userId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+                SELECT* FROM user_event 
+                WHERE user_id = $userId 
+                AND event_id = $eventId
+            ";
+            $results = $conn->executeQuery($sql);
+            
+            return $results->fetchAllAssociative();
+    }
 }

@@ -6,11 +6,12 @@ use App\Entity\Tag;
 use App\Entity\Event;
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\{ DateTimeType, FileType, TextType, NumberType, SubmitType, CheckboxType, TextareaType };
-use Symfony\Component\Validator\Constraints\Image;
 
 class EventType extends AbstractType
 {
@@ -32,7 +33,7 @@ class EventType extends AbstractType
                 'required' => true,     
             ])  
 
-            ->add('description', TextareaType::class, [
+            ->add('description', CKEditorType::class, [
 
                 'label' => 'Décrivez votre événement...',
                 'required' => true,     
@@ -43,7 +44,7 @@ class EventType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'Date de votre événement',
                 'required' => true,     
-                'data' => new \DateTime(),
+                //'data' => new \DateTime(),
             ])  
 
             ->add('endDate', DateTimeType::class, [
@@ -64,11 +65,11 @@ class EventType extends AbstractType
                 //contraint valid image file type 
                 'constraints' => [
                     new Image([
-                        'maxSize' => '1024k',
+                        'maxSize' => '2024k',
                         'minWidth' => '400',
-                        'maxWidth' => '1980',
+                        'maxWidth' => '4000',
                         'minHeight' => '400',
-                        'maxHeight' => '1980',
+                        'maxHeight' => '4000',
                     ])
                 ]
             ])  

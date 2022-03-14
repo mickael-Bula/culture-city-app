@@ -20,15 +20,11 @@ class CategoryController extends AbstractController
         // catch category
         $category = $categoryRepository->findOneBy(['slug' => $slug]);
 
-        $categorySlug = $category->getSlug();
+        // get Events from the category ordered By date
+        $eventsList = $eventRepository->findByCategory($slug);
 
-        // catch Events form this category orderby date
-        $eventsList = $eventRepository->findByCategory($categorySlug);
- 
-        // catch category for dynamize custom request parameter with current category 
-        $catparam = $categoryRepository->findOneBy(['slug' => $slug]);
         //Custom request on Category repository 
-        $premiumEvents = $categoryRepository->findCurrentCategoryPremiumEventsDQL($catparam);
+        $premiumEvents = $categoryRepository->findCurrentCategoryPremiumEventsDQL($category);
 
         return $this->render('front/main/category.html.twig', compact('category','eventsList','premiumEvents'));
     }

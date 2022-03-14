@@ -27,13 +27,24 @@ class EventController extends AbstractController
     public function showEventBySlug(EventRepository $eventRepository, string $slug): Response
     {
         $event = $eventRepository->findOneBy(["slug" => $slug]);
-        
-        //get user for favorite link button
-        $user = $this->getUser();
-      
-        if (!$event) {
-            throw $this->createNotFoundException('Il n\'y a pas d\'événement');
-        }
+       
+            //we check if there is a logged in user
+            if ($user = $this->getUser()) {
+             
+                // get curent event id to dynamise request first param
+                $eventid = $event->getId();
+                // get curent user id to dynamise request second param
+                $userId = $user->getId();
+                //we check if the current event is already in the favorites of the current user.
+                $isInFavorite = $eventRepository->findIfCurrentEventIsAlreadyInUserFavorite($eventid, $userId);
+
+                return $this->render('front/main/event.html.twig', compact('event', 'user' , 'isInFavorite'));
+            }
+
+            if (!$event) {
+                throw $this->createNotFoundException('Il n\'y a pas d\'événement');
+            }
+
         return $this->render('front/main/event.html.twig', compact('event', 'user'));
     }
 
@@ -66,8 +77,8 @@ class EventController extends AbstractController
                 $slug = $slugger->slug($name);
                 $event->setSlug(strtolower($slug));
 
-                //! Au cas ou on utilise ce form pour mettre à jour l'événement 
-                //! on ne passe ici que si il y a eu une image modifiée.
+                // Comme on utilise ce form pour mettre à jour l'événement 
+                // on ne passe ici que si il y a eu une image modifiée.
 
                 $eventFile = $form->get('picture')->getData();
 
@@ -109,6 +120,7 @@ class EventController extends AbstractController
     {
 
         $this->denyAccessUnlessGranted('EVENT_EDIT', $event); // EVENT_EDIT -> Voter rule
+       
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 

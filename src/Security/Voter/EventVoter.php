@@ -46,4 +46,5 @@ class EventVoter extends Voter
     {
         return $user === $event->getUser();
     }
+
 }
