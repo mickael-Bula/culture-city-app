@@ -7,8 +7,6 @@
 
 <div class="container-fluid">
 
-
-
     <div class="row">
 
         {# flash si le user edite son profil  #}
@@ -30,119 +28,113 @@
         </div>    
     </div><!-- end row-->
 
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <!-- user pictures-->
+            <div class="avatar">
+                {% if vich_uploader_asset (user, 'avatarFile') %}
+                <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
+                {% else %}
+                <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
+                {% endif %} 
+            </div><!-- end avatar-->
+        
+            <h1>Profil {{ user.name }}</h1>
+            {% if user.facebook  %}
+            <a href="{{ user.facebook }}" ><i class="fa-brands fa-facebook fa-2xl"></i></a>
+            {% else %}
+            {% endif %}
+
+            {% if user.instagram %}
+            <a href="{{ user.instagram }}"><i class="fa-brands fa-instagram fa-2xl"></i></a> 
+            {% else %}
+            {% endif %}
+
+            {% if user.twitter %}
+            <a href="{{ user.twitter }}"><i class="fa-brands fa-twitter fa-2xl"></i></a> 
+            {% else %}
+            {% endif %}  
+        </div><!-- end col-->
+    </div><!-- end row-->
+       
+    <div class="col-lg-8 offset-lg-2 mt-5">
         <div class="row">
-            <div class="col-lg-8 offset-lg-2">
-                <!-- user pictures-->
-                    <div class="avatar">
-                        {% if vich_uploader_asset (user, 'avatarFile') %}
-                        <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
-                        {% else %}
-                        <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
-                        {% endif %} 
-                    </div><!-- end avatar-->
-         
-                        <h1>Profil {{ user.name }}</h1>
-                            {% if user.facebook  %}
-                            <a href="{{ user.facebook }}" ><i class="fa-brands fa-facebook fa-2xl"></i></a>
-                            {% else %}
-                            {% endif %}
+            <h3>Vos événements favoris</h3>
+            {% for event in user.favorite %}    
+                <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
+                    <div class="card overflow-hidden">
+                        <div class="d-flex d-flex flex-row flex-md-column">
+                            <div class="col-4 col-sm-12 ">
+                                <!-- pour avoir un bloc carré qui se redimensionne correctement, il faut créer un hack css avec square:after
+                                    info ici : https://spin.atomicobject.com/2015/07/14/css-responsive-square/
+                                -->
+                                <a href="{{ path('show_event', {slug: event.slug}) }}">
+                                    {% if vich_uploader_asset (event, 'pictureFile') %}
+                                    <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') | imagine_filter ('event_picture_300') }}" alt="{{ event.name }}" />
+                                    {% else %}
+                                    <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') ?: '/upload/default_picture/default_event.jpg' | imagine_filter ('event_picture_300') }}" alt="{{ event.name }}" />
+                                    {% endif %}
 
-                            {% if user.instagram %}
-                            <a href="{{ user.instagram }}"><i class="fa-brands fa-instagram fa-2xl"></i></a> 
-                            {% else %}
-                            {% endif %}
-
-                            {% if user.twitter %}
-                            <a href="{{ user.twitter }}"><i class="fa-brands fa-twitter fa-2xl"></i></a> 
-                            {% else %}
-                            {% endif %}  
-
-            </div><!-- end col-->
-        </div><!-- end row-->
-
-            <div class="row mt-4">
-                <div class="col-lg-8 offset-lg-2">
-                    <h3>Vos événements favoris</h3>
-                    {% for event in user.favorite %}    
-                            <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
-                                <div class="card overflow-hidden">
-                                    <div class="d-flex d-flex flex-row flex-md-column">
-                                        <div class="col-4 col-sm-12 ">
-                                            <!-- pour avoir un bloc carré qui se redimensionne correctement, il faut créer un hack css avec square:after
-                                                info ici : https://spin.atomicobject.com/2015/07/14/css-responsive-square/
-                                            -->
-                                            <a href="{{ path('show_event', {slug: event.slug}) }}">
-                                                {% if vich_uploader_asset (event, 'pictureFile') %}
-                                                <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') | imagine_filter ('event_picture_300') }}" alt="{{ event.name }}" />
-                                                {% else %}
-                                                <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (event, 'pictureFile') ?: '/upload/default_picture/default_event.jpg' | imagine_filter ('event_picture_300') }}" alt="{{ event.name }}" />
-                                                {% endif %}
-
-                                                {# <a href="">
-                                                    <div class="square" style="background-image:url('{{event.picture}}'); background-size:cover; background-position:center center; ">
-                                                    </div>
-                                                </a> #}
-                                            </a>
-                                            <a href="{{ path('show_category', {slug: event.category.slug}) }}">
-                                                <div class="sticker-category text-center scaled-xs">
-                                                    <div class="bg-category-{{event.category.slug}} d-inline"> {{event.category.name}}</div>
-                                                </div>
-                                            </a>
+                                    {# <a href="">
+                                        <div class="square" style="background-image:url('{{event.picture}}'); background-size:cover; background-position:center center; ">
                                         </div>
-                                    
-                                        <div class="col-8 col-sm-12 p-1 p-sm-3">
-                                            <a href="{{ path('show_event', {slug: event.slug}) }}">
-                                                {# limit event name caracters #}
-                                                <h3 class="name mb-2">{{ event.name > 5 ? event.name|slice(0, 15) ~ '...' : event.name }}</h3>
-                                            </a>
-
-                                            <div class="my-2">
-                                                <div class="scaled-xs">
-                                                    <i class="fa-solid fa-calendar-days d-inline"></i>  
-                                                    <div class ="date ms-2 d-inline">{{event.startDate | date("d/m/Y") }}</div>
-                                                </div> 
-                                            </div>
-                                            
-                                            <div class="my-2">
-                                                <div class="scaled-xs">
-                                                    <i class="fa-solid fa-tags d-inline"></i> 
-                                                    <div class="tags ms-2 d-inline">
-                                                        {% for tag in event.tags %}
-                                                            <a href="{{ path('show_tag', {slug: tag.slug}) }}">{{tag.name}}</a>
-                                                        {% endfor %}
-                                                    </div>    
-                                                </div>
-                                            </div>
-
-                                            <div class="my-2">    
-                                                <div class="scaled-xs">
-                                                    <i class="fa-solid fa-location-dot d-inline"></i> 
-                                                    <a href="{{ path('show_advertiser_page', {slug: event.user.slug}) }}">
-                                                        <div class="place ms-2 d-inline">{{event.user.name}}</div>
-                                                    </a>
-                                                </div>  
-                                            </div>
-                                            
-                                            <div class="d-flex justify-content-end">
-                                                <a href="{{ path('show_event', {slug: event.slug}) }}">
-                                                    <i class="fa-solid fa-arrow-right-long me-2"></i>
-                                                </a>
-                                            </div>
-                                        </div>
+                                    </a> #}
+                                </a>
+                                <a href="{{ path('show_category', {slug: event.category.slug}) }}">
+                                    <div class="sticker-category text-center scaled-xs">
+                                        <div class="bg-category-{{event.category.slug}} d-inline"> {{event.category.name}}</div>
                                     </div>
+                                </a>
+                            </div>
+                        
+                            <div class="col-8 col-sm-12 p-1 p-sm-3">
+                                <a href="{{ path('show_event', {slug: event.slug}) }}">
+                                    {# limit event name caracters #}
+                                    <h3 class="name mb-2">{{ event.name > 5 ? event.name|slice(0, 15) ~ '...' : event.name }}</h3>
+                                </a>
 
+                                <div class="my-2">
+                                    <div class="scaled-xs">
+                                        <i class="fa-solid fa-calendar-days d-inline"></i>  
+                                        <div class ="date ms-2 d-inline">{{event.startDate | date("d/m/Y") }}</div>
+                                    </div> 
+                                </div>
+                                
+                                <div class="my-2">
+                                    <div class="scaled-xs">
+                                        <i class="fa-solid fa-tags d-inline"></i> 
+                                        <div class="tags ms-2 d-inline">
+                                            {% for tag in event.tags %}
+                                                <a href="{{ path('show_tag', {slug: tag.slug}) }}">{{tag.name}}</a>
+                                            {% endfor %}
+                                        </div>    
+                                    </div>
+                                </div>
+
+                                <div class="my-2">    
+                                    <div class="scaled-xs">
+                                        <i class="fa-solid fa-location-dot d-inline"></i> 
+                                        <a href="{{ path('show_advertiser_page', {slug: event.user.slug}) }}">
+                                            <div class="place ms-2 d-inline">{{event.user.name}}</div>
+                                        </a>
+                                    </div>  
+                                </div>
+                                
+                                <div class="d-flex justify-content-end">
+                                    <a href="{{ path('show_event', {slug: event.slug}) }}">
+                                        <i class="fa-solid fa-arrow-right-long me-2"></i>
+                                    </a>
                                 </div>
                             </div>
-                              {% else %}
+                        </div>
 
-                              <p>Vous n'avez actuellement pas d'événements dans vos favoris !<p>
-
-                        {% endfor %}
-
-                        
-                </div><!-- end col-->
-            </div><!-- end row-->
-
+                    </div>
+                </div>
+            {% else %}
+                <p>Vous n'avez actuellement pas d'événements dans vos favoris !</p>
+            {% endfor %}
+        </div><!-- end row-->      
+    </div><!-- end col-->
 
 </div><!-- end first container-fluid-->
 {% endblock %}

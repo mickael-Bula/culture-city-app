@@ -45,11 +45,12 @@
 <body>
     {% include '_header.html.twig' %}
 
-    <div class="container-fluid my-5">
-        {% block body %}
-       
-        {% endblock %}
-    </div> 
+    <div class="bg-white">
+        <div class="container-fluid py-5">
+            {% block body %}
+            {% endblock %}
+        </div>  
+    </div>
 
     {% include '_footer.html.twig' %}
 

@@ -11,50 +11,49 @@
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3 col-xl-4 offset-xl-4">
 
-                <h1 class="alert mb-5">Connection</h1>
+                <h1 class="alert mb-5">Connexion</h1>
 
                 {% if error %}
-                {# max login attempts message  #}
-                <div class="alert alert-danger text-center mb-3" role="alert">
-                {{ error.messageKey|trans(error.messageData, 'security') }}
-                </div>
+                    {# max login attempts message  #}
+                    <div class="alert alert-danger text-center mb-3" role="alert">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
                 {% endif %}
 
+                     
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}   
+                        <h3 class="text-center mt-5">Vous êtes déjà connecté {{ app.user.username }}</h3> 
+                        <p>
+                            La publication d'évènement est réservé aux annonceurs, <br>
+                            Merci de vous connecter ou d'envoyer un message à contact@culturecityapp.app
+                        </p>
+                    {% else %}     
+                        <form action="{{ path('app_login') }}" method="post">
+                            <div class="form-group mb-3">
+                                <label for="username" class="mb-2">Email:</label>
+                                <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}"/>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="password" class="mb-2">Mot de passe :</label>
+                                <input type="password" class="form-control" id="password" name="_password"/>
+                            </div>
 
-                {% if app.user %}
-                    <h3 class="text-center mt-5">Vous êtes déjà connecté {{ app.user.username }}</h3> 
-                {% else %}  
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                    <form action="{{ path('app_login') }}" method="post">
-                        <div class="form-group mb-3">
-                            <label for="username" class="mb-2">Email:</label>
-                            <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}"/>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="password" class="mb-2">Mot de passe :</label>
-                            <input type="password" class="form-control" id="password" name="_password"/>
-                        </div>
+                            {# If you want to control the URL the user is redirected to on success
+                            <input type="hidden" name="_target_path" value="/account"/> #}
+                            
+                            <div class="form-check checkbox p-0 mb-3">
+                                <input id="form-check" class="d-inline" type="checkbox" name="_remember_me"> 
+                                <label for="form-check" class="d-inline">se souvenir de moi </label>  
+                            </div>
 
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-                        {# If you want to control the URL the user is redirected to on success
-                        <input type="hidden" name="_target_path" value="/account"/> #}
-                        
-                        <div class="form-check checkbox p-0 mb-3">
-                            <input id="form-check" class="d-inline" type="checkbox" name="_remember_me"> 
-                            <label for="form-check" class="d-inline">se souvenir de moi </label>  
-                        </div>
-
-                        <button class="btn btn-primary" type="submit">Se connecter</button>
-                        <a class="btn btn-primary" href="{{ path('user_register') }}">S'enregistrer</a>
-                    </form>
-
-                         
-
-        
-
-                {% endif %} 
-            
+                            <button class="btn btn-primary" type="submit">Se connecter</button>
+                            <a class="btn btn-primary" href="{{ path('user_register') }}">S'enregistrer</a>
+                        </form>
+                    {% endif %}  
+                
+                    
             </div>
         </div>
     </div>
