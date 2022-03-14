@@ -8,7 +8,7 @@ liip_imagine:
     # On pourrait aussi utiliser "gmagick" ou "imagick" si installés sur le serveur.
     # ou les installer sur le serveur si ce n'est pas le cas (de la même façon wu'on a installé composer ou symfony sur la VM...).
 
-    driver: "imagick"
+    driver: "gd"
     default_filter_set_settings:
         format: webp
         
