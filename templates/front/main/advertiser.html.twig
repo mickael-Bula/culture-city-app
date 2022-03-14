@@ -191,6 +191,7 @@
                                 </div> 
                             </div>
                             
+                            {% if event.tags|length > 0 %}
                             <div class="my-2">
                                 <div class="scaled-xs">
                                     <i class="fa-solid fa-tags d-inline"></i> 
@@ -201,6 +202,7 @@
                                     </div>    
                                 </div>
                             </div>
+                            {% endif %}
 
                             <div class="my-2">    
                                 <div class="scaled-xs">
@@ -209,6 +211,13 @@
                                         <div class="place ms-2 d-inline">{{user.name}}</div>
                                     </a>
                                 </div>  
+                            </div>
+
+                            <div class="my-2">
+                                <div class="scaled-xs">
+                                    <i class="fa-solid fa-money-bill"></i>
+                                    <div class ="price ms-2 d-inline">{{event.price}}<span> €</span></div>
+                                </div> 
                             </div>
 
                             <!-- edit button if it's your own event -->
