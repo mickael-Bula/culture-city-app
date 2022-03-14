@@ -217,11 +217,17 @@ const app = {
             // alternaltively we display it to Upcoming Events list
             displayUpcomingElement.appendChild(eventTemplate);
         }
-        // if the list of events is empty we display a message
+        // if a list of events is empty we display a message
         if (displayCurrentElement.firstElementChild == null)
         {
             displayCurrentElement.textContent = "Il n'y a pas d'événement pour cette date";
         }
+        if (displayUpcomingElement.firstElementChild == null)
+        {
+            displayUpcomingElement.textContent = "Il n'y a pas d'événement à venir";
+        }
+
+
         // refresh map with current events
         mapModule.refreshMarkers(eventsCoordinates);
     },
