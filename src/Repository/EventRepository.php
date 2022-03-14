@@ -59,7 +59,7 @@ class EventRepository extends ServiceEntityRepository
             // on lie le paramètre à la valeur $tag (fournit en paramètre de la requête)
             ->setParameter('tag', $tagId)
             // sort by date
-            //->orderBy('e.startDate', 'ASC')
+            ->orderBy('e.startDate', 'ASC')
             // on lance la requête
             ->getQuery()
             // on retourne le résultat
@@ -96,7 +96,6 @@ class EventRepository extends ServiceEntityRepository
         return $this->findBy([],['startDate' => 'ASC'] );
     }
 
-    // TODO custom request to fetch events by locality
     /**
      * custom request to fetch events by locality
      *
@@ -114,6 +113,13 @@ class EventRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * custom request to fetch events by locality and filters
+     *
+     * @param array $filters
+     * @param string $locality
+     * @return void
+     */
     public function findEventsByLocality($filters, $locality)
     {
         return $this->createQueryBuilder('e')
@@ -128,6 +134,7 @@ class EventRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
     // TODO end of custom request
 
 
@@ -154,6 +161,4 @@ class EventRepository extends ServiceEntityRepository
             
             return $results->fetchAllAssociative();
     }
-
-
 }

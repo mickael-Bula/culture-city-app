@@ -51,7 +51,7 @@ class AppFixtures extends Fixture
 
         $allCategoriesEntity = []; // to add category to events
         $categories = [
-            'Concert', 'Spectacle', 'Exposition', 'Loisir', 'Évènementiel'
+            'Concert', 'Spectacle', 'Exposition', 'Loisirs', 'Événementiel'
         ];
 
         foreach ($categories as $categoryName){
