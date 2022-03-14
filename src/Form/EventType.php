@@ -43,7 +43,7 @@ class EventType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'Date de votre événement',
                 'required' => true,     
-                'data' => new \DateTime(),
+                //'data' => new \DateTime(),
             ])  
 
             ->add('endDate', DateTimeType::class, [
@@ -64,11 +64,11 @@ class EventType extends AbstractType
                 //contraint valid image file type 
                 'constraints' => [
                     new Image([
-                        'maxSize' => '1024k',
+                        'maxSize' => '2024k',
                         'minWidth' => '400',
-                        'maxWidth' => '1980',
+                        'maxWidth' => '4000',
                         'minHeight' => '400',
-                        'maxHeight' => '1980',
+                        'maxHeight' => '4000',
                     ])
                 ]
             ])  

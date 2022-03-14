@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repository;
-
+use App\Entity\User;
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -133,5 +133,32 @@ class EventRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    // TODO end of custom request
+
+
+
+    /**
+     * Sql custom request for user favorite.
+     * We check if the current event is already 
+     * in the favorites of the current user.
+     *
+     * @param integer $eventId
+     * @param integer $userId
+     * @return [] 
+     */
+    public function findIfCurrentEventIsAlreadyInUserFavorite(int $eventId , int $userId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+                SELECT* FROM user_event 
+                WHERE user_id = $userId 
+                AND event_id = $eventId
+            ";
+            $results = $conn->executeQuery($sql);
+            
+            return $results->fetchAllAssociative();
     }
 }
