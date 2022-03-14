@@ -6,11 +6,12 @@ use App\Entity\Tag;
 use App\Entity\Event;
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\{ DateTimeType, FileType, TextType, NumberType, SubmitType, CheckboxType, TextareaType };
-use Symfony\Component\Validator\Constraints\Image;
 
 class EventType extends AbstractType
 {
@@ -32,7 +33,7 @@ class EventType extends AbstractType
                 'required' => true,     
             ])  
 
-            ->add('description', TextareaType::class, [
+            ->add('description', CKEditorType::class, [
 
                 'label' => 'Décrivez votre événement...',
                 'required' => true,     
