@@ -24,10 +24,6 @@ const mapModule = {
             tileSize: 512,
             zoomOffset: -1,
         }).addTo(map);
-
-        // current user's position
-        const marker = L.marker([userLocation[0], userLocation[1]]).addTo(map);
-        marker.bindPopup("<b>Votre position</b><br>").openPopup();
     },
 
     // add markers on map using coordinates from dataset or from API
