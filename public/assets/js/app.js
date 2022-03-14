@@ -31,6 +31,7 @@ const app = {
             app.zip = zip.split('=')[1]
         }
         
+        // retrieve events' datasets to display markers on the map
         const datasetEvents = document.getElementsByClassName("datasetEvents");
         const nextdatasetEvents = document.getElementsByClassName("nextDatasetEvents");
         if (datasetEvents.length > 0)
@@ -38,11 +39,6 @@ const app = {
             const coordinates = [];
             // retrieve coordinates of current events with their placeName and slug passed as dataset
             for (const eachEvent of datasetEvents)
-            {
-                coordinates.push(eachEvent.dataset.coordinates.split(', '));
-            }
-            // retrieve coordinates of upcoming events with their placeName and slug passed as dataset
-            for (const eachEvent of nextdatasetEvents)
             {
                 coordinates.push(eachEvent.dataset.coordinates.split(', '));
             }
@@ -156,7 +152,7 @@ const app = {
             referenceDate = new Date(referenceDate);
             if (datePicker.getTime() > referenceDate.getTime()) { continue }
 
-            // if an event starts before the current day, we set its startDate as current date and add it tag 'en cours'
+            // if an event starts before the current day, we set its startDate as current date and add tag 'en cours'
             if (element.endDate !== null && endDate.getTime() > datePicker.getTime() && startDate.getTime() <= datePicker.getTime())
             {
                 element.startDate = document.getElementById("start").value;
@@ -198,6 +194,7 @@ const app = {
             // display a capitalize and truncated name
             eventTemplate.querySelector(".eventName").textContent = utils.truncateString(utils.capitalize(element.name), 12);
             
+            // display event's place name
             eventTemplate.querySelector(".eventPlace").textContent = element.user.placeName;
 
             // if an event matches the date picker we display it as 'Current Event', otherwise as 'Upcoming Events'
@@ -205,15 +202,15 @@ const app = {
             const reformateStartDate = startDate.toLocaleDateString();
             const reformateDatePicker = datePicker.toLocaleDateString();
 
-            // get event's coordinates for display on the map
-            eventsCoordinates.push([element.user.lat, element.user.lng, element.user.slug, element.user.placeName]);
-
             // add price
             eventTemplate.querySelector(".eventPrice").textContent = element.price + " €";
 
             // compare dates
             if (reformateDatePicker >= reformateStartDate)
             {
+                // get event's coordinates of current day to display on the map
+                eventsCoordinates.push([element.user.lat, element.user.lng, element.user.slug, element.user.placeName]);
+                
                 // when an event starts before the date picker or takes place on that day, we add it to Current Events list
                 displayCurrentElement.appendChild(eventTemplate);
             }
