@@ -45,7 +45,10 @@
 <body>
     {% include '_header.html.twig' %}
 
+    {# display cookies window only if rout is not login #}
+    {% if app.request.attributes.get('_route') is not same as 'app_login' %}
     {% include '_cookie_concent.html.twig' %}
+    {% endif %}
 
     <div class="bg-white">
         <div class="container-fluid py-5">
