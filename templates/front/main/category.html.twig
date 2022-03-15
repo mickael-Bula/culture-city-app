@@ -108,12 +108,11 @@
                          {% else %}
                          <p>Il n'y a pas encore d'événements ici !</p> 
                     {% endfor %}
-  
+                    {% include '_cookie_concent.html.twig' %}
                 </div>
             </div>
         </div>
     </div>
-    {% include '_cookie_concent.html.twig' %}
 </div>
 
 {% endblock %}
