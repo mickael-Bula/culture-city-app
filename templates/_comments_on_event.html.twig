@@ -1,6 +1,6 @@
 <div class="container my-3 bg-blue-med border-radius p-4">
     <div class="bg-white border-radius pt-3 pb-2 px-3">
-        <h4>Derniers commentaires sur: {{event.name}}</h4>
+        <h4>Derniers commentaires sur : {{event.name}}</h4>
     </div>
     <div class="my-3">
         {% for posts in event.posts %}
@@ -11,10 +11,10 @@
                         {% else %} 
                         <img class="" src="{{ vich_uploader_asset (posts.author, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_50') }}" alt="{{ posts.author.name  }}" />
                     {% endif %}
-                    <p class="mb-0 ms-2 d-inline small">Par: {{ posts.author.name }}</p>  
+                    <p class="mb-0 ms-2 d-inline small">Par : {{ posts.author.name }}</p>  
                     
                 </div> 
-                <p class="small"><b>Commentaire:</b> {{ posts.content }}</p>     
+                <p class="small"><b>Commentaire : </b> {{ posts.content }}</p>     
             </div>
         {% endfor %}
     </div>
@@ -30,7 +30,7 @@
                 </a>
             </div>  
         {% else %}
-            <div class="place ms-2 mb-2 d-inline text-white">Connectez vous en tant qu'utilisateur pour ajouter un commentaire sur {{event.name}}</div>
+            <div class="place ms-2 mb-2 d-inline text-white">Connectez-vous en tant qu'utilisateur pour ajouter un commentaire sur {{event.name}}</div>
             {% if not is_granted('ROLE_ADMIN') and not is_granted('ROLE_ANNONCEUR') and not is_granted('IS_AUTHENTICATED_FULLY')%}  
                 <div class="d-flex justify-content-start">  
                     <button type="button" class="btn btn-warning mt-3">
