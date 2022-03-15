@@ -4,9 +4,7 @@ namespace App\Controller\Front;
 
 
 use App\Entity\Event;
-use App\Entity\Tag;
 use App\Form\EventType;
-use App\Entity\Category;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,8 +15,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-
-
 class EventController extends AbstractController
 {
     /**
@@ -27,25 +23,26 @@ class EventController extends AbstractController
     public function showEventBySlug(EventRepository $eventRepository, string $slug): Response
     {
         $event = $eventRepository->findOneBy(["slug" => $slug]);
-       
-            //we check if there is a logged in user
-            if ($user = $this->getUser()) {
-             
-                // get curent event id to dynamise request first param
-                $eventid = $event->getId();
-                // get curent user id to dynamise request second param
-                $userId = $user->getId();
-                //we check if the current event is already in the favorites of the current user.
-                $isInFavorite = $eventRepository->findIfCurrentEventIsAlreadyInUserFavorite($eventid, $userId);
 
-                return $this->render('front/main/event.html.twig', compact('event', 'user' , 'isInFavorite'));
-            }
+        //we check if a user is logged in
+        $user = $this->getUser();
+        if ($user)
+        {
+            // get current event's id to dynamise request first param
+            $eventId = $event->getId();
 
-            if (!$event) {
-                throw $this->createNotFoundException('Il n\'y a pas d\'événement');
-            }
+            // get current user's id to dynamise request second param
+            $userId = $user->getId();
 
-        return $this->render('front/main/event.html.twig', compact('event', 'user'));
+            //we check if the current event is already in the favorites of the current user.
+            $isInFavorite = $eventRepository->findIfCurrentEventIsAlreadyInUserFavorite($eventId, $userId);
+
+            return $this->render('front/main/event.html.twig', compact('event', 'isInFavorite'));
+        }
+        if ( !$event) {
+            throw $this->createNotFoundException('Il n\'y a pas d\'événement');
+        }
+        return $this->render('front/main/event.html.twig', compact('event'));
     }
 
     /**
@@ -54,9 +51,8 @@ class EventController extends AbstractController
     public function createEvent(EntityManagerInterface $entityManager, 
             Request $request, 
             SluggerInterface $slugger
-            ): Response 
-        {
-        
+            ): Response
+    {
         // New Empty event
         $event = New Event();
         
@@ -66,15 +62,13 @@ class EventController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid())
-
         {           
                 $user = $this->getUser();
                 //$user->getName();
                 $event->setUser($user);
 
-                // need to sluggify event by event name property
-                $name = $form->get('name')->getData();
-                $slug = $slugger->slug($name);
+                // need to sluggify event by event's name property
+                $slug = $slugger->slug($event->getName());
                 $event->setSlug(strtolower($slug));
 
                 // Comme on utilise ce form pour mettre à jour l'événement 
@@ -82,12 +76,13 @@ class EventController extends AbstractController
 
                 $eventFile = $form->get('picture')->getData();
 
-                if ($form->get('picture')->getData() != null) {
-
-                    if ($eventFile) {
+                if ($event->getPicture())
+                {
+                    if ($eventFile)
+                    {
                         $originalFilename = pathinfo($eventFile->getClientOriginalName(), PATHINFO_FILENAME);
                         $safeFilename = $slugger->slug($originalFilename);
-                        $newFilename = $safeFilename.'-'.uniqid().'.'.$eventFile->guessExtension();
+                        $newFilename = $safeFilename . '-' . uniqid() . '.' . $eventFile->guessExtension();
         
                         try {
                             $eventFile->move(
@@ -101,7 +96,6 @@ class EventController extends AbstractController
                         $event->setPicture($newFilename);
                     }
                 }
-
             $this->addFlash('event_create', 'votre événement a été crée');
 
             $entityManager->persist($event);
@@ -109,7 +103,6 @@ class EventController extends AbstractController
 
             return $this->redirectToRoute('show_advertiser_page', ['slug'=> $user->getSlug()], Response::HTTP_SEE_OTHER);
         }
-
             return $this->renderForm('front/form/event.html.twig', compact('form'));
     }
 
@@ -158,7 +151,7 @@ class EventController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('main_home', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('show_advertiser_page', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('front/form/edit_event.html.twig', compact('form'));

@@ -10,20 +10,6 @@
 <div class="container-fluid">
     <div class="row">
          <div class="col-12 col-lg-4 col-xl-3">
-     {#<form id="filters">
-                <div class="aside p-4 mb-5">
-                    <!-- search by date -->
-                    <input type="date" id="start" name="trip-start" value="2022-02-22" min="2022-02-22" max="2032-12-31">
-
-         <!-- Checked switch -->
-                    {% for category in categories %}
-                    <div class="form-check form-switch d-flex align-items-center my-3">
-                        <input class="form-check-input" name="filters[]" type="checkbox" role="switch3" value="{{ category.name }}" id="flexSwitchCheckChecked"/>
-                        <label class="form-check-label text-white ms-2" for="flexSwi3tchCheckChecked">{{ category.name }}</label>
-                    </div>
-                    {% endfor %}        
-                </div>
-    </form> #}
     
     <!-- Premium events in current category-->
     {% include '_category_premium_events.html.twig' %}
@@ -72,6 +58,7 @@
                                             </div> 
                                         </div>
                                         
+                                        {% if event.tags|length > 0 %}
                                         <div class="my-2">
                                             <div class="scaled-xs">
                                                 <i class="fa-solid fa-tags d-inline"></i> 
@@ -82,6 +69,7 @@
                                                 </div>    
                                             </div>
                                         </div>
+                                        {% endif %}
 
                                         <div class="my-2">    
                                             <div class="scaled-xs">
@@ -90,6 +78,13 @@
                                                     <div class="place ms-2 d-inline"> {{event.user.name}}</div>
                                                 </a>
                                             </div>  
+                                        </div>
+
+                                        <div class="my-2">
+                                            <div class="scaled-xs">
+                                                <i class="fa-solid fa-money-bill"></i>
+                                                <div class ="price ms-2 d-inline">{{event.price}}<span> €</span></div>
+                                            </div> 
                                         </div>
                                         
                                         <div class="d-flex justify-content-end">

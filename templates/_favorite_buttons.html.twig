@@ -1,19 +1,24 @@
-                    {% if is_granted('ROLE_USER') %}
-                        {% if isInFavorite != null %}
-                      <!-- remove event in favorite -->
-                                <div class="d-flex justify-content-start text-center mb-3">  
-                                    <a href="{{ path("remove_favorite", {id: event.id}) }}"><i class="fa-solid fa-eraser fa-xl"></i> Retirer des favoris</a>
-                                </div>  
-                        <!-- end remove favorite event-->
-                        
-                            {% else %}    
-                    
-                        <!-- add event in favorite -->
-                        
-                                <div class="d-flex justify-content-start text-center mb-3"> 
-                                    <a href="{{ path("add_favorite", {id: event.id}) }}"><i class="fa-solid fa-bookmark fa-xl"></i> Ajouter aux favoris</a>
-                                </div>  
-                               
-                        <!-- end add favorite event-->
-                        {% endif %} 
-                    {% endif %}    
+{% if  is_granted('ROLE_ADMIN') == false %}
+    {% if is_granted('ROLE_ANNONCEUR') == false %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if isInFavorite != null %}
+                <!-- remove event in favorite -->
+                <div class="mb-3">  
+                    <a href="{{ path("remove_favorite", {id: event.id}) }}">
+                        <i class="fa-solid fa-eraser fa-xl"></i> Retirer des favoris
+                    </a>
+                </div>  
+                <!-- end remove favorite event-->
+            {% else %}    
+                <!-- add event in favorite -->
+                <div class="mb-3"> 
+                    <a href="{{ path("add_favorite", {id: event.id}) }}">
+                        <i class="fa-solid fa-bookmark fa-xl"></i> Ajouter aux favoris
+                    </a>
+                </div>      
+                <!-- end add favorite event-->
+            {% endif %}     
+        {% endif %}
+    {% endif %}
+{% endif %}
+  

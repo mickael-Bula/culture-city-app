@@ -27,7 +27,7 @@ class EventCrudController extends AbstractCrudController
             TextField::new('name')->setLabel("Nom de l'évenement"),
             TextField::new('slug')->hideOnForm(),
             AssociationField::new('category')->setLabel('Categorie'),
-            AssociationField::new('tags')->setLabel('Nombre de tags'),
+            AssociationField::new('tags')->setLabel('Tag.s'),
             ChoiceField::new('is_premium')->setChoices(['Oui' => 1, 'Non' => 0])->setLabel('Premium'),
             DateField::new('created_at')->hideOnForm()->setLabel('Crée le'),
             IntegerField::new('price')->hideOnIndex()->setLabel('Prix'),

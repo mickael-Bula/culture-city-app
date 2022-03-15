@@ -4,7 +4,7 @@
 }
 
 .header_logo {
-    width :200px;
+    width :150px;
     height: auto;
 }
 
@@ -175,14 +175,24 @@
 }
 
 /** Global **/
+
+.btn {
+    border-radius: 50px;  
+}
+
 .btn-primary {
-    color: var(--main-color-white);;
+    color: var(--main-color-white);
     background-color: var(--main-color-blue-light);
     border-color: var(--main-color-blue-light);
     border-radius: 50px;
 }
 
-.btn-primary:hover {
+.btn-primary a {
+    color: var(--main-color-white);
+}
+
+.btn-primary:hover,
+.btn-warning:hover {
     color: var(--main-color-blue-med);
     background-color: var(--main-color-white);
     border-color: var(--main-color-blue-med);
