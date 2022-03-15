@@ -1,3 +1,8 @@
+# requete a passer en bdd pour créer la table et stocker les 'cookies'
+# CREATE TABLE ch_cookieconsent_log (id INT AUTO_INCREMENT NOT NULL, ip_address VARCHAR(255) NOT NULL, cookie_consent_key VARCHAR(255) NOT NULL, cookie_name VARCHAR(255) NOT NULL, cookie_value VARCHAR(255) NOT NULL, timestamp DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET UTF8 COLLATE `UTF8_general_ci` ENGINE = InnoDB
+
+# paramètrage du formulaire qu is'affiche pour acceper les cookies.
+
 ch_cookie_consent:
     theme: 'light' # light, dark
     categories: # Below are the default supported categories
@@ -5,9 +10,9 @@ ch_cookie_consent:
         - 'tracking'
         #- 'marketing'
         #- 'social_media'
-    #use_logger: true # Logs user actions to database
+    use_logger: true # Logs user actions to database
     position: 'bottom' # top, bottom
     simplified: true # When set to true the user can only deny or accept all cookies at once
-    #http_only: true # Sets HttpOnly on cookies
+    http_only: true # Sets HttpOnly on cookies
     #form_action: $routeName # When set, xhr-Requests will only be sent to this route. Take care of having the route available.
     csrf_protection: true # The cookie consent form is csrf protected or not
