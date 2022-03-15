@@ -6,3 +6,6 @@
 # Ajouter cette ligne pour intégrer LiipImagine FIlter Bundle au FW.
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.yaml"
+
+ch_cookie_consent:
+    resource: "@CHCookieConsentBundle/Resources/config/routing.yaml"

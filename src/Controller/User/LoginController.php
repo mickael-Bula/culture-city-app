@@ -20,7 +20,7 @@ class LoginController extends AbstractController
             //on récupère l'url à partir de laqeuelle le user arrive sur la page de login.
             $targetOrigin = $request->headers->get('referer');
 
-            if (str_contains($targetOrigin, 'event')) 
+        if (str_contains($targetOrigin, 'event')) 
             {
 
             // get the login error if there is one
@@ -41,10 +41,9 @@ class LoginController extends AbstractController
                 // comme target path de redirection après login...dans twig on concatène {{ redirect_user_after_login ~ '/post' }}
                 // pour rediriger directement vers le form de commentaire.
                 'redirect_user_after_login' => $targetRedirect,
-                
             ]);
 
-        } else {
+            } else {
 
             $error = $authenticationUtils->getLastAuthenticationError();
 
@@ -60,8 +59,6 @@ class LoginController extends AbstractController
 
         }
     }
-
-
 
     /**
      * Method allowing a user to disconnect from the app.
