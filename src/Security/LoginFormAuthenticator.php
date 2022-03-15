@@ -46,15 +46,14 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
-        }
+        } 
         
-        // For example:
-        return new RedirectResponse(
+            // Retour custom vers la dernière page visitée avant de demander à se logguer.
+            // voir champ caché du template login.html.twig
+            return new RedirectResponse($request->get('_target_path'));
 
-            $this->urlGenerator->generate('main_home'),
-            );
         
     }
 
