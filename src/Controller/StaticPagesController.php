@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class StaticPagesController extends AbstractController
 {
     /**
-     * @Route("/static/pages", name="app_static_pages")
+     * @Route("/privacy-statement", name="app_static_pages")
      */
     public function legalNotice(): Response
     {
