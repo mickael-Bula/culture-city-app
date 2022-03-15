@@ -38,10 +38,12 @@
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                         {# Champ caché qui retournee le user vers la dernière page passé en requette GET si il n'arrive
-                        pas directement de la page login -> voir LoginController.php#}
-
-                        <input type="hidden" name="_target_path" value="{{ redirect_user_after_login }}"/> 
-                        
+                        pas directement de la page login -> voir LoginController.php #}
+                        {% if redirect_user_after_login is defined %}
+                        <input type="hidden" name="_target_path" value="{{ redirect_user_after_login ~ '/post' }}"/> 
+                        {% else %}
+                    
+                        {% endif %}
                         <div class="form-check checkbox p-0 mb-3">
                             <input id="form-check" class="d-inline" type="checkbox" name="_remember_me"> 
                             <label for="form-check" class="d-inline">se souvenir de moi </label>  
