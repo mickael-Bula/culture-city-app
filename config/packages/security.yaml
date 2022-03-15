@@ -30,7 +30,8 @@ security:
                 login_path: app_login
                 check_path: app_login
                 # default redirect route after login successfull
-                default_target_path: main_home
+                # default_target_path: main_home
+                # always_use_default_target_path: true
                 # comment or uncomment 'enable_csrf: true' line for allow csrf on loginform
                 enable_csrf: true
 
