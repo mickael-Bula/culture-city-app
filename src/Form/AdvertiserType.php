@@ -47,7 +47,7 @@ class AdvertiserType extends AbstractType
             // upload user banner file    
             ->add('banner', FileType::class, [
 
-                'label' => 'Ajoutez une banière à votre page de profil',
+                'label' => 'Ajoutez une bannière à votre page de profil',
                 'mapped' => false,
                 'required' => false,
 
