@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class EventController extends AbstractController
 {
     /**
-     * @Route("/event/{slug}", name="show_event")
+     * @Route("/event/{slug}", name="show_event" , methods={"GET", "POST"})
      */
     public function showEventBySlug(EventRepository $eventRepository, string $slug): Response
     {

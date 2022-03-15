@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TagController extends AbstractController
 {
     /**
-     * @Route("/tag/{slug}", name="show_tag", methods={"GET"})
+     * @Route("/tag/{slug}", name="show_tag", methods={"GET", "POST"})
      */
     public function showByName(Tag $tag): Response
     {

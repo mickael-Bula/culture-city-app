@@ -122,7 +122,7 @@ class ShowController extends AbstractController
 
      /**
      * 
-     * @Route("/user/{slug}", name="show_user_page")
+     * @Route("/user/{slug}", name="show_user_page" , methods={"GET", "POST"})
      */
     public function showUserPanel(UserRepository $userRepository,  string $slug): Response
     {      
