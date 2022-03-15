@@ -1,9 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Page non trouvée</h1>
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/404.css') }}">
+{% endblock %}
 
-    <p>
-        La route demandée n'existe pas. Vérifiez le nom de l'url. <a href="{{ path('main_home') }}">Retourner à la page d'accueil</a>.
-    </p>
+{% block body %}
+
+<div class="container overflow-hidden ">
+    <div class="col-12 col-md-8 offset-md-2">
+    <div class="text-center mb-3">
+        <h1> OOps erreur !</h1>
+        <p>
+            La route demandée n'existe pas. Vérifiez le nom de l'url.  
+        </p>
+            
+        <a href="{{ path('main_home') }}" class="btn btn-primary">Retourner à la page d'accueil</a>    
+    </div>
+   
+
+    <div class="starWarBody">
+
+        <div class="fade"></div>
+    
+        <section class="star-wars" style="background-color:#000; overflow :hidden">
+    
+            <div class="crawl">
+                <div class="title">
+                    <p>Perdu dans l'Espace</p>
+                    <h2>Ton chemin tu dois retrouver</h2>
+                </div>
+                
+                <p>Cette page a été perdue. Comment faire pour la retrouver ?</p>      
+                <p>Peut-être pourrais-tu cliquer sur le lien qui t'es présenté au-dessus de cette image.</p>
+                <p>Une autre solution serait de crier pour obtenir de l'aide. Mais dans ce vide intersidéral, il y a peu de chance pour que quiconque t'entende...</p>
+            </div>
+    
+        </section>
+    
+    </div>
+    </div>
+    
+</div>
+
 {% endblock %}
