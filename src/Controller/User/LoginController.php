@@ -12,7 +12,7 @@ class LoginController extends AbstractController
 {
     /**
      * Method allowing a user to connect on the app.
-     * @Route("/login", name="app_login")
+     * @Route("/login", name="app_login", methods={"GET", "POST"})
      */
     public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
