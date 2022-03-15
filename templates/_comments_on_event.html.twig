@@ -4,7 +4,7 @@
     </div>
     <div class="my-3">
         {% for posts in event.posts %}
-            <div class="bg-white border-radius p-3">
+            <div class="bg-white border-radius p-3 mb-3">
                 <div class="mb-2 d-inline d-flex align-items-center">
                     {% if vich_uploader_asset (posts.author, 'avatarFile') %}
                         <img class="" src="{{ vich_uploader_asset (posts.author, 'avatarFile') | imagine_filter ('avatar_50') }}" alt="{{ posts.author.name  }}" />
