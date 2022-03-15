@@ -94,8 +94,6 @@
                                                     <i class="fa-solid fa-calendar-days d-inline"></i> 
                                                     
                                                     {# Condition to display the good format date if event is on more one day#}
-                                                    
-                                                    {# Condition to display the good format date if event is on more one day#}
                                                     {% set date = 'now' | date("d/m/Y") %}
                                                     {% if event.startDate | date("d/m/Y") < date %}
                                                         <div class ="date ms-2 d-inline">{{date}}</div> <div class="d-inline btn-xs">en cours</div>
