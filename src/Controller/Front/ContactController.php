@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
     /**
-     * @Route("/contact", name="app_front_contact")
+     * @Route("/contact", name="app_front_contact", methods={"GET", "POST"})
      */
     public function show(Request $request, MailerInterface $mailer): Response
     {

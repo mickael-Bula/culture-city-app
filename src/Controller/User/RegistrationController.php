@@ -34,7 +34,7 @@ class RegistrationController extends AbstractController
 
     /**
      * Method for registering a new user.
-     * @Route("register", name="user_register")
+     * @Route("register", name="user_register", methods={"GET", "POST"})
      */
     public function register(Request $request, 
         UserPasswordHasherInterface $userPasswordHasher, 
