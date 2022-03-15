@@ -210,18 +210,6 @@ table {
   color: var(--main-color-white);
 }
 
-.raisedContainer {
-  transition: 0.5s ease;
-  box-shadow: 1px 1px 5px #696969;
-  overflow: hidden;
-
-}
-
-.raisedContainer:hover {
-  transform: scale(1.01);
-  box-shadow: 0px 0px 35px #696969;
-}
-
 /** advertiser page **/
 .avatar {
   max-width: 150px;
@@ -294,6 +282,7 @@ table {
   position: fixed;
   bottom: 0;
   width: 100%;
+  z-index: 10000;
 }
 
 /** Global **/
