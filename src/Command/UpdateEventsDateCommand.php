@@ -35,42 +35,36 @@ class UpdateEventsDateCommand extends Command
         $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Dry run');
     }
 
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
      $io = new SymfonyStyle($input, $output);
 
-  
                 $io->info(sprintf('On démarre'));
 
                 $events = $this->eventRepository->findAll();
 
                 foreach ($events as $event) {
 
-                //$io->info('Date actuele de l\'événement : ' . $event->getStartDate());
+                    //$io->info('Date actuele de l\'événement : ' . $actualEventDateInDataBase );
 
-                    $actualEventDate = new DateTime('2022-03-'. rand(16,19));
-                    //$actualEventDate = $actualEventDate->add(new DateInterval('P7D'));
+                    // set datetime on now and 21HOO
+                    $actualEventDate = new DateTime('21:00');
+                    //get actuel event date
                     $event->getStartDate();
-                    $NewEventDate = $actualEventDate->add(new DateInterval('PT21H00S'));
-                
-
+                    // add rendom interval between + 5 to 7 day
+                    $NewEventDate = $actualEventDate->add(new DateInterval('P' . rand(5,7). 'D'));
+                    // set the new events date on day + 5 to 7
                     $event->setStartDate($NewEventDate);
-
-                    //$io->info('Résultat : ' . $event->setStartDate($NewEventDate));
+                    $io->info('Résultat : ' . $event->setStartDate($NewEventDate));
                 }
 
                 // enregistrer la nouvelle date
                 $this->entityManagerInterface->flush();
 
-                
-      
+                //message de sortie
+                $io->success(sprintf('Terminé'));
+                return Command::SUCCESS;    
 
-        //message de sortie
-        $io->success(sprintf('Terminé'));
-        //return Command::SUCCESS;    
-
-        return 0;
     }
 }
