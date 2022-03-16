@@ -89,7 +89,7 @@ class EventRepository extends ServiceEntityRepository
     /**
      * Custom findAllByStartDate to have OrderBy startDate
      *
-     * @return 
+     * @return Event
      */
     public function findAllByStartDate()
     {
@@ -108,6 +108,7 @@ class EventRepository extends ServiceEntityRepository
             ->join('e.user', 'e_u')
             ->andWhere('e_u.zip = :val')
             ->setParameter(':val', $locality)
+            ->orderBy('e.startDate', 'ASC')
             ->getQuery()
             ->getResult()
         ;
@@ -118,7 +119,7 @@ class EventRepository extends ServiceEntityRepository
      *
      * @param array $filters
      * @param string $locality
-     * @return void
+     * @return Event;
      */
     public function findEventsByLocality($filters, $locality)
     {
@@ -134,10 +135,6 @@ class EventRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-    // TODO end of custom request
-
-
 
     /**
      * Sql custom request for user favorite.
