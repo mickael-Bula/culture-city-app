@@ -21,7 +21,6 @@ class MainController extends AbstractController
 
         // if locality exists we retrieve its events, otherwise we display all events
         $events = ($locality === null) ? $eventRepository->findAllByStartDate() : $eventRepository->findByLocality($locality);
-        dump($events);
  
         // Je récupère la date du jour
         $currentDate = new \DateTime('now');
