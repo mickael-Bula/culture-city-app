@@ -22,6 +22,12 @@
         <script src="{{ asset('assets/js/utils.js') }}" defer></script>
         <script src="{{ asset('assets/js/leaflet.js') }}" defer></script>
         <script src="{{ asset('assets/js/app.js') }}" defer></script>
+        <script src="https://www.google.com/recaptcha/api.js"></script>
+        <script>
+        function onSubmit(token) {
+        document.getElementById("captcha").submit();
+         }
+        </script>
         
         {% block stylesheets %} {% endblock %}
         
