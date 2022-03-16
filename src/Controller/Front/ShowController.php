@@ -122,13 +122,16 @@ class ShowController extends AbstractController
 
      /**
      * 
-     * @Route("/user/{slug}", name="show_user_page")
+     * @Route("/user/{slug}", name="show_user_page" , methods={"GET", "POST"})
      */
     public function showUserPanel(UserRepository $userRepository,  string $slug): Response
     {      
+
         // display user page
         $user = $userRepository->findOneBy(["slug" => $slug]);
 
+        $this->denyAccessUnlessGranted('PANEL_VIEW', $user); // PANEL_VIEW -> Voter rule
+        
         // keep User id 
         //!je pense que c'est pas utile là...
         $userId = $user->getId();

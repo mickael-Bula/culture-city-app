@@ -4,6 +4,8 @@
 
 {% block body %}
 
+
+
 <div class="container">
    {% include '_flashmessages.html.twig' %}
 </div>
@@ -50,7 +52,7 @@
             <div class="">
                 
                 <!-- Day events-->
-                <h3 id="curentDate">{{ "now"| format_datetime('full', 'none', locale='fr') }}</h3>
+                <h3 id="currentDate">{{ "now"| format_datetime('full', 'none', locale='fr') }}</h3>
                 <div class="separator-small"></div>
 
                 <div id="displayCurrentEvents" class="d-flex flex-column flex-md-row flex-wrap">
@@ -94,8 +96,6 @@
                                                     <i class="fa-solid fa-calendar-days d-inline"></i> 
                                                     
                                                     {# Condition to display the good format date if event is on more one day#}
-                                                    
-                                                    {# Condition to display the good format date if event is on more one day#}
                                                     {% set date = 'now' | date("d/m/Y") %}
                                                     {% if event.startDate | date("d/m/Y") < date %}
                                                         <div class ="date ms-2 d-inline">{{date}}</div> <div class="d-inline btn-xs">en cours</div>
@@ -106,17 +106,18 @@
                                                 </div>
                                             </div>
                                             
+                                            {% if event.tags|length > 0 %}
                                             <div class="my-2">
                                                 <div class="scaled-xs">
-                                                 
                                                     <i class="fa-solid fa-tags d-inline"></i> 
                                                     <div class="tags ms-2 d-inline">
-                                                            {% for tag in event.tags %}
-                                                            <a href="{{ path('show_tag', {slug: tag.slug}) }}">{{tag.name}}</a>
+                                                        {% for tag in event.tags %}
+                                                        <a href="{{ path('show_tag', {slug: tag.slug}) }}">{{tag.name}}</a>
                                                         {% endfor %}
                                                     </div>    
                                                 </div>
                                             </div>
+                                            {% endif %}
 
                                             <div class="my-2">    
                                                 <div class="scaled-xs">
@@ -170,7 +171,7 @@
                     
                         {% for event in upcomingEvents %}
                             <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
-                                <div class="card overflow-hidden">
+                                <div class="raisedContainer card overflow-hidden">
                                     <div class="d-flex d-flex flex-row flex-md-column">
                                         <div class="col-4 col-sm-12 ">
                                             <!-- pour avoir un bloc carré qui se redimensionne correctement, il faut créer un hack css avec square:after
@@ -260,5 +261,4 @@
             </div>
         </div>
     </div>
-    
 {% endblock %}

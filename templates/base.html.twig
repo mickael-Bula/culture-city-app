@@ -45,6 +45,11 @@
 <body>
     {% include '_header.html.twig' %}
 
+    {# display cookies window only if rout is not login #}
+    {% if app.request.attributes.get('_route') is not same as 'app_login' %}
+    {% include '_cookie_concent.html.twig' %}
+    {% endif %}
+
     <div class="bg-white">
         <div class="container-fluid py-5">
             {% block body %}
@@ -67,7 +72,7 @@
     <!-- add a template element as model to display an event  -->
     <template id="eventTemplate">
         <div class="col-12 col-sm-6 col-xl-4 col-xxl-3 mb-3 p-sm-3 ">
-            <div class="card overflow-hidden">
+            <div class="raisedContainer card overflow-hidden">
                 <div class="d-flex flex-row flex-md-column">
                     <div class="col-4 col-sm-12 ">
                         <a href="">

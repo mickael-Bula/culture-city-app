@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/", name="main_home")
+     * @Route("/", name="main_home" , methods={"GET", "POST"})
      */
     public function showHomePage(CategoryRepository $categoryRepository, EventRepository $eventRepository, Request $request): Response
     {

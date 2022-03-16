@@ -2,6 +2,7 @@
 
 namespace App\Controller\User;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,27 +12,53 @@ class LoginController extends AbstractController
 {
     /**
      * Method allowing a user to connect on the app.
-     * @Route("/login", name="app_login")
+     * @Route("/login", name="app_login", methods={"GET", "POST"})
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+      
+            //on récupère l'url à partir de laqeuelle le user arrive sur la page de login.
+            $targetOrigin = $request->headers->get('referer');
 
-        // last username entered by the user
-        $last_username = $authenticationUtils->getLastUsername();
-       
-        // flash massage on user login actually displayed on home page
-        $this->addFlash('success-login', 'Félicitation, vous êtes bien connecté !');
-       
-        return $this->render('user/login.html.twig', [
-            'last_username' => $last_username, 
-            'error' => $error
-        ]);
+        if (str_contains($targetOrigin, 'event')) 
+            {
 
+            // get the login error if there is one
+            $error = $authenticationUtils->getLastAuthenticationError();
+
+            // last username entered by the user
+            $last_username = $authenticationUtils->getLastUsername();
+        
+            // flash massage on user login actually displayed on home page
+            $this->addFlash('success-login', 'Félicitation, vous êtes bien connecté !');
+
+            $targetRedirect = $targetOrigin;
+
+            return $this->render('user/login.html.twig', [
+                'last_username' => $last_username, 
+                'error' => $error,
+                // on récupère l'url dans la query string et on passe cette variable au champ caché du formulaire de login
+                // comme target path de redirection après login...dans twig on concatène {{ redirect_user_after_login ~ '/post' }}
+                // pour rediriger directement vers le form de commentaire.
+                'redirect_user_after_login' => $targetRedirect,
+            ]);
+
+            } else {
+
+            $error = $authenticationUtils->getLastAuthenticationError();
+
+            $last_username = $authenticationUtils->getLastUsername();
+        
+            // flash massage on user login actually displayed on home page
+            $this->addFlash('success-login', 'Félicitation, vous êtes bien connecté !');
+
+            return $this->render('user/login.html.twig', [
+                'last_username' => $last_username, 
+                'error' => $error,
+            ]);
+
+        }
     }
-
-
 
     /**
      * Method allowing a user to disconnect from the app.

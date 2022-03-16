@@ -96,10 +96,16 @@ const app = {
         // get date from date picker and display it as title for current events list
         let datePicker = new Date(event.currentTarget.value);
 
+        // display a message if date picker's date is not valid
+        if (isNaN(datePicker))
+        {
+            document.getElementById("currentDate").innerHTML = "date invalide";
+            return;
+        }
         // options to display date in long format
         const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }
         datePicker = datePicker.toLocaleDateString('fr-FR', options);
-        document.getElementById("curentDate").innerHTML = datePicker;
+        document.getElementById("currentDate").innerHTML = datePicker;   
     },
 
     fetchEvents: async function(url, queryString)

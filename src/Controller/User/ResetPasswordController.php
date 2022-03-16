@@ -23,7 +23,7 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 /**
  * Global Route and Method for user to send a password reset request
  * 
- * @Route("/reset-password")
+ * @Route("/reset-password", methods={"GET", "POST"})
  */
 class ResetPasswordController extends AbstractController
 {

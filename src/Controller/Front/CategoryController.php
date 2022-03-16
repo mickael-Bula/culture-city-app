@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/category/{slug}", name="show_category", methods={"GET"})
+     * @Route("/category/{slug}", name="show_category", methods={"GET", "POST"})
      */
     public function showCategoryByName(CategoryRepository $categoryRepository, EventRepository $eventRepository, string $slug): Response
     {
