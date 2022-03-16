@@ -3,11 +3,11 @@
         <div class="row justify-content-center">
             
             <nav class="d-flex flex-column flex-md-row justify-content-center text-center m-3">
-                <a href="#" class="m-2">Contact</a> 
+                <a href="{{ path('app_front_contact') }}" class="m-2">Contact</a> 
+                <a href="{{ path('main_a_propos') }}" class="m-2">à propos</a> 
                 <a href="{{ path('app_static_pages') }}" class="m-2">Mentions légales</a> 
             </nav>
         
-
             <div class="d-flex flex-row justify-content-center m-3 mb-5 mb-lg-3">
                 <a href="#" class="mx-2"><i class="fa-brands fa-facebook fa-2x"></i></a>
                 <a href="#" class="mx-2"><i class="fa-brands fa-instagram fa-2x"></i></a>
@@ -22,20 +22,19 @@
 <div class="menu-mobile d-sm-none">
     <div class="container">
         <div class="d-flex flex-row justify-content-center mx-3">
-            <a href="#" class="mx-2 text-center">
+            <a href="{{ path('app_login') }}" class="mx-2 text-center">
                 <i class="fa-solid fa-circle-user fa-2xl text-white mt-4"></i>
                 <p class="mt-2">Profile</p>
             </a>
-            <a href="#" class="mx-2 text-center">
+            <a href="{{ path('create_event') }}" class="mx-2 text-center">
                 <i class="fa-solid fa-bullhorn fa-2xl text-white mt-4"></i>
                 <p class="mt-2">Annoncer un évènement</p>
             </a>
-            <a href="#" class="mx-2 text-center">
+            <a href="{{ path('app_front_contact') }}" class="mx-2 text-center">
                 <i class="fa-solid fa-envelope fa-2xl text-white mt-4"></i>
                 <p class="mt-2">Contact</p>
             </a>          
         </div>
     </div>
-   
 </div>
 

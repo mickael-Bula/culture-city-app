@@ -156,6 +156,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OrderBy({"startDate" = "ASC"})
      */
     private $events;
 
