@@ -87,20 +87,20 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * Custom FindALL to have OrderBy startDate
+     * Custom findAllByStartDate to have OrderBy startDate
      *
-     * @return void
+     * @return 
      */
-    public function findAll()
+    public function findAllByStartDate()
     {
-        return $this->findBy([],['startDate' => 'ASC'] );
+        return $this->findBy([], ['startDate' => 'ASC'] );
     }
 
     /**
      * custom request to fetch events by locality
      *
      * @param string $locality
-     * @return void
+     * @return Event;
      */
     public function findByLocality($locality)
     {

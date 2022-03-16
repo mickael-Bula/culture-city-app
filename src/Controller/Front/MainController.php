@@ -20,7 +20,8 @@ class MainController extends AbstractController
         $locality = $request->cookies->get('locality');
 
         // if locality exists we retrieve its events, otherwise we display all events
-        $events = ($locality === null) ? $eventRepository->findAll() : $eventRepository->findByLocality($locality);
+        $events = ($locality === null) ? $eventRepository->findAllByStartDate() : $eventRepository->findByLocality($locality);
+        dump($events);
  
         // Je récupère la date du jour
         $currentDate = new \DateTime('now');
@@ -49,7 +50,7 @@ class MainController extends AbstractController
             } 
         }
 
-        $premiumEvents = $eventRepository->findBy(['isPremium'=> 'true'], ['createdAt' => 'DESC'], 5);
+        $premiumEvents = $eventRepository->findBy(['isPremium'=> 'true'], ['createdAt' => 'DESC'], 3);
 
         return $this->render('front/main/home.html.twig', compact('categories', 'currentEvents', 'upcomingEvents', 'premiumEvents'));
     }
