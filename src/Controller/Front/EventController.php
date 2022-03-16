@@ -113,6 +113,7 @@ class EventController extends AbstractController
     {
 
         $this->denyAccessUnlessGranted('EVENT_EDIT', $event); // EVENT_EDIT -> Voter rule
+        $user = $this->getUser();
        
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
@@ -151,7 +152,7 @@ class EventController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('show_advertiser_page', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('show_advertiser_page', ['slug'=> $user->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('front/form/edit_event.html.twig', compact('form'));

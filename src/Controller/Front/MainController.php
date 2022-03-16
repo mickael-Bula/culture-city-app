@@ -53,4 +53,17 @@ class MainController extends AbstractController
 
         return $this->render('front/main/home.html.twig', compact('categories', 'currentEvents', 'upcomingEvents', 'premiumEvents'));
     }
+
+  
+    /**
+    * @Route("/a-propos", name="main_a_propos")
+    */
+
+    public function showAboutPage() {
+
+        return $this->render('front/main/about.html.twig');
+    }
+
+
+
 }
