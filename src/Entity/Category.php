@@ -34,6 +34,7 @@ class Category
 
     /**
      * @ORM\OneToMany(targetEntity=Event::class, mappedBy="category", orphanRemoval=true)
+     * @ORM\OrderBy({"startDate" = "ASC"})
      */
     private $events;
 

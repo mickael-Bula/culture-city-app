@@ -86,7 +86,7 @@
                     <a class="dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                         
                         {% if app.user %}
-                            <div class="avatar-header">
+                            <div class="avatar-header d-flex align-items-center">
                                 {% if vich_uploader_asset (app.user, 'avatarFile') %}
                                     <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (app.user, 'avatarFile') | imagine_filter ('avatar_50') }}" alt="{{ app.user.name }}" />
                                 {% else %}

@@ -33,9 +33,9 @@
             <!-- user pictures-->
             <div class="avatar">
                 {% if vich_uploader_asset (user, 'avatarFile') %}
-                <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
+                <img class="img-fluid w-100 border-radius-100" src="{{ vich_uploader_asset (user, 'avatarFile') | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
                 {% else %}
-                <img class="img-fluid w-100 border-radius" src="{{ vich_uploader_asset (user, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
+                <img class="img-fluid w-100 border-radius-100" src="{{ vich_uploader_asset (user, 'avatarFile') ?: '/upload/default_picture/default_avatar.jpg' | imagine_filter ('avatar_200') }}" alt="{{ user.name }}" />
                 {% endif %} 
             </div><!-- end avatar-->
         
