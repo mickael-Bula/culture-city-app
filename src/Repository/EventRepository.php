@@ -91,7 +91,7 @@ class EventRepository extends ServiceEntityRepository
      *
      * @return void
      */
-    public function findAll()
+    public function findAllByStartDate()
     {
         return $this->findBy([],['startDate' => 'ASC'] );
     }
