@@ -27,7 +27,7 @@
                             Merci de vous connecter ou d'envoyer un message à contact@culturecityapp.app
                         </p>
                     {% else %}     
-                        <form action="{{ path('app_login') }}" method="post" id="captcha">
+                        <form action="{{ path('app_login') }}" method="post" id="reCaptcha">
                             <div class="form-group mb-3">
                                 <label for="username" class="mb-2">Email:</label>
                                 <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}"/>
@@ -52,10 +52,10 @@
                                 <input id="form-check" class="d-inline" type="checkbox" name="_remember_me"> 
                                 <label for="form-check" class="d-inline">se souvenir de moi </label>  
                             </div>
-
-                            <div class="g-recaptcha" data-sitekey="6Ld9DOIeAAAAAKj2dE5t2FcB6hNU6tPA620Xag0y" data-callback="onSubmit" ></div></br>
-
-                            <button class="btn btn-primary" type="submit">Se connecter</button>
+    
+                            <div class="g-recaptcha" data-sitekey="6Ld9DOIeAAAAAKj2dE5t2FcB6hNU6tPA620Xag0y"></div><br/>
+      
+                            <button class="btn btn-primary" type="submit" value="Submit">Se connecter</button>
                             <a class="btn btn-primary" href="{{ path('user_register') }}">S'enregistrer</a>
                         </form>
                     {% endif %}  
