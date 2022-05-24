@@ -78,7 +78,7 @@ const locality = {
             document.cookie = `locality=${zip}; expires=${expires}; SameSite=Lax`;      // géolocalisé
 
             // on appelle la page home avec les données correspondant à la localité
-            window.location.href="http:/";
+            window.location.href="/";
         }
     }
 }
