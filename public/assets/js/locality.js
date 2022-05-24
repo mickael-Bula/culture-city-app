@@ -43,7 +43,7 @@ const locality = {
     {
         // on appelle ici l'api mapquestapi qui va nous donner le nom de la ville à partir de nos coordonnées géographiques
         const [latitude, longitude] = coordinates;
-        locality.fetchPostalCode(`http://www.mapquestapi.com/geocoding/v1/reverse?key=${config.APIkey}&location=${latitude},${longitude}`);
+        locality.fetchPostalCode(`https://www.mapquestapi.com/geocoding/v1/reverse?key=${config.APIkey}&location=${latitude},${longitude}`);
     },
 
     fetchPostalCode: async function(url)
