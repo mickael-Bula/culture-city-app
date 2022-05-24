@@ -153,6 +153,10 @@ table {
   border-color: var(--main-color-grey);
 }
 
+.card__min-width {
+  min-width: 260px;
+}
+
 .square {
   width: 100%;
 }
